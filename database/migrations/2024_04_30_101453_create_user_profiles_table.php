@@ -24,6 +24,8 @@ class CreateUserProfilesTable extends Migration
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users')->onDelete('CASCADE');
+            $table->foreignId('sucursal_id')
+                ->references('id')->on('sucursals');
             $table->timestamps();
             $table->softDeletes();
 

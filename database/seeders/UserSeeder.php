@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $sucursal=Sucursal::where('id',1)->first();
         $user = User::create([
             'name' => 'Henry Espinoza',
             'email' => 'henry@gmail.com',
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
             'tipo_documento'=>'V',
             'num_documento'=>'23897456',
             'profesion' => 'Ingeniero',
+            'sucursal_id'=>$sucursal->id,
         ]);
         foreach (range(1,10) as $i) {
             $user = UserFactory::new()->create([

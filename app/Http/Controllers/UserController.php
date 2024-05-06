@@ -6,6 +6,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Filters\UserFilter;
 use App\Models\Sortable;
+use App\Models\Sucursal;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -30,17 +31,19 @@ class UserController extends Controller
         ]);
     }
     public function create(){
-        return $this->form('users.create', new User);
+        return $this->form('users.create', new User,'create');
     }
     public function store(CreateUserRequest $request)
     {
         $request->createUser();
         return redirect()->route('users.index')->with('success','Usuario Guardado con Exito');
     }
-    private function form(string $view, User $user)
+    private function form(string $view, User $user,$vista)
     {
         return view($view, [
             'user' => $user,
+            'sucursales'=>Sucursal::orderBy('nombre')->get(),
+            'vista'=>$vista
         ]);
     }
     public function update(UpdateUserRequest $request, User $user)
@@ -55,7 +58,7 @@ class UserController extends Controller
     }
     public function edit(User $user)
     {
-        return $this->form('users.edit', $user);
+        return $this->form('users.edit', $user,'editar');
     }
     public function destroy(Request $request){
         $user_id=$request->user_id;

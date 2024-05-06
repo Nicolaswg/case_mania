@@ -17,8 +17,10 @@ class DatabaseSeeder extends Seeder
         $this->truncateTables([
             'users',
             'user_profiles',
+            'sucursals'
         ]);
         $this->call([
+            SucursalSeeder::class,
             UserSeeder::class,
         ]);
 

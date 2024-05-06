@@ -34,14 +34,17 @@ class CreateUserRequest extends FormRequest
             'bio' => 'required',
             'ubicacion'=>['required'],
             'num_cel'=>['required'],
+            'sucursal_id'=>['required'],
             'state'=>[Rule::in(['active','inactive'])],
             'tipo_documento'=>'required',
             'num_documento'=>['required',Rule::unique('user_profiles','num_documento')],
+            'cargo'=>['required_unless:empleado,null']
         ];
     }
     public function messages()
     {
         return [
+            'cargo.required_unless'=>'Al agregar el usuario a empleado debes escribir el cargo que desempeña',
             'name.required' => 'El nombre es obligatorio',
             'num_cel.required'=>'El numero de telefono es obligatorio',
             'role.required'=>'El usuario debe tener un Rol.',
@@ -69,6 +72,7 @@ class CreateUserRequest extends FormRequest
                 'num_cel'=>$this->input('num_cel'),
                 'tipo_documento'=>$this->input('tipo_documento'),
                 'num_documento'=>$this->input('num_documento'),
+                'sucursal_id'=>$this->input('sucursal_id'),
 
             ]);
 

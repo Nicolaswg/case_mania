@@ -20,6 +20,7 @@ class UserProfileFactory extends Factory
             'tipo_documento'=>$this->faker->randomElement(['V','E','J']),
             'num_documento'=>$this->faker->randomNumber(8),
             'profesion'=>$this->faker->randomElement(['Licenciado','Ingeniero','Abogado','Comerciante']),
+            'sucursal_id'=>random_int(1,2)
         ];
     }
 }

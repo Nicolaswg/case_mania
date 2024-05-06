@@ -45,7 +45,7 @@
                         <p><strong>Telefono</strong>: {{ $user->profile->num_cel  }}</p>
                         <p><strong>N° de Documento: </strong>:{{ucfirst($user->profile->tipo_documento)}}-{{$user->profile->num_documento}}</p>
                         <p><strong>Profesion</strong>: {{ucwords( $user->profile->profesion)  }}</p>
-
+                        <p><strong>Sucursal</strong>: {{ucwords( $user->profile->sucursal->nombre)  }}</p>
                     </div>
                     <div class="card-header-pills" align="right">
                         <div class="btn-group" role="group" aria-label="Basic example" align="right">

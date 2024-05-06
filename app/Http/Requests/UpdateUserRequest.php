@@ -25,6 +25,7 @@ class UpdateUserRequest extends FormRequest
             'role' => ['required'],
             'bio' => 'required',
             'ubicacion'=>['required'],
+            'sucursal_id'=>'required',
             'num_cel'=>['required'],
             'tipo_documento'=>'required',
             'num_documento'=>['required',Rule::unique('user_profiles','num_documento')->ignore($this->user->profile)],
@@ -63,6 +64,7 @@ class UpdateUserRequest extends FormRequest
             'num_cel'=>$this->num_cel,
             'tipo_documento'=>$this->tipo_documento,
             'num_documento'=>$this->num_documento,
+            'sucursal_id'=>$this->sucursal_id,
         ]);
 
     }
