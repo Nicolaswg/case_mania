@@ -89,7 +89,7 @@
     <div :class="{ 'col-md-2': empleado , 'col-md-6': !empleado }" class="card">
         <label class="mt-1"> <strong>EMPLEADOS</strong></label>
         <div class="form-check" >
-            <input class="form-check-input" type="checkbox" value="{{old('empleado')}}" v-model="empleado" @click="config()" name="empleado" id="empleado">
+            <input class="form-check-input" type="checkbox" :value="empleado" v-model="empleado" @click="config()" name="empleado" id="empleado">
             <label class="form-check-label" for="flexCheckDefault">
                Agregar a Empleados
             </label>

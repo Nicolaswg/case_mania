@@ -35,6 +35,7 @@ class UserController extends Controller
     }
     public function store(CreateUserRequest $request)
     {
+        //dd($request->input('empleado'));
         $request->createUser();
         return redirect()->route('users.index')->with('success','Usuario Guardado con Exito');
     }

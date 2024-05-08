@@ -12,7 +12,7 @@
     <form method="POST" action="{{ url('usuarios') }}" id="app">
         @include('users._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="submit"  class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Crear usuario</button>
+            <button type="submit" :disabled=" empleado === true && cargo === ''" class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Crear usuario</button>
             <a href="{{ route('users.index') }}" class="btn btn-link">Regresar al listado de usuarios</a>
         </div>
     </form>

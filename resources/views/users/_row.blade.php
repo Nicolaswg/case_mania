@@ -10,7 +10,7 @@
 
     <td>
         <span class="note">Registro: {{ $user->created_at->format('d/m/Y') }}</span>
-        <span class="note"> <strong>Último login: {{ $user->last_login != null ?  \Carbon\Carbon::create($user->last_login) : 'No disponible'  }}</strong></span>
+        <span class="note"> <strong>Último login: {{ $user->last_login != null ?  \Carbon\Carbon::create($user->last_login)->format('d-m-Y') : 'No disponible'  }}</strong></span>
     </td>
     <td class="text-right">
         <a href="{{ route('users.show', $user) }}" class="btn btn-outline-primary btn-sm"><i class="bi bi-eye-fill"></i></a>

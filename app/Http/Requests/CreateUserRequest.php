@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Empleado;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\DB;
@@ -38,13 +39,11 @@ class CreateUserRequest extends FormRequest
             'state'=>[Rule::in(['active','inactive'])],
             'tipo_documento'=>'required',
             'num_documento'=>['required',Rule::unique('user_profiles','num_documento')],
-            'cargo'=>['required_unless:empleado,null']
         ];
     }
     public function messages()
     {
         return [
-            'cargo.required_unless'=>'Al agregar el usuario a empleado debes escribir el cargo que desempeña',
             'name.required' => 'El nombre es obligatorio',
             'num_cel.required'=>'El numero de telefono es obligatorio',
             'role.required'=>'El usuario debe tener un Rol.',
@@ -54,29 +53,64 @@ class CreateUserRequest extends FormRequest
     }
     public function createUser()
     {
-        DB::transaction(function () {
-            $user = User::create([
-                'name' => $this->input('name'),
-                'email' => $this->input('email'),
-                'password' => bcrypt($this->input('password')),
-                'role' => $this->input('role' ),
-                'state'=>$this->input('state')
-            ]);
+        if($this->input('empleado')=='true'){
+            DB::transaction(function () {
+                $user = User::create([
+                    'name' => $this->input('name'),
+                    'email' => $this->input('email'),
+                    'password' => bcrypt($this->input('password')),
+                    'role' => $this->input('role' ),
+                    'state'=>$this->input('state')
+                ]);
 
-            $user->save();
+                $user->save();
 
-            $user->profile()->create([
-                'bio' => $this->input('bio'),
-                'ubicacion'=>$this->input('ubicacion'),
-                'profesion' => $this->input('profesion'),
-                'num_cel'=>$this->input('num_cel'),
-                'tipo_documento'=>$this->input('tipo_documento'),
-                'num_documento'=>$this->input('num_documento'),
-                'sucursal_id'=>$this->input('sucursal_id'),
+                $user->profile()->create([
+                    'bio' => $this->input('bio'),
+                    'ubicacion'=>$this->input('ubicacion'),
+                    'profesion' => $this->input('profesion'),
+                    'num_cel'=>$this->input('num_cel'),
+                    'tipo_documento'=>$this->input('tipo_documento'),
+                    'num_documento'=>$this->input('num_documento'),
+                    'sucursal_id'=>$this->input('sucursal_id'),
+                ]);
+                Empleado::create([
+                    'nombre'=>$this->input('name'),
+                    'tipo_documento'=>$this->input('tipo_documento'),
+                    'num_documento'=>$this->input('num_documento'),
+                    'num_cel'=>$this->input('num_cel'),
+                    'profesion' => $this->input('profesion'),
+                    'active'=>true,
+                    'cargo'=>$this->input('cargo'),
+                ]);
 
-            ]);
+            });
+        }
+        if($this->input('empleado')=='false' || $this->input('empleado')==null){
+            DB::transaction(function () {
+                $user = User::create([
+                    'name' => $this->input('name'),
+                    'email' => $this->input('email'),
+                    'password' => bcrypt($this->input('password')),
+                    'role' => $this->input('role' ),
+                    'state'=>$this->input('state')
+                ]);
 
-        });
+                $user->save();
+
+                $user->profile()->create([
+                    'bio' => $this->input('bio'),
+                    'ubicacion'=>$this->input('ubicacion'),
+                    'profesion' => $this->input('profesion'),
+                    'num_cel'=>$this->input('num_cel'),
+                    'tipo_documento'=>$this->input('tipo_documento'),
+                    'num_documento'=>$this->input('num_documento'),
+                    'sucursal_id'=>$this->input('sucursal_id'),
+                ]);
+
+            });
+        }
+
 
     }
 
