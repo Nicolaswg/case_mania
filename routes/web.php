@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -32,5 +33,13 @@ Route::group(['middleware'=>'auth'],function (){
     Route::put('/usuarios/{user}', [UserController::class, 'update']);
     Route::post('/usuarios', [UserController::class, 'store']);
     Route::post('/user/delete', [UserController::class, 'destroy'])->name('users.destroy');
+
+    //PRODUCTOS
+    Route::get('productos',[ProductoController::class,'index'])->name('productos.index');
+    Route::get('/productos/nuevo', [ProductoController::class, 'create'])->name('productos.create');
+    Route::post('/productos', [ProductoController::class, 'store']);
+    Route::get('/productos/{producto}/editar', [ProductoController::class, 'edit'])->name('productos.edit');
+    Route::put('/productos/{producto}', [ProductoController::class, 'update']);
+
 });
 Route::group(['middleware'=>['auth','admin']],function (){});

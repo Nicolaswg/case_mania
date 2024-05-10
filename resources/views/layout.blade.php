@@ -21,6 +21,15 @@
         <div class="list-group list-group-flush text-center">
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('home')}}"><i class="bi bi-house-door-fill"></i> Inicio</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('users.index')}}"><i class="bi bi-people-fill"></i> Usuarios</a>
+            <button class="btn btn-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i>
+                Productos <i class="bi bi-caret-down-fill"></i>
+            </button>
+            <div class="collapse" id="home-collapse">
+                <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
+                    <li><a href="#" class="link-dark rounded">Categorias</a></li>
+                    <li><a href="{{route('productos.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Productos</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <!-- Page content wrapper-->

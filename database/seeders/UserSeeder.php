@@ -36,6 +36,7 @@ class UserSeeder extends Seeder
             'profesion' => 'Ingeniero',
             'sucursal_id'=>$sucursal->id,
         ]);
+
         foreach (range(1,10) as $i) {
             $user = UserFactory::new()->create([
                 'active' => (bool)rand(0, 3),
