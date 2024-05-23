@@ -30,6 +30,15 @@
                     <li><a href="{{route('productos.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Productos</a></li>
                 </ul>
             </div>
+            <button class="btn btn-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#compras" aria-expanded="true"><i class="bi bi-cart-fill"></i>
+                Compras <i class="bi bi-caret-down-fill"></i>
+            </button>
+            <div class="collapse" id="compras">
+                <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
+                    <li><a href="#" class="link-dark rounded">Proveedores</a></li>
+                    <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Compras</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <!-- Page content wrapper-->

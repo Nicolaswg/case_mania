@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -41,5 +42,16 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('/productos/{producto}/editar', [ProductoController::class, 'edit'])->name('productos.edit');
     Route::put('/productos/{producto}', [ProductoController::class, 'update']);
 
+    //COMPRAS
+    Route::get('compras',[CompraController::class,'index'])->name('compras.index');
+    Route::get('/compras/nueva', [CompraController::class, 'create'])->name('compras.create');
+    Route::post('/selecproducto', [CompraController::class, 'selecproducto']);
+    Route::post('compras',[CompraController::class,'store'])->name('compras.store');
+    Route::get('compras/{compra}/mostrar',[CompraController::class,'show'])->name('compras.show');
+    Route::get('compras/{compra}/pdf',[CompraController::class,'showpdf'])->name('compras.showpdf');
+    Route::get('compras/{compra}/editar',[CompraController::class,'edit'])->name('compras.edit');
+    Route::post('cargarproducto',[CompraController::class,'selecdata']);
+    Route::post('compra/update',[CompraController::class,'update']);
+    Route::post('/compra/delete',[CompraController::class,'delete'])->middleware('password.confirm')->name('compras.delete');
 });
 Route::group(['middleware'=>['auth','admin']],function (){});

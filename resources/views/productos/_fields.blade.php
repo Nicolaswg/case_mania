@@ -33,7 +33,7 @@
 <div class="row">
     <div class="col-md-4">
         <label for="">Imagen</label>
-        <input type="file" name="photo" class="form-input-file" accept="image/*" >
+        <input style="background-color: #0dcaf0 " type="file" name="photo" class="form-input-file" accept="image/*" >
         @if($producto->photo)
             <div class="container mt-2" style="display: flex; justify-content: center">
                 <p><strong>Imagen Actual</strong></p>
