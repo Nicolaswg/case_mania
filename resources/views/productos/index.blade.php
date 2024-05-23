@@ -40,6 +40,7 @@
                     <th scope="col">Descripcion</th>
                     <th scope="col">Categoria </th>
                     <th scope="col">Cantidad Disponible </th>
+                    <th scope="col">Datos Comerciales </th>
                     <th scope="col" class="text-right th-actions">Acciones</th>
                 </tr>
                 </thead>

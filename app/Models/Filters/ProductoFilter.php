@@ -17,6 +17,7 @@ class ProductoFilter extends QueryFilter
             'search' => 'filled',
             'categoria'=>'filled',
             'order'=>['regex:/^(nombre)(-desc)?$/'],
+            'state'=>['in:activo,inactivo']
         ];
     }
     public function search($query,$search)
@@ -26,6 +27,11 @@ class ProductoFilter extends QueryFilter
                 ->orwhere('descripcion', 'like', "%{$search}%");
 
         });
+
+    }
+    public function state( $query,$state){
+
+        return $query->where('status', $state);
 
     }
     public function categoria($query,$categoria){

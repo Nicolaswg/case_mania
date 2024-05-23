@@ -24,7 +24,7 @@ class CreateProductosTable extends Migration
             $table->string('descripcion')->nullable();
             $table->string('status')->nullable();
             $table->float('precio_compra')->nullable();
-            $table->integer('porcentaje_ganancia')->nullable()->default(30);
+            $table->integer('porcentaje_ganancia')->nullable();
             $table->float('precio_venta')->nullable();
             $table->timestamps();
         });

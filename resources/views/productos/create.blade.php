@@ -27,6 +27,9 @@
             data: {
                 empleado:'',
                 cargo:'',
+                precio_venta:'',
+                porcentaje_ganancia:30,
+                precio_compra:'',
             },
             methods:{
                 config(){
@@ -72,6 +75,9 @@
                             })
                         }
                     })
+                },
+                setprecio(){
+                    this.precio_venta=(parseFloat(this.precio_compra)*parseFloat(this.porcentaje_ganancia)/100)+parseFloat(this.precio_compra)
                 }
             },
             computed:{
