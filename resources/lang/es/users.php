@@ -10,8 +10,11 @@ return [
 
     'filters' => [
             'roles' => ['all'=>'Todos', 'admin' => 'Administradores', 'vendedor' => 'Vendedores', 'servicio'=>'Servicio Tecnico' ],
-            'states' => ['all' => 'Todos', 'activo' => 'Activos', 'inactivo' => 'Inactivos'],
+            'states' => ['all' => 'Todos', 'active' => 'Activos', 'inactive' => 'Inactivos'],
             ],
     'rol' => ['admin' => 'Administrador', 'vendedor' => 'Vendedor', 'servicio'=>'Servicio Tecnico'],
+    'users'=>[
+        'states' => ['active' => 'Activos', 'inactive' => 'Inactivos'],
+    ]
 
 ];

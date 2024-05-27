@@ -42,7 +42,7 @@ class CompraController extends Controller
             'compra' => $compra,
             'vista'=>$vista,
             'categorias'=>Categoria::query()->orderBy('nombre')->get(),
-            'proveedores'=>Proveedor::query()->orderBy('nombre')->get(),
+            'proveedores'=>Proveedor::query()->where('status','active')->orderBy('nombre')->get(),
         ]);
     }
     public function selecproducto(Request $request){

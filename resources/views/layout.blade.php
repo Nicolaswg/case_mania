@@ -35,7 +35,7 @@
             </button>
             <div class="collapse" id="compras">
                 <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
-                    <li><a href="#" class="link-dark rounded">Proveedores</a></li>
+                    <li><a href="{{route('proveedores.index')}}" class="link-dark rounded"><i class="bi bi-person-badge-fill"></i> Proveedores</a></li>
                     <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Compras</a></li>
                 </ul>
             </div>

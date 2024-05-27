@@ -17,7 +17,8 @@ class ProveedorFactory extends Factory
             'nombre'=>$this->faker->company,
             'rif'=>$this->faker->creditCardNumber,
             'status'=>$this->faker->randomElement(['active','inactive']),
-            'num_cel'=>$this->faker->phoneNumber
+            'num_cel'=>$this->faker->phoneNumber,
+            'tipo'=>$this->faker->randomElement(['v','j']),
         ];
     }
 }

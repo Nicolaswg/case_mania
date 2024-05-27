@@ -17,6 +17,7 @@ class CreateProveedorsTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('rif');
+            $table->string('tipo');
             $table->string('status');
             $table->string('num_cel');
             $table->timestamps();

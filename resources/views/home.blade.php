@@ -1,5 +1,8 @@
 @extends('layout')
 @section('title', "Inicio")
+@section('breadcrumb')
+    <li class="breadcrumb-item active" aria-current="page">Inicio</li>
+@endsection
 @section('content')
 <div class="container">
     <div class="row justify-content-center mt-2">

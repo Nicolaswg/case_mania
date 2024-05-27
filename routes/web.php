@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -53,5 +54,18 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('cargarproducto',[CompraController::class,'selecdata']);
     Route::post('compra/update',[CompraController::class,'update']);
     Route::post('/compra/delete',[CompraController::class,'delete'])->middleware('password.confirm')->name('compras.delete');
+
+    //PROVEEDORES
+    Route::get('/proveedores', [ProveedorController::class, 'index'])
+        ->name('proveedores.index');
+    Route::get('/proveedores/nuevo', [ProveedorController::class, 'create'])->name('proveedores.create');
+    Route::get('/proveedores/{proveedor}/editar', [ProveedorController::class, 'edit'])->name('proveedores.edit');
+    Route::get('/proveedores/{proveedor}', [ProveedorController::class, 'show'])
+        ->where('proveedor', '[0-9]+')
+        ->name('proveedores.show');
+    Route::post('proveedores',[ProveedorController::class,'store'])->name('proveedores.store');
+    Route::put('/proveedores/{proveedor}', [ProveedorController::class, 'update']);
+    Route::post('/proveedor/delete',[ProveedorController::class,'delete'])->name('proveedor.delete');
+
 });
 Route::group(['middleware'=>['auth','admin']],function (){});
