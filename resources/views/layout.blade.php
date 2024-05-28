@@ -53,9 +53,9 @@
                         @yield('breadcrumb')
                     </ol>
                 </nav>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div class="collapse navbar-collapse" id="helper">
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
-                        <li class="nav-item active"><a class="nav-link" href="#!">Config Tasa Bcv</a></li>
+                        <li class="nav-item active nav-link">Tasa BCV: <span class="fw-bold">@{{ tasa_dolar.price }}</span> Bs/Dolar</li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{auth()->user()->name}}</a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -94,6 +94,39 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.29/dist/sweetalert2.all.min.js"></script>
 <!-- Core theme JS-->
 <script src="{{asset('js/scripts.js')}}"></script>
+<script>
+    const helper=new Vue({
+        el:'#helper',
+        data: {
+            tasa_dolar:{
+                price:0,
+                date:'',
+            },
+        },
+        mounted() {
+            this.setpreciodolar()
+        },
+        methods:{
+            setpreciodolar(){
+                $.ajax({
+                    url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                    method:'GET',
+                    dataType:'json',
+                    success:function (data){
+                        if(data){
+                            helper.tasa_dolar.price=data.monitors.usd.price
+                            helper.tasa_dolar.date=data.datetime.date
+                        }
+                    },
+                    error:function (jqXHR){
+                        console.log(jqXHR.responseJSON)
+                    }
+                })
+            }
+        },
+    })
+
+</script>
 @yield('script')
 </body>
 </html>
