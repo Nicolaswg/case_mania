@@ -7,26 +7,26 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class CompraFilter extends QueryFilter
+class VentaFilter extends QueryFilter
 {
     use HasFactory;
 
     public function rules()
     {
-        return[
-            'search' => 'filled',
-            'proveedor'=>'filled',
+        return [
+            'search'=>'filled',
             'sucursal'=>'filled',
-            'order'=>['regex:/^(fecha_compra)(-desc)?$/'],
+            'order'=>['regex:/^(fecha_venta)(-desc)?$/'],
         ];
 
     }
     public function search($query,$search)
     {
-        return $query->where(function ($query) use ($search){
-            $query->wherehas('detalle_compra',function ($q) use ($search){
-                $q->where('productos_nombres','like', "%{$search}%");
-            });
+        return $query->wherehas('cliente',function ($q) use ($search){
+            $q->where('nombre','like', "%{$search}%")
+            ->orWhere('num_documento','like', "%{$search}%");
+        })->orwherehas('detalle_venta',function ($q) use ($search){
+            $q->where('productos_nombres','like', "%{$search}%");
         });
 
     }
@@ -34,15 +34,6 @@ class CompraFilter extends QueryFilter
         return $query->whereHas('sucursal',function ($q) use ($value){
             $q->where('id',$value);
         });
-    }
-    public function proveedor($query,$proveedor)
-    {
-        return $query->where(function ($query) use ($proveedor){
-            $query->whereHas('proveedor',function ($q) use ($proveedor){
-                $q->where('id',$proveedor);
-            });
-        });
-
     }
     public function order($query,$value){
 

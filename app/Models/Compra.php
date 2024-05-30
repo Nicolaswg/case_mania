@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Compra extends Model
 {
     use HasFactory;
-    protected $fillable=['proveedor_id','fecha_compra','subtotal','iva','total'];
+    protected $fillable=['proveedor_id','fecha_compra','subtotal','iva','total','tasa_bcv','sucursal_id'];
     public function detalle_compra()
     {
         return $this->hasOne(DetalleCompra::class);
@@ -17,6 +17,11 @@ class Compra extends Model
     {
         return $this->belongsTo(Proveedor::class);
     }
+    public function sucursal()
+    {
+        return $this->belongsTo(Sucursal::class);
+    }
+
 
     public function ScopeFilterBy($query,QueryFilter $filters,array $data)
     {

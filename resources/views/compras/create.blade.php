@@ -28,6 +28,10 @@
         const app=new Vue({
             el:'#app',
             data: {
+                tasa_dolar:{
+                    price:0,
+                    date:'',
+                },
             categoria_id:'',
                 productos:{
                     nombres:[],
@@ -48,6 +52,7 @@
                     total_factura:0,
                 },
                 index_producto:'',
+                sucursal:<?php echo auth()->user()->profile->sucursal->id?>,
                 cantidad:'',
                 datos:false,
                 cont:0,
@@ -57,13 +62,33 @@
                 disabledprecio:false,
                 error:false,
             },
+            mounted() {
+                this.setpreciodolar()
+            },
             methods:{
+                setpreciodolar() {
+                    $.ajax({
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        method:'GET',
+                        dataType:'json',
+                        success:function (data){
+                            if(data){
+                                app.tasa_dolar.price=data.monitors.usd.price
+                                app.tasa_dolar.date=data.datetime.date
+                            }
+                        },
+                        error:function (jqXHR){
+                            console.log(jqXHR.responseJSON)
+                        }
+                    })
+                },
                 selecproductos(){
                     $.ajax({
                         url:'/selecproducto',
                         method:'POST',
                         data:{
                             'categoria_id':app.categoria_id,
+                            'sucursal_id':app.sucursal,
                             "_token": "{{ csrf_token() }}"
                         },
                         dataType:'json',
@@ -120,6 +145,7 @@
                     this.lista_compras.precio_unitario.splice(indice,1)
                     this.lista_compras.subtotal.splice(indice,1)
                     this.lista_compras.categoria.splice(indice,1)
+                    this.lista_compras.photos.splice(indice,1)
                     this.calculofactura()
                     this.cont=this.cont-1
                     if (this.lista_compras.nombres.length === 0) {
@@ -194,6 +220,8 @@
                             'total_factura':app.lista_compras.total_factura,
                             'proveedor_id':app.proveedor,
                             'photos_productos':app.lista_compras.photos,
+                            'tasa':app.tasa_dolar.price,
+                            'sucursal_id':app.sucursal,
                             "_token": "{{ csrf_token() }}"
                         },
                         dataType:'json',

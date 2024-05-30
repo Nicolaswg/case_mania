@@ -1,12 +1,22 @@
 @csrf
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-3">
         <label for="sucursal_id">Categoria</label>
         <select name="categoria_id" id="categoria_id" class="form-control text-center @if( $errors->get('categoria_id')) field-error @endif">
             <option value="">--SELECCIONA--</option>
             @foreach($categorias as $categoria)
                 <option value="{{ $categoria->id }}"{{ old('categoria_id',$producto->categoria_id)==$categoria->id ? ' selected' : '' }}>
                     {{ ucwords($categoria->nombre) }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-3">
+        <label for="sucursal">Sucursal</label>
+        <select name="sucursal_id"  id="sucursal_id" class="form-control text-center" >
+            @foreach($sucursales as $sucursal)
+                <option value="{{ $sucursal->id }}"{{ old('sucursal_id'.$producto->sucursal_id) == $sucursal->id ? 'selected' : ''}} >
+                    {{ ucwords($sucursal->nombre)}}
                 </option>
             @endforeach
         </select>

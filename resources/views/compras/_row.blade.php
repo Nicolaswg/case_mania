@@ -1,7 +1,8 @@
 <tr class="" align="center">
     <td>{{$i + 1}}</td>
     <td>
-      {{\Carbon\Carbon::parse($compra->fecha_compra)->format('d-m-Y')}}
+      {{\Carbon\Carbon::parse($compra->fecha_compra)->format('d-m-Y')}} <br>
+       <span>Sucursal: <strong>{{ucwords($compra->sucursal->nombre)}}</strong></span>
     </td>
     <td>
         {{ucfirst($compra->proveedor->nombre)}}

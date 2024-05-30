@@ -19,13 +19,15 @@ class DatabaseSeeder extends Seeder
             'user_profiles',
             'sucursals',
             'categorias',
-            'proveedors'
+            'proveedors',
+            'clientes'
         ]);
         $this->call([
             SucursalSeeder::class,
             UserSeeder::class,
             CategoriaSeeder::class,
             ProveedorSeeder::class,
+            ClienteSeeder::class,
         ]);
 
     }

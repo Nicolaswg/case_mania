@@ -52,6 +52,7 @@
                     total_factura:0,
                 },
                 index_producto:'',
+                sucursal:<?php echo $compra->sucursal->id?>,
                 cantidad:'',
                 datos:false,
                 cont:0,
@@ -73,6 +74,7 @@
                         method:'POST',
                         data:{
                             'categoria_id':app.categoria_id,
+                            'sucursal_id':app.sucursal,
                             "_token": "{{ csrf_token() }}"
                         },
                         dataType:'json',
@@ -251,6 +253,7 @@
                                     'total_factura':app.lista_compras.total_factura,
                                     'proveedor_id':app.proveedor,
                                     'photos_productos':app.lista_compras.photos,
+                                    'sucursal_id':app.sucursal,
                                     'compra_id':app.compra_id,
                                     "_token": "{{ csrf_token() }}"
                                 },

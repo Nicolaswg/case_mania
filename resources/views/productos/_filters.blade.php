@@ -21,9 +21,10 @@
     </div>
     <div class="row row-filters">
         <div class="col-md-6">
+            <div class="form-check-inline">
             <div class="form-inline form-search">
                 <div class="btn-group ">
-                    <select name="categoria" id="categoria" class="select-field">
+                    <select name="categoria" id="categoria" class="select-field text-center">
                         <option value="">--Buscar por Categoria--</option>
                         @foreach($categorias as $categoria)
                             <option value="{{ $categoria->id }}"{{ request('categoria') == $categoria->id ? ' selected' : '' }}>{{ ucwords($categoria->nombre) }}</option>
@@ -31,6 +32,18 @@
                     </select>
                 </div>
             </div>
+            <div class="form-inline form-search ml-3">
+                <div class="btn-group ">
+                    <select name="sucursal" id="sucursal" class="select-field text-center">
+                        <option value="">--Buscar por Sucursal--</option>
+                        @foreach($sucursales as $sucursal)
+                            <option value="{{ $sucursal->id }}"{{ request('sucursal') == $sucursal->id ? ' selected' : '' }}>{{ ucwords($sucursal->nombre) }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            </div>
         </div>
+
     </div>
 </form>

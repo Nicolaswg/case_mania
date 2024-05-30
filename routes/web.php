@@ -4,6 +4,7 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,11 +43,12 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('/productos', [ProductoController::class, 'store']);
     Route::get('/productos/{producto}/editar', [ProductoController::class, 'edit'])->name('productos.edit');
     Route::put('/productos/{producto}', [ProductoController::class, 'update']);
-
+//RUTA PARA SELECIONAR PRODUCOTS TANTO EN VENTS COMO EN COMPRAS
+    Route::post('/selecproducto', [ProductoController::class, 'selecproducto']);
+    Route::post('/verificarmaxproducto', [ProductoController::class, 'selecmaxproducto']);
     //COMPRAS
     Route::get('compras',[CompraController::class,'index'])->name('compras.index');
     Route::get('/compras/nueva', [CompraController::class, 'create'])->name('compras.create');
-    Route::post('/selecproducto', [CompraController::class, 'selecproducto']);
     Route::post('compras',[CompraController::class,'store'])->name('compras.store');
     Route::get('compras/{compra}/mostrar',[CompraController::class,'show'])->name('compras.show');
     Route::get('compras/{compra}/pdf',[CompraController::class,'showpdf'])->name('compras.showpdf');
@@ -66,6 +68,16 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('proveedores',[ProveedorController::class,'store'])->name('proveedores.store');
     Route::put('/proveedores/{proveedor}', [ProveedorController::class, 'update']);
     Route::post('/proveedor/delete',[ProveedorController::class,'delete'])->name('proveedor.delete');
+    //VENTAS
+    Route::get('ventas',[VentaController::class,'index'])->name('ventas.index');
+    Route::get('/ventas/nueva', [VentaController::class, 'create'])->name('ventas.create');
+    Route::post('ventas',[VentaController::class,'store'])->name('ventas.store');
+    Route::post('/venta/delete',[VentaController::class,'delete'])->name('ventas.delete');
+    Route::get('ventas/{venta}/mostrar',[VentaController::class,'show'])->name('ventas.show');
+    Route::get('ventas/{venta}/pdf',[VentaController::class,'showpdf'])->name('ventas.showpdf');
+    Route::get('ventas/{venta}/editar',[VentaController::class,'edit'])->name('ventas.edit');
+    Route::post('cargarventa',[VentaController::class,'selecdata']);
+    Route::post('venta/update',[VentaController::class,'update']);
 
 });
 Route::group(['middleware'=>['auth','admin']],function (){});

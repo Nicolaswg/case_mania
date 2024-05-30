@@ -39,6 +39,15 @@
                     <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Compras</a></li>
                 </ul>
             </div>
+            <button class="btn btn-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#ventas" aria-expanded="true"><i class="bi bi-graph-up-arrow"></i>
+                Ventas <i class="bi bi-caret-down-fill"></i>
+            </button>
+            <div class="collapse" id="ventas">
+                <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
+                    <li><a href="{{route('proveedores.index')}}" class="link-dark rounded"><i class="bi bi-person-badge-fill"></i> Clientes</a></li>
+                    <li><a href="{{route('ventas.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Ventas</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <!-- Page content wrapper-->
@@ -55,6 +64,7 @@
                 </nav>
                 <div class="collapse navbar-collapse" id="helper">
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+
                         <li class="nav-item active nav-link">Tasa BCV: <span class="fw-bold">@{{ tasa_dolar.price }}</span> Bs/Dolar</li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{auth()->user()->name}}</a>
@@ -122,6 +132,7 @@
                         console.log(jqXHR.responseJSON)
                     }
                 })
+
             }
         },
     })

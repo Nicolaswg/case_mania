@@ -29,6 +29,7 @@ class CreateProductoRequest extends FormRequest
             'cantidad'=>'required',
             'descripcion'=>'required',
             'photo'=>['required','mimes:png,jpg,jpeg'],
+            'sucursal_id'=>'required'
 
         ];
     }

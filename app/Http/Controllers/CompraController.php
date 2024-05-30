@@ -9,6 +9,7 @@ use App\Models\filters\CompraFilter;
 use App\Models\Producto;
 use App\Models\Proveedor;
 use App\Models\Sortable;
+use App\Models\Sucursal;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,15 +21,21 @@ class CompraController extends Controller
     {
         $compras = Compra::query()
             ->with( 'proveedor')
-            ->filterBy($filters,$request->only(['search','proveedor','order']))
+            ->filterBy($filters,$request->only(['search','proveedor','order','sucursal']))
             ->orderByDesc('created_at')
             ->paginate(5);
 
         $compras->appends($filters->valid());//para concatenar a la paginacion en busqueda
         $sortable->appends($filters->valid());
 
+        $sucursales=Sucursal::query()
+            ->unless(auth()->user()->isAdmin(),function ($q){
+                $q->where('id',auth()->user()->profile->sucursal->id);
+            })->orderBy('nombre')->get();
+
         return view('compras.index', [
             'compras' => $compras,
+            'sucursales'=>$sucursales,
             'sortable'=>$sortable,
             'proveedores'=>Proveedor::query()->whereHas('compras')->orderBy('nombre')->get()
         ]);
@@ -38,32 +45,17 @@ class CompraController extends Controller
     }
     private function form(string $view, Compra $compra,$vista)
     {
+        $sucursales=Sucursal::query()
+            ->unless(auth()->user()->isAdmin(),function ($q){
+                $q->where('id',auth()->user()->profile->sucursal->id);
+            })->orderBy('nombre')->get();
         return view($view, [
             'compra' => $compra,
             'vista'=>$vista,
+            'sucursales'=>$sucursales,
             'categorias'=>Categoria::query()->orderBy('nombre')->get(),
             'proveedores'=>Proveedor::query()->where('status','active')->orderBy('nombre')->get(),
         ]);
-    }
-    public function selecproducto(Request $request){
-        $categoria_id=$request->categoria_id;
-        $productos= Producto::query()->whereHas('categoria',function ($q) use ($categoria_id){
-           $q->where('id',$categoria_id);
-        })->orderBy('nombre')->get();
-        $nombres=[];
-        $ids=[];
-        $photos=[];
-        foreach ($productos as $producto){
-            $nombres[]=$producto->nombre;
-            $ids[]=$producto->id;
-            $photos[]=$producto->photo;
-        }
-        return[
-            'nombres'=>$nombres,
-            'ids'=>$ids,
-            'photos'=>$photos,
-            'nombre_categoria'=>ucwords($productos->first()->categoria->nombre)
-        ];
     }
     public function edit(Compra $compra){
         return $this->formedit('compras.edit',$compra,'editar');
@@ -109,6 +101,7 @@ class CompraController extends Controller
             'fecha_compra' => Carbon::now()->setTimezone('America/Caracas'),
             'subtotal' => $request->subtotal_factura,
             'iva' => $request->iva_factura,
+            'sucursal_id'=>$request->sucursal_id,
             'total' => $request->total_factura,
         ]);
         $compra->save();
@@ -141,6 +134,8 @@ class CompraController extends Controller
                 'proveedor_id' => (int) $request->proveedor_id,
                 'fecha_compra' => Carbon::now()->setTimezone('America/Caracas'),
                 'subtotal' => $request->subtotal_factura,
+                'tasa_bcv'=>$request->tasa,
+                'sucursal_id'=>$request->sucursal_id,
                 'iva' => $request->iva_factura,
                 'total' => $request->total_factura,
             ]);
@@ -195,9 +190,14 @@ class CompraController extends Controller
         $subtotal=explode(',',$compra->detalle_compra->subtotal);
         $photos=explode(',',$compra->detalle_compra->photos);
         $categoria=explode(',',$compra->detalle_compra->categorias_productos);
+        $sucursales=Sucursal::query()
+            ->unless(auth()->user()->isAdmin(),function ($q){
+                $q->where('id',auth()->user()->profile->sucursal->id);
+            })->orderBy('nombre')->get();
         return view($view, [
             'compra' => $compra,
             'vista'=>$vista,
+            'sucursales'=>$sucursales,
             'categorias'=>Categoria::query()->orderBy('nombre')->get(),
             'proveedores'=>Proveedor::query()->orderBy('nombre')->get(),
             'ids'=>json_encode($ids),

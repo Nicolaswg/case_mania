@@ -16,6 +16,7 @@ class ProductoFilter extends QueryFilter
         return [
             'search' => 'filled',
             'categoria'=>'filled',
+            'sucursal'=>'filled',
             'order'=>['regex:/^(nombre)(-desc)?$/'],
             'state'=>['in:activo,inactivo']
         ];
@@ -28,6 +29,11 @@ class ProductoFilter extends QueryFilter
 
         });
 
+    }
+    public function sucursal($query,$value){
+        $query->whereHas('sucursal',function ($q) use ($value){
+           $q->where('id',$value) ;
+        });
     }
     public function state( $query,$state){
 

@@ -17,7 +17,8 @@
     </td>
 
     <td align="center">
-        {{$producto->cantidad}}
+        {{$producto->cantidad}} <br>
+        <span class="note">Sucursal: <strong> {{ucwords($producto->sucursal->nombre)}}</strong>  </span>
     </td>
     <td>
         @if(auth()->user()->isAdmin())

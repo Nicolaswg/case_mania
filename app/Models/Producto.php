@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     use HasFactory;
-    protected $fillable=['cantidad','nombre','photo','descripcion','categoria_id','status','precio_compra','porcentaje_ganancia','precio_venta'];
+    protected $fillable=['cantidad','nombre','photo','descripcion','categoria_id','status','precio_compra','porcentaje_ganancia','precio_venta','sucursal_id'];
 
     public function categoria()
     {
         return $this->belongsTo(Categoria::class);
+    }
+    public function sucursal()
+    {
+        return $this->belongsTo(Sucursal::class);
     }
     public function ScopeFilterBy($query,QueryFilter $filters,array $data)
     {
