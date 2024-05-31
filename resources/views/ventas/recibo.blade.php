@@ -145,6 +145,17 @@
                         {{number_format(((float)$venta->total_dolar* (float)$venta->tasa_bcv),2,',','.')}} Bs
                     </th>
                 </tr>
+                <tr class="text-center" style="border-style: double">
+                    <th colspan="4">
+                        COSTO DELIVERY
+                    </th>
+                    <th>
+                        {{number_format($venta->delivery->costo_delivery,2,',','.')}} $
+                    </th>
+                    <th>
+                        {{number_format(((float)$venta->delivery->costo_delivery* (float)$venta->tasa_bcv),2,',','.')}} Bs
+                    </th>
+                </tr>
                 </tbody>
             </table>
         </div>

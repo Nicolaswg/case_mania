@@ -29,6 +29,10 @@ class Venta extends Model
     {
         return $this->hasOne(DetalleVenta::class);
     }
+    public function delivery()
+    {
+        return $this->hasOne(Delivery::class)->withDefault();
+    }
     public function ScopeFilterBy($query,QueryFilter $filters,array $data)
     {
         return $filters->applyTo($query,$data);

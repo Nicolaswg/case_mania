@@ -84,7 +84,36 @@
         </tbody>
     </table>
     <div class="row">
-        <div class="col-md-6"></div>
+        <div class="col-md-6 mt-3">
+            <label class="mt-1"> <strong>Delivery</strong></label>
+            <div class="form-check" >
+                <input class="form-check-input" type="checkbox" :value="delivery" v-model="delivery" @click="configdelivery()" name="delivery" id="delivery">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Agregar Delivery
+                </label>
+            </div>
+            <div v-if="delivery" class=" card">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="direccion">Direccion</label>
+                        <input type="text" class="form-control" name="direccion" v-model="direccion_delivery">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="direccion">Referencia</label>
+                        <input type="text" class="form-control" name="referencia" v-model="referencia_delivery">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4">
+                        <label for="costo_delivery">Costo Delivery ($)</label>
+                        <input type="number" class="form-control text-center" min="1"  name="costo_delivery" @keyup="setcostodelivery()" v-model="costo_delivery" >
+                    </div>
+                    <div class="col-md-4"></div>
+                </div>
+            </div>
+
+        </div>
         <div class="col-md-6">
             <table class=" table table-striped table-hover table-responsive-md" align="right">
                 <thead>
@@ -104,10 +133,15 @@
                     <td colspan="2"> @{{ lista_venta.iva }} $</td>
                     <td class="text-center">@{{ bs.iva }} </td>
                 </tr>
-                <tr align="right">
+                <tr align="right" class="" style=" border: double #051b11;" >
                     <th colspan="3">TOTAL FACTURA </th>
                     <th colspan="2"> @{{ lista_venta.total_factura }} $</th>
                     <td class="text-center  fw-bold ">@{{  bs.total_factura }} </td>
+                </tr>
+                <tr align="right" v-if="delivery && checkdelivery()"style=" border: double #051b11;" >
+                    <th colspan="3">COSTO DELIVERY</th>
+                    <th colspan="2"> @{{ costo_delivery }} $</th>
+                    <td class="text-center  fw-bold ">@{{  costo_delivery_bs }} </td>
                 </tr>
                 </tbody>
 

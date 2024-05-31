@@ -73,6 +73,15 @@ class VentaController extends Controller
                 'photos' => implode(',', $request->photos_productos),
                 'subtotal' => implode(',', $request->subtotal_productos),
             ]);
+            if($request->delivery == 'true'){
+                $venta->delivery->create([
+                    'venta_id'=>$venta->id,
+                    'direccion'=>$request->direccion_delivery,
+                    'referencia'=>$request->referencia_delivery,
+                    'costo_delivery'=>(float)$request->costo_delivery,
+                    'status'=>'pendiente',
+                ]);
+            }
         });
         foreach ($request->ids_productos as $i=>$id){
             $producto=Producto::query()->where('id',$id)->first();
@@ -162,6 +171,21 @@ class VentaController extends Controller
         $photos=explode(',',$venta->detalle_venta->photos);
         $categoria=explode(',',$venta->detalle_venta->categorias_productos);
 
+        if($venta->delivery != null){
+            $delivery=true;
+            $costo_delivery=$venta->delivery->costo_delivery;
+            $direccion_delivery=$venta->delivery->direccion;
+            $referencia_delivery=$venta->delivery->referencia;
+            $costo_delivery_bs=number_format((float)$venta->delivery->costo_delivery*(float) $venta->tasa_bcv,2,',','.');
+        }else{
+            $delivery=false;
+            $referencia_delivery='';
+            $costo_delivery='';
+            $direccion_delivery='';
+            $costo_delivery_bs='';
+        }
+
+
         return[
             'venta_id'=>$venta,
             'ids'=>($ids),
@@ -174,7 +198,13 @@ class VentaController extends Controller
             'subtotal_factura'=>$venta->subtotal_dolar,
             'iva'=>$venta->iva_dolar,
             'total_factura'=>$venta->total_dolar,
-            'cliente_id'=>$venta->cliente->id
+            'cliente_id'=>$venta->cliente->id,
+            //DELIVERY
+            'delivery'=>$delivery,
+            'referencia_delivery'=>$referencia_delivery,
+            'direccion_delivery'=>$direccion_delivery,
+            'costo_delivery'=>$costo_delivery,
+            'costo_delivery_bs'=>$costo_delivery_bs,
         ];
     }
     public function update(Request $request){
@@ -198,6 +228,14 @@ class VentaController extends Controller
             'tasa_bcv'=>$request->tasa_bcv,
         ]);
         $venta->save();
+        if($request->delivery == 'true'){
+            $venta->delivery->update([
+                'direccion'=>$request->direccion_delivery,
+                'referencia'=>$request->referencia_delivery,
+                'costo_delivery'=>(float)$request->costo_delivery,
+                'status'=>'pendiente',
+            ]);
+        }
         $venta->detalle_venta->update([
             'venta_id' => $venta->id,
             'productos_nombres' => implode(',', $request->nombre_productos),

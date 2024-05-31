@@ -12,7 +12,7 @@
     <form method="POST" action="{{ url('ventas') }}" id="app" >
         @include('ventas._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="button" :disabled="!datos"  class="btn btn-primary" @click="savedata()"><i class="bi bi-save-fill"></i> Guardar Venta</button>
+            <button type="button" :disabled="!datos || !checkdelivery()"  class="btn btn-primary" @click="savedata()"><i class="bi bi-save-fill"></i> Guardar Venta</button>
             <a href="{{ route('ventas.index') }}" class="btn btn-link">Regresar</a>
         </div>
     </form>
@@ -32,7 +32,12 @@
                     price:0,
                     date:'',
                 },
-            categoria_id:'',
+                delivery:false,
+                costo_delivery:'',
+                costo_delivery_bs:'',
+                direccion_delivery:'',
+                referencia_delivery: '',
+                categoria_id:'',
                 productos:{
                     nombres:[],
                     ids:[],
@@ -75,6 +80,31 @@
                 this.setpreciodolar()
             },
             methods:{
+                checkdelivery(){
+                    if(this.delivery){
+                        if(this.direccion_delivery === '' || this.referencia_delivery === '' || this.costo_delivery === '' ){
+                            return false
+                        }else{
+                            return true
+                        }
+                    }else{
+                        return true
+                    }
+                },
+                configdelivery(){
+                    if(this.delivery){
+                        this.delivery=false
+                        this.costo_delivery=''
+                        this.direccion_delivery=''
+                        this.referencia_delivery=''
+                    }else{
+                        this.delivery=true
+                    }
+                    this.delivery = this.delivery !== true;
+                },
+                setcostodelivery(){
+                    this.costo_delivery_bs= new Intl.NumberFormat('de-DE',{ style: 'currency', currency: 'BsF'}).format(parseFloat(this.costo_delivery)*parseFloat(this.tasa_dolar.price))
+                },
                 setpreciodolar() {
                     $.ajax({
                         url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
@@ -249,7 +279,7 @@
                 },
                 savedata(){
                     $.ajax({
-                        url:'/venta/update',
+                        url:'/ventas',
                         method:'POST',
                         data:{
                             'nombre_productos':app.lista_venta.nombres,
@@ -265,6 +295,12 @@
                             'photos_productos':app.lista_venta.photos,
                             'tasa':app.tasa_dolar.price,
                             'sucursal_id':app.sucursal,
+                            //DELIVERY
+                            'delivery':app.delivery,
+                            'direccion_delivery':app.direccion_delivery,
+                            'referencia_delivery':app.referencia_delivery,
+                            'costo_delivery':app.costo_delivery,
+                            //TOKEN
                             "_token": "{{ csrf_token() }}"
                         },
                         dataType:'json',

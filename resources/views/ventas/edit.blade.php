@@ -60,6 +60,11 @@
                 sucursal:<?php echo auth()->user()->profile->sucursal->id?>,
                 index_producto:'', //ID_PRODUCTO
                 venta_id:<?php echo $venta->id?>,
+                delivery:'',
+                costo_delivery:'',
+                direccion_delivery:'',
+                referencia_delivery:'',
+                costo_delivery_bs:'',
                 cantidad:'',
                 datos:false,
                 cont:0,
@@ -74,9 +79,41 @@
             },
             mounted() {
                 this.setpreciodolar()
-                this.cargardatosventa()
             },
             methods:{
+                checkdelivery(){
+                    if(this.delivery){
+                        if(this.direccion_delivery === '' || this.referencia_delivery === '' || this.costo_delivery === '' ){
+                            return false
+                        }else{
+                            return true
+                        }
+                    }else{
+                        return true
+                    }
+                },
+                configdelivery(){
+                    if(this.delivery){
+                        this.delivery=false
+                        this.costo_delivery=''
+                        this.direccion_delivery=''
+                        this.referencia_delivery=''
+                        this.ini=false
+                    }else{
+                        this.delivery=true
+                        this.ini=false
+                    }
+                    this.delivery = this.delivery !== true;
+                },
+                setcostodelivery(){
+                    this.ini=false
+                    if(this.delivery){
+                        this.costo_delivery_bs= new Intl.NumberFormat('de-DE',{ style: 'currency', currency: 'BsF'}).format(parseFloat(this.costo_delivery)*parseFloat(this.tasa_dolar.price))
+                    }else{
+                        this.costo_delivery_bs=''
+                    }
+
+                },
                 cargardatosventa(){
                     $.ajax({
                         url:'/cargarventa',
@@ -102,6 +139,12 @@
                                 app.cliente=data.cliente_id
                                 app.cont=app.lista_venta.nombres.length
                                 app.calculofactura()
+                                //DELIVERY
+                                app.delivery=data.delivery
+                                app.referencia_delivery=data.referencia_delivery
+                                app.direccion_delivery=data.direccion_delivery
+                                app.costo_delivery=data.costo_delivery
+                                app.costo_delivery_bs=data.costo_delivery_bs
                                 app.datos=true
 
                             }
@@ -120,6 +163,7 @@
                             if(data){
                                 app.tasa_dolar.price=data.monitors.usd.price
                                 app.tasa_dolar.date=data.datetime.date
+                                app.cargardatosventa()
                             }
                         },
                         error:function (jqXHR){
@@ -259,7 +303,6 @@
                     this.lista_venta.subtotal_factura=acum.toFixed(2)
                     this.lista_venta.iva=(acum*0.19).toFixed(2)
                     this.lista_venta.total_factura=(parseFloat(this.lista_venta.subtotal_factura) +  parseFloat(this.lista_venta.iva)).toFixed(2)
-                    //AUXILIARES BS
                     this.bs.subtotal= new Intl.NumberFormat('de-DE',{ style: 'currency', currency: 'BsF'}).format(parseFloat(this.lista_venta.subtotal)*parseFloat(this.tasa_dolar.price))
                     this.bs.iva= new Intl.NumberFormat('de-DE',{ style: 'currency',currency: 'BsF'}).format((parseFloat(this.lista_venta.iva )* parseFloat(this.tasa_dolar.price)))
                     this.bs.total_factura=  new Intl.NumberFormat('de-DE',{ style: 'currency',currency: 'BsF' }).format((parseFloat(this.lista_venta.total_factura) * parseFloat(this.tasa_dolar.price)))
@@ -315,6 +358,11 @@
                                     'sucursal_id':app.sucursal,
                                     'venta_id':app.venta_id,
                                     'tasa_bcv':app.tasa_dolar.price,
+                                    //DELIVERY
+                                    'delivery':app.delivery,
+                                    'direccion_delivery':app.direccion_delivery,
+                                    'referencia_delivery':app.referencia_delivery,
+                                    'costo_delivery':app.costo_delivery,
                                     "_token": "{{ csrf_token() }}"
                                 },
                                 dataType:'json',
