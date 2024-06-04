@@ -7,25 +7,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class ProveedorFilter extends QueryFilter
+class ClienteFilter extends QueryFilter
 {
     use HasFactory;
 
     public function rules()
     {
-        return [
-            'search' => 'filled',
-            'status' => 'in:active,inactive',
-            'order'=>['regex:/^(nombre)(-desc)?$/'],
-        ];
-    }
-    public function search($query,$search)
-    {
-        return $query->where(function ($query) use ($search){
-            $query->where('nombre', 'like', "%{$search}%")
-                ->orwhere('rif', 'like', "%{$search}%");
-        });
-
+       return [
+           'search' => 'filled',
+           'status' => 'in:active,inactive',
+           'order'=>['regex:/^(nombre)(-desc)?$/'],
+       ];
     }
     public function state( $query,$state){
 
@@ -39,13 +31,19 @@ class ProveedorFilter extends QueryFilter
         }else{
             $query->orderBy($this->getColumnName($value));
         }
-
-
     }
-
     private function getColumnName($value): string
     {
 
         return $this->aliases[$value] ?? $value;
     }
+    public function search($query,$search)
+    {
+        return $query->where(function ($query) use ($search){
+            $query->where('nombre', 'like', "%{$search}%")
+                ->orwhere('num_documento', 'like', "%{$search}%");
+        });
+
+    }
+
 }

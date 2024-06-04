@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
@@ -78,6 +79,16 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('ventas/{venta}/editar',[VentaController::class,'edit'])->name('ventas.edit');
     Route::post('cargarventa',[VentaController::class,'selecdata']);
     Route::post('venta/update',[VentaController::class,'update']);
+    //CLIENTES
+    Route::get('/clientes', [ClienteController::class, 'index'])
+        ->name('clientes.index');
+    Route::get('/clientes/nuevo', [ClienteController::class, 'create'])->name('clientes.create');
+    Route::get('/clientes/{cliente}/editar', [ClienteController::class, 'edit'])->name('clientes.edit');
+    Route::post('clientes',[ClienteController::class,'store'])->name('clientes.store');
+    Route::put('/clientes/{cliente}', [ClienteController::class, 'update']);
+    Route::post('/cliente/delete',[ClienteController::class,'delete'])->name('cliente.delete');
+
+
 
 });
 Route::group(['middleware'=>['auth','admin']],function (){});

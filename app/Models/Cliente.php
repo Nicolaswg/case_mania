@@ -9,4 +9,12 @@ class Cliente extends Model
 {
     use HasFactory;
     protected $fillable=['nombre','direccion','tipo_documento','num_documento','telefono','email','status'];
+    public function ScopeFilterBy($query,QueryFilter $filters,array $data)
+    {
+        return $filters->applyTo($query,$data);
+    }
+    public function ventas(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Venta::class);
+    }
 }
