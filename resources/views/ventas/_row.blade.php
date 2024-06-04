@@ -7,9 +7,6 @@
     <td>
         {{ucfirst($venta->cliente->nombre)}} <br>
         {{ucfirst($venta->cliente->tipo_documento)}}-{{$venta->cliente->num_documento}} <br>
-        @if($venta->delivery->status != null)
-            <span class="@if($venta->delivery->status == 'pendiente') text-danger @endif"><strong>Delivery: {{ucwords($venta->delivery->status)  }}</strong></span>
-        @endif
     </td>
     <td>
         <table class="table table-striped">
@@ -32,6 +29,13 @@
             @endforeach
             </tbody>
         </table>
+    </td>
+    <td>
+        @if($venta->delivery->status != null)
+            <span class="@if($venta->delivery->status == 'pendiente') text-danger @endif"><strong>{{ucwords($venta->delivery->status)  }}</strong></span>
+        @else
+            <span><strong>No Solicitado</strong></span>
+        @endif
     </td>
 
     <td class="text-center">

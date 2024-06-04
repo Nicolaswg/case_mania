@@ -79,13 +79,16 @@
             },
             mounted() {
                 this.setpreciodolar()
+                this.cargardatosventa()
             },
             methods:{
                 checkdelivery(){
                     if(this.delivery){
                         if(this.direccion_delivery === '' || this.referencia_delivery === '' || this.costo_delivery === '' ){
+                            this.ini=true
                             return false
                         }else{
+                            this.ini=false
                             return true
                         }
                     }else{
@@ -163,7 +166,6 @@
                             if(data){
                                 app.tasa_dolar.price=data.monitors.usd.price
                                 app.tasa_dolar.date=data.datetime.date
-                                app.cargardatosventa()
                             }
                         },
                         error:function (jqXHR){
@@ -368,6 +370,7 @@
                                 dataType:'json',
                                 success:function (data){
                                     if(data.status=== true){
+                                        console.log(data.delivery)
                                         Swal.fire({
                                             icon: "success",
                                             title: "Exito",

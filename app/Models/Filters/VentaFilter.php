@@ -16,8 +16,19 @@ class VentaFilter extends QueryFilter
         return [
             'search'=>'filled',
             'sucursal'=>'filled',
+            'delivery'=>'',
             'order'=>['regex:/^(fecha_venta)(-desc)?$/'],
         ];
+
+    }
+    public function delivery($query,$value){
+
+        return $query->where(function ($query) use ($value){
+            $query->whereHas('delivery',function ($query) use ($value){
+                $query->where('status',$value);
+            });
+        }) ;
+
 
     }
     public function search($query,$search)

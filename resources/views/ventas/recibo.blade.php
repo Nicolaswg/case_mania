@@ -75,7 +75,7 @@
         </thead>
         <tbody class="text-center" >
             @foreach($nombre as $i=>$producto)
-                <tr >
+                <tr class="text-center" >
                     <td>
                         <div style="display: flex; justify-content: center">
                             <img src="{{asset('storage/productos/'.$photos[$i])}}" class="img-thumbnail" width="25" height="25" alt="{{'Foto'.$photos[$i]}}">
@@ -84,7 +84,7 @@
                     <td  style="vertical-align: middle">
                         {{ucwords($producto)}}
                     </td>
-                    <td  style="vertical-align: middle">
+                    <td  style="vertical-align: middle;">
                        {{$cantidad[$i]}}
                     </td>
                     <td  style="vertical-align: middle">
@@ -145,6 +145,7 @@
                         {{number_format(((float)$venta->total_dolar* (float)$venta->tasa_bcv),2,',','.')}} Bs
                     </th>
                 </tr>
+                @if($venta->delivery->id != null)
                 <tr class="text-center" style="border-style: double">
                     <th colspan="4">
                         COSTO DELIVERY
@@ -156,6 +157,7 @@
                         {{number_format(((float)$venta->delivery->costo_delivery* (float)$venta->tasa_bcv),2,',','.')}} Bs
                     </th>
                 </tr>
+                @endif
                 </tbody>
             </table>
         </div>

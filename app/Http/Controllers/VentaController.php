@@ -21,7 +21,7 @@ class VentaController extends Controller
     {
         $ventas = Venta::query()
             ->with( 'cliente')
-            ->filterBy($filters,$request->only(['search','order','sucursal']))
+            ->filterBy($filters,$request->only(['search','order','sucursal','delivery']))
             ->orderByDesc('created_at')
             ->paginate(5);
 
@@ -171,7 +171,7 @@ class VentaController extends Controller
         $photos=explode(',',$venta->detalle_venta->photos);
         $categoria=explode(',',$venta->detalle_venta->categorias_productos);
 
-        if($venta->delivery != null){
+        if($venta->delivery->id != null){
             $delivery=true;
             $costo_delivery=$venta->delivery->costo_delivery;
             $direccion_delivery=$venta->delivery->direccion;
@@ -229,12 +229,23 @@ class VentaController extends Controller
         ]);
         $venta->save();
         if($request->delivery == 'true'){
-            $venta->delivery->update([
-                'direccion'=>$request->direccion_delivery,
-                'referencia'=>$request->referencia_delivery,
-                'costo_delivery'=>(float)$request->costo_delivery,
-                'status'=>'pendiente',
-            ]);
+            if($venta->delivery->id == null){
+                $venta->delivery->create([
+                    'direccion'=>$request->direccion_delivery,
+                    'referencia'=>$request->referencia_delivery,
+                    'costo_delivery'=>(float)$request->costo_delivery,
+                    'status'=>'pendiente',
+                    'venta_id'=>$venta->id,
+                ]);
+            }else{
+                $venta->delivery->update([
+                    'direccion'=>$request->direccion_delivery,
+                    'referencia'=>$request->referencia_delivery,
+                    'costo_delivery'=>(float)$request->costo_delivery,
+                    'status'=>'pendiente',
+                ]);
+            }
+
         }
         $venta->detalle_venta->update([
             'venta_id' => $venta->id,
@@ -253,7 +264,8 @@ class VentaController extends Controller
             ]);
         }
         return [
-            'status'=>true
+            'status'=>true,
+            'delivery'=>$request->delivery,
         ];
 
     }

@@ -1,5 +1,15 @@
 <form method="get" action="{{ url('ventas') }}">
     <div class="row row-filters">
+        <div class="col-md-8">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" value="pendiente" {{'pendiente' == request('delivery') ? 'checked' : ''}} id="" name="delivery">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Delivery Pendiente
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="row row-filters">
         <div class="col-md-10">
             <div class="form-inline form-search">
                 <input type="search" name="search" value="{{ request('search') }}" size="80" class="form-control form-control-sm" placeholder="Buscar...">

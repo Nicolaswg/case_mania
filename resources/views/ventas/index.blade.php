@@ -38,6 +38,7 @@
                     <th scope="col"><a href="{{$sortable->url('fecha_venta')}}" class="{{ $sortable->classes('fecha_venta') }}">Fecha de Venta <i class="icon-sort"></i></a></th>
                     <th scope="col">Cliente </th>
                     <th scope="col">Productos Vendidos</th>
+                    <th scope="col">Delivery</th>
                     <th scope="col" class="text-center th-actions">Acciones</th>
                 </tr>
                 </thead>
