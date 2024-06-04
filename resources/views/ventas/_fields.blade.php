@@ -2,14 +2,18 @@
 <div class="row">
     <div class="col-md-8">
         <h5>Cliente</h5>
-        <select name="cliente_id" :disabled="datos" v-model="cliente" id="cliente_id" class="form-control text-center" :class="{'field-error': cliente === ''  && error}">
-            <option value="">--SELECCIONA--</option>
-            @foreach($clientes as $cliente)
-                <option value="{{ $cliente->id }}"{{ old('cliente_id')}}>
-                    {{ ucwords($cliente->nombre)}} / {{$cliente->num_documento}}
-                </option>
-            @endforeach
-        </select>
+        <div class="input-group">
+            <select name="cliente_id" :disabled="datos" v-model="cliente" id="cliente_id" class="form-control text-center" :class="{'field-error': cliente === ''  && error}">
+                <option value="">--SELECCIONA--</option>
+                @foreach($clientes as $cliente)
+                    <option value="{{ $cliente->id }}"{{ old('cliente_id')}}>
+                        {{ ucwords($cliente->nombre)}} / {{$cliente->num_documento}}
+                    </option>
+                @endforeach
+            </select>
+            <a class="btn btn-outline-primary"  href="{{route('clientes.create')}}" target="_blank" type="button" id="button-addon2">Añadir</a>
+        </div>
+
     </div>
     <div class="col-md-4">
         <h5>Sucursal</h5>
