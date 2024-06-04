@@ -11,7 +11,7 @@
                     </option>
                 @endforeach
             </select>
-            <a class="btn btn-outline-primary"  href="{{route('clientes.create')}}" target="_blank" type="button" id="button-addon2">Añadir</a>
+            <a class="btn btn-outline-primary" href="{{route('clientes.create')}}" target="_blank" type="button" id="button-addon2">Añadir</a>
         </div>
 
     </div>

@@ -44,7 +44,7 @@
             </button>
             <div class="collapse" id="ventas">
                 <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
-                    <li><a href="{{route('clientes.index')}}" class="link-dark rounded"><i class="bi bi-person-badge-fill"></i> Clientes</a></li>
+                    <li><a href="{{route('clientes.index')}}" class="link-dark rounded"><i class="bi bi-person-plus-fill"></i> Clientes</a></li>
                     <li><a href="{{route('ventas.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Ventas</a></li>
                 </ul>
             </div>

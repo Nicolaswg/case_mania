@@ -13,5 +13,15 @@ class Categoria extends Model
     {
         return $this->hasMany(Producto::class);
     }
+    public function setStateAttribute($value){
+        $this->attributes['active'] = $value=='active';
+    }
+    public function getStateAttribute()
+    {
+        if($this->active !== null) {
+            return $this->active ? 'active' : 'inactive';
+        }
+
+    }
 
 }

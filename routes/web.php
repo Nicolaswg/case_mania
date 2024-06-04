@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\ProductoController;
@@ -88,6 +89,15 @@ Route::group(['middleware'=>'auth'],function (){
     Route::put('/clientes/{cliente}', [ClienteController::class, 'update']);
     Route::post('/cliente/delete',[ClienteController::class,'delete'])->name('cliente.delete');
 
+    //CATEGORIA DE PRODUCTOS
+
+    Route::get('/categorias', [CategoriaController::class, 'index'])
+        ->name('categorias.index');
+    Route::get('/categorias/nuevo', [CategoriaController::class, 'create'])->name('categorias.create');
+    Route::get('/categorias/{categoria}/editar', [CategoriaController::class, 'edit'])->name('categorias.edit');
+    Route::post('/categorias',[CategoriaController::class,'store'])->name('categorias.store');
+    Route::put('/categorias/{categoria}', [CategoriaController::class, 'update']);
+    Route::post('/categorias/delete',[CategoriaController::class,'delete'])->name('categorias.delete');
 
 
 });
