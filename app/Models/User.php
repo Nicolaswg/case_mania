@@ -31,8 +31,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class)->withDefault();
     }
+    public function delivery()
+    {
+        return $this->hasMany(Delivery::class);
+    }
     public function isAdmin(){
         return $this->role === 'admin';
+    }
+    public function isDelivery(){
+        return $this->role === 'delivery';
     }
     public function ScopeFilterBy($query,QueryFilter $filters,array $data)
     {

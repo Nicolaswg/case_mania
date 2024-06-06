@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\UserController;
@@ -99,6 +100,13 @@ Route::group(['middleware'=>'auth'],function (){
     Route::put('/categorias/{categoria}', [CategoriaController::class, 'update']);
     Route::post('/categorias/delete',[CategoriaController::class,'delete'])->name('categorias.delete');
 
+    //DELIVERYS
+    Route::get('/delivery', [DeliveryController::class, 'index'])
+        ->name('deliverys.index');
+    Route::get('/deliverys/{delivery}/editar', [DeliveryController::class, 'edit'])->name('delivery.edit');
+    Route::get('delivery/repartidor',[DeliveryController::class,'selecrepartidores']);
+    Route::post('/delivery/update/repartidor',[DeliveryController::class,'updaterepartidor']);
+    Route::post('/delivery/registrar',[DeliveryController::class,'update']);
 
 });
 Route::group(['middleware'=>['auth','admin']],function (){});

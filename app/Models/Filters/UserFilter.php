@@ -18,7 +18,7 @@ class UserFilter extends QueryFilter
         return [
             'search' => 'filled',
             'state' => 'in:active,inactive',
-            'role' => 'in:admin,vendedor,servicio',
+            'role' => 'in:admin,vendedor,servicio,delivery',
             'order'=>['regex:/^(name|email)(-desc)?$/'],
         ];
     }
