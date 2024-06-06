@@ -26,7 +26,7 @@ class CreateDeliveriesTable extends Migration
             $table->string('status');
             $table->float('costo_delivery');
             $table->string('detalles_entrega')->nullable();
-            $table->date('fecha_entrega')->nullable();
+            $table->string('fecha_entrega')->nullable();
             $table->timestamps();
         });
     }
