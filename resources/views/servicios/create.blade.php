@@ -12,7 +12,7 @@
     <form method="POST" action="{{ url('servicio') }}" id="app">
         @include('servicios._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="button" class="btn btn-primary" @click="savedata()"><i class="bi bi-person-plus-fill"></i> Guardar</button>
+            <button type="button" :disabled="!datos" class="btn btn-primary" @click="savedata()"><i class="bi bi-person-plus-fill"></i> Guardar</button>
             <a href="{{ route('servicios.index') }}" class="btn btn-link">Regresar al listado</a>
         </div>
     </form>

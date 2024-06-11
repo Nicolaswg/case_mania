@@ -12,7 +12,7 @@
     <form method="POST" action="{{ url('servicio') }}" id="app">
         @include('servicios._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="button" class="btn btn-primary" @click="editdata()"><i class="bi bi-person-plus-fill"></i> Guardar</button>
+            <button type="button" :disabled="!datos || ini" class="btn btn-primary" @click="editdata()"><i class="bi bi-person-plus-fill"></i> Guardar</button>
             <a href="{{ route('servicios.index') }}" class="btn btn-link">Regresar al listado</a>
         </div>
     </form>
@@ -33,6 +33,7 @@
                 },
                 serial:'',
                 cantidad:1,
+                ini:true,
                 producto:'',
                 cliente_id:<?php echo $servicio->cliente->id?>,
                 costo_unitario:<?php echo $servicio->costo_dolar?>,
@@ -75,11 +76,13 @@
                     })
                 },
                 setcostobs(){
+                    this.ini=false
                     this.costo_unitario_bs=(parseFloat(this.costo_unitario)*parseFloat(this.tasa_dolar.price)).toFixed(2)
                     this.total_dolar=(parseFloat(this.costo_unitario)*parseInt(this.cantidad)).toFixed(2)
                     this.total_bs=(parseFloat(this.total_dolar)*parseFloat(this.tasa_dolar.price)).toFixed(2)
                 },
                 agregarfila(){
+                    this.ini=false
                     let status=this.checkfields()
                     if(status){
                         this.datos=true
@@ -102,6 +105,7 @@
 
                 },
                 deletefila(indice){
+                    this.ini=false
                     this.lista_servicio.productos.splice(indice,1)
                     this.lista_servicio.cantidad.splice(indice,1)
                     this.lista_servicio.serial.splice(indice,1)
@@ -130,6 +134,7 @@
                     }
                 },
                 config(){
+                    this.ini=false
                     if(this.costo===true){
                         this.costo=false
                         this.resetfields()
