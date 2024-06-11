@@ -17,4 +17,9 @@ class Cliente extends Model
     {
         return $this->hasMany(Venta::class);
     }
+    public function servicio(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ServicioTecnico::class);
+    }
+
 }

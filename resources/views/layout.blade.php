@@ -22,6 +22,7 @@
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('home')}}"><i class="bi bi-house-door-fill"></i> Inicio</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('users.index')}}"><i class="bi bi-people-fill"></i> Usuarios</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('deliverys.index')}}"><i class="bi bi-car-front-fill"></i> Deliverys</a>
+            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('servicios.index')}}"><i class="bi bi-exclamation-square-fill"></i> Servicio Tecnico</a>
             <button class="btn btn-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i>
                 Productos <i class="bi bi-caret-down-fill"></i>
             </button>

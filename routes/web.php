@@ -6,6 +6,7 @@ use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DeliveryController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\ServicioTecnicoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\Route;
@@ -107,6 +108,21 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('delivery/repartidor',[DeliveryController::class,'selecrepartidores']);
     Route::post('/delivery/update/repartidor',[DeliveryController::class,'updaterepartidor']);
     Route::post('/delivery/registrar',[DeliveryController::class,'update']);
+
+    //SERVICIO TECNICO
+
+    Route::get('/servicio', [ServicioTecnicoController::class, 'index'])
+        ->name('servicios.index');
+    Route::get('/servicio/nuevo', [ServicioTecnicoController::class, 'create'])->name('servicios.create');
+    Route::get('/servicios/{servicioTecnico}/editar', [ServicioTecnicoController::class, 'edit'])->name('servicio.edit');
+    Route::post('/servicios', [ServicioTecnicoController::class, 'store']);
+    Route::get('servicios/{servicioTecnico}/pdf',[ServicioTecnicoController::class,'showpdf'])->name('servicio.showpdf');
+    Route::post('/servicios/recibo/update',[ServicioTecnicoController::class,'updaterecibo']);
+    Route::post('/servicio/changestatus',[ServicioTecnicoController::class,'updatestatus']);
+    Route::post('/servicios/update',[ServicioTecnicoController::class,'update']);
+    Route::post('/servicio/delete',[ServicioTecnicoController::class,'delete']);
+
+
 
 });
 Route::group(['middleware'=>['auth','admin']],function (){});
