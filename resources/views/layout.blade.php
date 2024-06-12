@@ -19,10 +19,16 @@
     <div class="border-end bg-white" id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-light"><img src="{{asset('images/logo.png')}}" width="150" class="img-thumbnail rounded" alt="CaseMania"></div>
         <div class="list-group list-group-flush text-center">
+
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('home')}}"><i class="bi bi-house-door-fill"></i> Inicio</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('users.index')}}"><i class="bi bi-people-fill"></i> Usuarios</a>
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('deliverys.index')}}"><i class="bi bi-car-front-fill"></i> Deliverys</a>
+          @admin
+                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('users.index')}}"><i class="bi bi-people-fill"></i> Usuarios</a>
+          @endadmin
+            @if(auth()->user()->isServicio() || auth()->user()->isAdmin() )
             <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('servicios.index')}}"><i class="bi bi-exclamation-square-fill"></i> Servicio Tecnico</a>
+            @endif
+            @vendedor
             <button class="btn btn-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i>
                 Productos <i class="bi bi-caret-down-fill"></i>
             </button>
@@ -41,6 +47,8 @@
                     <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Compras</a></li>
                 </ul>
             </div>
+            @endvendedor
+            @servicio
             <button class="btn btn-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#ventas" aria-expanded="true"><i class="bi bi-graph-up-arrow"></i>
                 Ventas <i class="bi bi-caret-down-fill"></i>
             </button>
@@ -50,6 +58,7 @@
                     <li><a href="{{route('ventas.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Ventas</a></li>
                 </ul>
             </div>
+            @endservicio
         </div>
     </div>
     <!-- Page content wrapper-->
@@ -121,12 +130,12 @@
         methods:{
             setpreciodolar(){
                 $.ajax({
-                    url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                    url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar',
                     method:'GET',
                     dataType:'json',
                     success:function (data){
                         if(data){
-                            helper.tasa_dolar.price=data.monitors.usd.price
+                            helper.tasa_dolar.price=data.monitors.bcv.price
                             helper.tasa_dolar.date=data.datetime.date
                         }
                     },

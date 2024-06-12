@@ -29,27 +29,10 @@ Route::get('/', function () {
 Auth::routes(['register'=>false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::group(['middleware'=>'auth'],function (){
-    Route::get('/usuarios', [UserController::class, 'index'])
-        ->name('users.index');
-    Route::get('/usuarios/nuevo', [UserController::class, 'create'])->name('users.create');
-    Route::get('/usuarios/{user}/editar', [UserController::class, 'edit'])->name('users.edit');
-    Route::get('/usuarios/{user}', [UserController::class, 'show'])
-        ->where('user', '[0-9]+')
-        ->name('users.show');
-    Route::put('/usuarios/{user}', [UserController::class, 'update']);
-    Route::post('/usuarios', [UserController::class, 'store']);
-    Route::post('/user/delete', [UserController::class, 'destroy'])->name('users.destroy');
+Route::group(['middleware'=>['auth','vendedor']],function (){
+    //ALAMACEN
+    //DEVOLUCIONES
 
-    //PRODUCTOS
-    Route::get('productos',[ProductoController::class,'index'])->name('productos.index');
-    Route::get('/productos/nuevo', [ProductoController::class, 'create'])->name('productos.create');
-    Route::post('/productos', [ProductoController::class, 'store']);
-    Route::get('/productos/{producto}/editar', [ProductoController::class, 'edit'])->name('productos.edit');
-    Route::put('/productos/{producto}', [ProductoController::class, 'update']);
-//RUTA PARA SELECIONAR PRODUCOTS TANTO EN VENTS COMO EN COMPRAS
-    Route::post('/selecproducto', [ProductoController::class, 'selecproducto']);
-    Route::post('/verificarmaxproducto', [ProductoController::class, 'selecmaxproducto']);
     //COMPRAS
     Route::get('compras',[CompraController::class,'index'])->name('compras.index');
     Route::get('/compras/nueva', [CompraController::class, 'create'])->name('compras.create');
@@ -72,6 +55,42 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('proveedores',[ProveedorController::class,'store'])->name('proveedores.store');
     Route::put('/proveedores/{proveedor}', [ProveedorController::class, 'update']);
     Route::post('/proveedor/delete',[ProveedorController::class,'delete'])->name('proveedor.delete');
+
+    //CATEGORIA DE PRODUCTOS
+
+    Route::get('/categorias', [CategoriaController::class, 'index'])
+        ->name('categorias.index');
+    Route::get('/categorias/nuevo', [CategoriaController::class, 'create'])->name('categorias.create');
+    Route::get('/categorias/{categoria}/editar', [CategoriaController::class, 'edit'])->name('categorias.edit');
+    Route::post('/categorias',[CategoriaController::class,'store'])->name('categorias.store');
+    Route::put('/categorias/{categoria}', [CategoriaController::class, 'update']);
+    Route::post('/categorias/delete',[CategoriaController::class,'delete'])->name('categorias.delete');
+
+    //PRODUCTOS
+    Route::get('productos',[ProductoController::class,'index'])->name('productos.index');
+    Route::get('/productos/nuevo', [ProductoController::class, 'create'])->name('productos.create');
+    Route::post('/productos', [ProductoController::class, 'store']);
+    Route::get('/productos/{producto}/editar', [ProductoController::class, 'edit'])->name('productos.edit');
+    Route::put('/productos/{producto}', [ProductoController::class, 'update']);
+//RUTA PARA SELECIONAR PRODUCOTS TANTO EN VENTS COMO EN COMPRAS
+    Route::post('/selecproducto', [ProductoController::class, 'selecproducto']);
+    Route::post('/verificarmaxproducto', [ProductoController::class, 'selecmaxproducto']);
+
+
+});
+Route::group(['middleware'=>['auth','servicio']],function (){
+
+    //SERVICIO TECNICO
+    Route::get('/servicio', [ServicioTecnicoController::class, 'index'])
+        ->name('servicios.index');
+    Route::get('/servicio/nuevo', [ServicioTecnicoController::class, 'create'])->name('servicios.create');
+    Route::get('/servicios/{servicioTecnico}/editar', [ServicioTecnicoController::class, 'edit'])->name('servicio.edit');
+    Route::post('/servicios', [ServicioTecnicoController::class, 'store']);
+    Route::get('servicios/{servicioTecnico}/pdf',[ServicioTecnicoController::class,'showpdf'])->name('servicio.showpdf');
+    Route::post('/servicios/recibo/update',[ServicioTecnicoController::class,'updaterecibo']);
+    Route::post('/servicio/changestatus',[ServicioTecnicoController::class,'updatestatus']);
+    Route::post('/servicios/update',[ServicioTecnicoController::class,'update']);
+    Route::post('/servicio/delete',[ServicioTecnicoController::class,'delete']);
     //VENTAS
     Route::get('ventas',[VentaController::class,'index'])->name('ventas.index');
     Route::get('/ventas/nueva', [VentaController::class, 'create'])->name('ventas.create');
@@ -90,17 +109,24 @@ Route::group(['middleware'=>'auth'],function (){
     Route::post('clientes',[ClienteController::class,'store'])->name('clientes.store');
     Route::put('/clientes/{cliente}', [ClienteController::class, 'update']);
     Route::post('/cliente/delete',[ClienteController::class,'delete'])->name('cliente.delete');
+});
 
-    //CATEGORIA DE PRODUCTOS
 
-    Route::get('/categorias', [CategoriaController::class, 'index'])
-        ->name('categorias.index');
-    Route::get('/categorias/nuevo', [CategoriaController::class, 'create'])->name('categorias.create');
-    Route::get('/categorias/{categoria}/editar', [CategoriaController::class, 'edit'])->name('categorias.edit');
-    Route::post('/categorias',[CategoriaController::class,'store'])->name('categorias.store');
-    Route::put('/categorias/{categoria}', [CategoriaController::class, 'update']);
-    Route::post('/categorias/delete',[CategoriaController::class,'delete'])->name('categorias.delete');
 
+Route::group(['middleware'=>['auth','admin']],function (){
+    Route::get('/usuarios', [UserController::class, 'index'])
+        ->name('users.index');
+    Route::get('/usuarios/nuevo', [UserController::class, 'create'])->name('users.create');
+    Route::get('/usuarios/{user}/editar', [UserController::class, 'edit'])->name('users.edit');
+    Route::get('/usuarios/{user}', [UserController::class, 'show'])
+        ->where('user', '[0-9]+')
+        ->name('users.show');
+    Route::put('/usuarios/{user}', [UserController::class, 'update']);
+    Route::post('/usuarios', [UserController::class, 'store']);
+    Route::post('/user/delete', [UserController::class, 'destroy'])->name('users.destroy');
+});
+
+Route::group(['middleware'=>['auth','delivery']],function (){
     //DELIVERYS
     Route::get('/delivery', [DeliveryController::class, 'index'])
         ->name('deliverys.index');
@@ -108,21 +134,10 @@ Route::group(['middleware'=>'auth'],function (){
     Route::get('delivery/repartidor',[DeliveryController::class,'selecrepartidores']);
     Route::post('/delivery/update/repartidor',[DeliveryController::class,'updaterepartidor']);
     Route::post('/delivery/registrar',[DeliveryController::class,'update']);
-
-    //SERVICIO TECNICO
-
-    Route::get('/servicio', [ServicioTecnicoController::class, 'index'])
-        ->name('servicios.index');
-    Route::get('/servicio/nuevo', [ServicioTecnicoController::class, 'create'])->name('servicios.create');
-    Route::get('/servicios/{servicioTecnico}/editar', [ServicioTecnicoController::class, 'edit'])->name('servicio.edit');
-    Route::post('/servicios', [ServicioTecnicoController::class, 'store']);
-    Route::get('servicios/{servicioTecnico}/pdf',[ServicioTecnicoController::class,'showpdf'])->name('servicio.showpdf');
-    Route::post('/servicios/recibo/update',[ServicioTecnicoController::class,'updaterecibo']);
-    Route::post('/servicio/changestatus',[ServicioTecnicoController::class,'updatestatus']);
-    Route::post('/servicios/update',[ServicioTecnicoController::class,'update']);
-    Route::post('/servicio/delete',[ServicioTecnicoController::class,'delete']);
-
-
-
 });
-Route::group(['middleware'=>['auth','admin']],function (){});
+
+
+
+
+
+

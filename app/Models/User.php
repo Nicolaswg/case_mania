@@ -41,6 +41,12 @@ class User extends Authenticatable
     public function isDelivery(){
         return $this->role === 'delivery';
     }
+    public function isVendedor(){
+        return $this->role === 'vendedor';
+    }
+    public function isServicio(){
+        return $this->role === 'servicio';
+    }
     public function ScopeFilterBy($query,QueryFilter $filters,array $data)
     {
         return $filters->applyTo($query,$data);

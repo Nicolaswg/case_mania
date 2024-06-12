@@ -30,6 +30,12 @@ class AppServiceProvider extends ServiceProvider
         Blade::if('admin',function (){
             return auth()->check() && auth()->user()->isAdmin();
         });
+        Blade::if('servicio',function (){
+            return auth()->check() && (auth()->user()->isServicio() || auth()->user()->isAdmin()) ;
+        });
+        Blade::if('vendedor',function (){
+            return auth()->check() &&( auth()->user()->isVendedor() ||  auth()->user()->isAdmin()) ;
+        });
         Paginator::useBootstrap();
         Carbon::setLocale(config('app.locale'));
     }
