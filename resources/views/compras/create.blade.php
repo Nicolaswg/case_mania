@@ -51,6 +51,11 @@
                     iva:0,
                     total_factura:0,
                 },
+                bs:{
+                    subtotal:0,
+                    iva:0,
+                    total_factura:0,
+                },
                 index_producto:'',
                 sucursal:<?php echo auth()->user()->profile->sucursal->id?>,
                 cantidad:'',
@@ -159,9 +164,13 @@
                             acum=acum+subtotal
                         }
                     );
-                    this.lista_compras.subtotal_factura=acum
-                    this.lista_compras.iva=acum*0.19
-                    this.lista_compras.total_factura=this.lista_compras.subtotal_factura +  this.lista_compras.iva
+                    this.lista_compras.subtotal_factura=acum.toFixed(2)
+                    this.lista_compras.iva=(acum*0.16).toFixed(2)
+                    this.lista_compras.total_factura=(parseFloat(this.lista_compras.subtotal_factura) +  parseFloat(this.lista_compras.iva)).toFixed(2)
+                    //AUXILIARES BS
+                    this.bs.subtotal= new Intl.NumberFormat('de-DE',{ style: 'currency', currency: 'BsF'}).format(parseFloat(this.lista_compras.subtotal)*parseFloat(this.tasa_dolar.price))
+                    this.bs.iva= new Intl.NumberFormat('de-DE',{ style: 'currency',currency: 'BsF'}).format((parseFloat(this.lista_compras.iva )* parseFloat(this.tasa_dolar.price)))
+                    this.bs.total_factura=  new Intl.NumberFormat('de-DE',{ style: 'currency',currency: 'BsF' }).format((parseFloat(this.lista_compras.total_factura) * parseFloat(this.tasa_dolar.price)))
                 },
                 resetfields() {
                     this.cantidad=''

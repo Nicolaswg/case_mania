@@ -103,30 +103,46 @@
     <div class="row">
         <div class="col-md-6"></div>
         <div class="col-md-6">
-            <table class=" table-sm " align="right" style="margin-right: auto">
+            <table class=" table-sm table-striped" align="right" style="margin-right: auto">
+                <thead class="table-dark">
+                <tr class="text-center">
+                    <th colspan="4" class="">Monto a Pagar</th>
+                    <th >Dolar</th>
+                    <th>Bs</th>
+                </tr>
+                </thead>
                 <tbody>
-                <tr>
+                <tr class="text-center">
                     <th colspan="4">
-                        SUBTOTAL FACTURA ($)
+                        SUBTOTAL FACTURA
                     </th>
                     <th>
-                        {{number_format($compra->subtotal,2,',','.')}}
+                        {{number_format($compra->subtotal,2,',','.')}} $
+                    </th>
+                    <th>
+                        {{number_format(((float)$compra->subtotal* (float)$compra->tasa_bcv),2,',','.')}} Bs
                     </th>
                 </tr>
-                <tr>
+                <tr class="text-center">
                     <th colspan="4">
-                        IVA ($)
+                        IVA (16%)
                     </th>
                     <th>
-                        {{number_format($compra->iva,2,',','.')}}
+                        {{number_format($compra->iva,2,',','.')}} $
+                    </th>
+                    <th>
+                        {{number_format(((float)$compra->iva* (float)$compra->tasa_bcv),2,',','.')}} Bs
                     </th>
                 </tr>
-                <tr>
+                <tr class="text-center" style="border-style: double">
                     <th colspan="4">
-                        TOTAL FACTURA ($)
+                        TOTAL FACTURA
                     </th>
                     <th>
-                        {{number_format($compra->total,2,',','.')}}
+                        {{number_format($compra->total,2,',','.')}} $
+                    </th>
+                    <th>
+                        {{number_format(((float)$compra->total* (float)$compra->tasa_bcv),2,',','.')}} Bs
                     </th>
                 </tr>
                 </tbody>

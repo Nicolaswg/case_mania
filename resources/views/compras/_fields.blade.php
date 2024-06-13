@@ -53,7 +53,6 @@
         <div class="input-group mb-3">
             <span class="input-group-text">$</span>
                 <input type="number" :readonly="disabledprecio" placeholder="PRECIO UNITARIO" name="precio_unitario" min="1" v-model="precio_unitario" class="form-control text-center"  :class="{'field-error': precio_unitario === ''  && error}">
-            <span class="input-group-text">.00</span>
         </div>
     </div>
 </div>
@@ -69,21 +68,27 @@
     <table class="table align-items-center mb-0" id="tabla_datos">
         <thead>
         <tr>
-            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">#</th>
-            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Producto</th>
-            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Cantidad</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" >#</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Codigo Producto</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Categoria Producto</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Nombre Producto</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2" >Cantidad</th>
             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio Unitario</th>
-            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Costo</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2" >Subtotal</th>
+            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >Total a Pagar</th>
             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
         </tr>
         </thead>
         <tbody>
             <tr v-for="(compras,index) in lista_compras.nombres ">
                 <td class="align-middle text-center text-sm">@{{ index +1 }}</td>
-                <td class="align-middle text-center text-sm">@{{ lista_compras.categoria[index] }} - @{{ compras }}</td>
+                <td class="align-middle text-center text-sm">00@{{ lista_compras.ids[index] }} </td>
+                <td class="align-middle text-center text-sm">@{{ lista_compras.categoria[index] }} </td>
+                <td class="align-middle text-center text-sm"> @{{ compras }}</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_compras.cantidad[index] }}</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_compras.precio_unitario[index] }} $</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_compras.subtotal[index] }} $</td>
+                <td class="align-middle text-center text-sm"> @{{ parseFloat(lista_compras.subtotal[index]) + parseFloat( lista_compras.subtotal[index] * 0.16)}} $</td>
                 <td align=middle>
                     <a class="btn btn-outline-danger btn-sm" type="button" @click.prevent="deletefila(index)"><i class="bi bi-trash3-fill"></i></a>
                 </td>
@@ -95,18 +100,30 @@
         <div class="col-md-6"></div>
         <div class="col-md-6">
             <table class=" table table-striped table-hover table-responsive-md" align="right">
+                <thead>
+                <tr align="right">
+                    <th colspan="5">Dolar ($)</th>
+                    <th colspan="4">Bolivares (Bs)</th>
+                </tr>
+                </thead>
+                <tbody>
                 <tr align="right" class="mt-2">
-                    <td colspan="4">SUBTOTAL A PAGAR</td>
+                    <td colspan="3">SUBTOTAL A PAGAR</td>
                     <td colspan="2"> @{{ lista_compras.subtotal_factura }} $ </td>
+                    <td class="text-center">@{{  bs.subtotal }} </td>
                 </tr>
                 <tr align="right">
-                    <td colspan="4">IVA (19%)</td>
+                    <td colspan="3">IVA (16%)</td>
                     <td colspan="2"> @{{ lista_compras.iva }} $</td>
+                    <td class="text-center">@{{ bs.iva }} </td>
                 </tr>
-                <tr align="right">
-                    <th colspan="4">TOTAL FACTURA </th>
+                <tr align="right" class="" style=" border: double #051b11;" >
+                    <th colspan="3">TOTAL FACTURA </th>
                     <th colspan="2"> @{{ lista_compras.total_factura }} $</th>
+                    <td class="text-center  fw-bold ">@{{  bs.total_factura }} </td>
                 </tr>
+                </tbody>
+
             </table>
         </div>
     </div>

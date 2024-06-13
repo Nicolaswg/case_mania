@@ -70,14 +70,16 @@ class CompraController extends Controller
         $subtotal=explode(',',$compra->detalle_compra->subtotal);
         $photos=explode(',',$compra->detalle_compra->photos);
         $categoria=explode(',',$compra->detalle_compra->categorias_productos);
+        $tasa=$compra->tasa_bcv;
 
         return[
             'compra_id'=>$compra,
             'ids'=>($ids),
             'cantidad'=>($cantidad),
+            'tasa'=>$tasa,
             'nombres'=>($nombres),
             'precio_unitario'=>($precio_unitario),
-            'subtotal'=>($subtotal),
+            'subtotal'=>$subtotal,
             'photos'=>($photos),
             'categorias_compra'=>($categoria),
             'subtotal_factura'=>$compra->subtotal,
@@ -194,9 +196,11 @@ class CompraController extends Controller
             ->unless(auth()->user()->isAdmin(),function ($q){
                 $q->where('id',auth()->user()->profile->sucursal->id);
             })->orderBy('nombre')->get();
+        $tasa=$compra->tasa_bcv;
         return view($view, [
             'compra' => $compra,
             'vista'=>$vista,
+            'tasa'=>$tasa,
             'sucursales'=>$sucursales,
             'categorias'=>Categoria::query()->orderBy('nombre')->get(),
             'proveedores'=>Proveedor::query()->orderBy('nombre')->get(),

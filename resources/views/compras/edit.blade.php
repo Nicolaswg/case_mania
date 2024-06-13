@@ -33,6 +33,10 @@
                     ids:[],
                     cantidad:[],
                 },
+                tasa_dolar:{
+                    price:0,
+                    date:'',
+                },
                 productos:{
                     nombres:[],
                     ids:[],
@@ -51,6 +55,12 @@
                     iva:0,
                     total_factura:0,
                 },
+                bs:{
+                    subtotal:'',
+                    iva:'',
+                    total_factura:'',
+                },
+                tasa:0,
                 index_producto:'',
                 sucursal:<?php echo $compra->sucursal->id?>,
                 cantidad:'',
@@ -66,8 +76,26 @@
             },
             mounted() {
                 this.cargardatoscompra()
+                this.setpreciodolar()
+                //this.calculofactura()
             },
             methods:{
+                setpreciodolar() {
+                    $.ajax({
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        method:'GET',
+                        dataType:'json',
+                        success:function (data){
+                            if(data){
+                                app.tasa_dolar.price=data.monitors.usd.price
+                                app.tasa_dolar.date=data.datetime.date
+                            }
+                        },
+                        error:function (jqXHR){
+                            console.log(jqXHR.responseJSON)
+                        }
+                    })
+                },
                 selecproductos(){
                     $.ajax({
                         url:'/selecproducto',
@@ -115,11 +143,16 @@
                                 app.lista_compras.subtotal_factura=data.subtotal_factura
                                 app.lista_compras.iva=data.iva
                                 app.lista_compras.total_factura=data.total_factura
+                                app.tasa=data.tasa
                                 app.proveedor=data.proveedor_id
                                 app.cont=app.lista_compras.nombres.length
                                 app.datos=true
+                                app.calculofactura()
+
+
 
                             }
+
                         },
                         error:function (jqXHR){
                             console.log(jqXHR.responseJSON)
@@ -144,9 +177,9 @@
                             this.lista_compras.precio_unitario[this.cont]=  this.precio_unitario
                             this.lista_compras.categoria[this.cont]=  this.productos.nombre_categoria
                             this.lista_compras.subtotal[this.cont]= parseInt( this.lista_compras.cantidad[this.cont]) * parseFloat( this.lista_compras.precio_unitario[this.cont])
-                            this.calculofactura()
                             this.cont=this.cont+1
                         }
+                        this.calculofactura()
                         this.resetfields()
                     }else{
                         Swal.fire({
@@ -176,15 +209,23 @@
 
                 },
                 calculofactura(){
+                    //console.log('entro aqui')
                     let acum=0
                     this.lista_compras.subtotal.forEach((subtotal, index)=>{
-                            acum=acum+parseFloat(subtotal)
+                            acum=parseFloat(acum)+parseFloat(subtotal)
                         }
                     );
-                    this.lista_compras.subtotal_factura=acum
-                    this.lista_compras.iva=acum*0.19
-                    this.lista_compras.total_factura=this.lista_compras.subtotal_factura +  this.lista_compras.iva
+                    this.lista_compras.subtotal_factura=parseFloat(acum).toFixed(2)
+                    this.lista_compras.iva=(parseFloat(acum)*0.16).toFixed(2)
+                    this.lista_compras.total_factura=(parseFloat(this.lista_compras.subtotal_factura) + parseFloat(this.lista_compras.iva)).toFixed(2)
+                    //BS
+                    if( this.lista_compras.subtotal_factura !== 0){
+                        this.bs.subtotal= new Intl.NumberFormat('de-DE',{ style: 'currency', currency: 'BsF'}).format(parseFloat(this.lista_compras.subtotal_factura)*parseFloat(this.tasa_dolar.price))
+                        this.bs.iva= new Intl.NumberFormat('de-DE',{ style: 'currency',currency: 'BsF'}).format((parseFloat(this.lista_compras.iva )* parseFloat(this.tasa_dolar.price)))
+                        this.bs.total_factura=  new Intl.NumberFormat('de-DE',{ style: 'currency',currency: 'BsF' }).format((parseFloat(this.lista_compras.total_factura) * parseFloat(this.tasa_dolar.price)))
+                    }
                 },
+
                 resetfields() {
                     this.cantidad=''
                     this.index_producto=''
@@ -215,8 +256,6 @@
                     );
                     this.calculofactura()
                     return band
-
-
                 },
                 checkfields() {
                     if(this.cantidad === '' || this.index_producto === '' || this.precio_unitario === '' || this.proveedor === ''){

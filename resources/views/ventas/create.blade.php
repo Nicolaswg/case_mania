@@ -250,7 +250,7 @@
                         }
                     );
                     this.lista_venta.subtotal_factura=acum.toFixed(2)
-                    this.lista_venta.iva=(acum*0.19).toFixed(2)
+                    this.lista_venta.iva=(acum*0.16).toFixed(2)
                     this.lista_venta.total_factura=(parseFloat(this.lista_venta.subtotal_factura) +  parseFloat(this.lista_venta.iva)).toFixed(2)
                     //AUXILIARES BS
                     this.bs.subtotal= new Intl.NumberFormat('de-DE',{ style: 'currency', currency: 'BsF'}).format(parseFloat(this.lista_venta.subtotal)*parseFloat(this.tasa_dolar.price))

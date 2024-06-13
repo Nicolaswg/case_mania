@@ -125,7 +125,7 @@
                 </tr>
                 <tr class="text-center">
                     <th colspan="4">
-                        IVA
+                        IVA (16%)
                     </th>
                     <th>
                         {{number_format($venta->iva_dolar,2,',','.')}} $
