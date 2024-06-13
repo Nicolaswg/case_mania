@@ -48,11 +48,12 @@ class ProductoController extends Controller
             $precio_venta=$producto->precio_venta == null ? 0 : $producto->precio_venta;
             $precio_compra=$producto->precio_compra == null ? 0 : $producto->precio_compra;
             $porcentaje_ganancia=$producto->porcentaje_ganancia == null ? 0 : $producto->porcentaje_ganancia;
-
+            $tasa=$producto->tasa_bcv == null ? 0 : $producto->tasa_bcv;
 
         return view($view, [
             'producto' => $producto,
             'vista'=>$vista,
+            'tasa'=>$tasa,
             'porcentaje_ganancia'=>$porcentaje_ganancia,
             'precio_venta'=>$precio_venta,
             'precio_compra'=>$precio_compra,
@@ -79,6 +80,7 @@ class ProductoController extends Controller
             'precio_venta'=>$request->input('precio_venta'),
             'sucursal_id'=>$request->sucursal_id,
             'photo'=>$nombreimg,
+            'tasa_bcv'=>(float)$request->tasa_bcv,
             'status'=>'Activo'
         ]);
 

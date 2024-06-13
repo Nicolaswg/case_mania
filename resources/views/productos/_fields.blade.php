@@ -46,20 +46,21 @@
     <div class="col-md-4 text-center">
         <label for="precio_compra"> <strong>Precio Compra ($)</strong></label>
         <input type="number" min="0" class="form-control text-center @if( $errors->get('precio_compra')) field-error @endif" name="precio_compra" id="precio_compra" @keyup="setprecio()" v-model="precio_compra"  value="{{ old('precio_compra',$producto->precio_compra) }}">
+        <input type="hidden" :value="tasa_dolar.price" name="tasa_bcv">
         <label for="precio_compra"> <strong>Precio Compra (Bs)</strong></label>
-        <input type="number" readonly min="0" class="form-control text-center" name="precio_compra" >
+        <input type="number" readonly :value="precio_bs" class="form-control text-center" >
     </div>
     <div class="col-md-4 text-center">
         <label for="porcentaje_ganancia"><strong>Porcentaje de Ganancia</strong></label>
         <input type="number" min="1" max="100" class="form-control text-center @if( $errors->get('porcentaje_ganancia')) field-error @endif" :readonly="precio_compra===''" v-model="porcentaje_ganancia" name="porcentaje_ganancia" id="porcentaje_ganancia" @keyup="setprecio()" placeholder="%"  value="{{ old('porcentaje_ganancia',$producto->porcentaje_ganancia) }}">
         <label for="precio_compra"> <strong>Ganancia en Bs</strong></label>
-        <input type="number" readonly min="0" class="form-control text-center" name="precio_compra" >
+        <input type="number" readonly :value="ganancia_bs" class="form-control text-center" >
     </div>
     <div class="col-md-4 text-center">
         <label for="precio_venta"><strong>Precio de Venta ($)</strong></label>
         <input type="number" class="form-control text-center @if( $errors->get('precio_venta')) field-error @endif" name="precio_venta" id="precio_venta" v-model="precio_venta" readonly value="{{ old('precio_venta',$producto->precio_venta) }}">
         <label for="precio_compra"> <strong>Precio Venta (Bs)</strong></label>
-        <input type="number" readonly min="0" class="form-control text-center" name="precio_compra" >
+        <input type="number" readonly :value="total_bs" class="form-control text-center"  >
     </div>
 </div>
     <hr>

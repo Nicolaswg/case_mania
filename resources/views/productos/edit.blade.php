@@ -36,8 +36,37 @@
                 precio_venta:<?php echo $precio_venta?>,
                 porcentaje_ganancia:<?php echo $porcentaje_ganancia?>,
                 precio_compra:<?php echo $precio_compra?>,
+                tasa:<?php echo $tasa?>,
+                tasa_dolar:{
+                    price:0,
+                    date:'',
+                },
+                precio_bs:'',
+                ganancia_bs:'',
+                total_bs:'',
+
+            },
+            mounted() {
+                this.setpreciodolar()
+                this.setprecio()
             },
             methods:{
+                setpreciodolar() {
+                    $.ajax({
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        method:'GET',
+                        dataType:'json',
+                        success:function (data){
+                            if(data){
+                                app.tasa_dolar.price=data.monitors.usd.price
+                                app.tasa_dolar.date=data.datetime.date
+                            }
+                        },
+                        error:function (jqXHR){
+                            console.log(jqXHR.responseJSON)
+                        }
+                    })
+                },
                 config(){
                     if(this.empleado===true){
                         this.empleado=false
@@ -84,6 +113,13 @@
                 },
                 setprecio(){
                     this.precio_venta=(parseFloat(this.precio_compra)*parseFloat(this.porcentaje_ganancia)/100)+parseFloat(this.precio_compra)
+                    if(this.tasa !== 0){
+                        this.precio_bs= (parseFloat(this.precio_compra) * parseFloat(this.tasa)).toFixed(2)
+                    }else{
+                        this.precio_bs= (parseFloat(this.precio_compra) * parseFloat(this.tasa_dolar.price)).toFixed(2)
+                    }
+                    this.ganancia_bs=(( parseInt(this.porcentaje_ganancia)*this.precio_bs)/100).toFixed(2)
+                    this.total_bs=parseFloat(this.precio_bs)+ parseFloat(this.ganancia_bs)
                 }
             },
             computed:{

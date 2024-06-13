@@ -30,8 +30,34 @@
                 precio_venta:'',
                 porcentaje_ganancia:30,
                 precio_compra:'',
+                precio_bs:'',
+                ganancia_bs:'',
+                total_bs:'',
+                tasa_dolar:{
+                    price:0,
+                    date:'',
+                },
+            },
+            mounted() {
+                this.setpreciodolar()
             },
             methods:{
+                setpreciodolar() {
+                    $.ajax({
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        method:'GET',
+                        dataType:'json',
+                        success:function (data){
+                            if(data){
+                                app.tasa_dolar.price=data.monitors.usd.price
+                                app.tasa_dolar.date=data.datetime.date
+                            }
+                        },
+                        error:function (jqXHR){
+                            console.log(jqXHR.responseJSON)
+                        }
+                    })
+                },
                 config(){
                     if(this.empleado===true){
                         this.empleado=false
@@ -78,6 +104,10 @@
                 },
                 setprecio(){
                     this.precio_venta=(parseFloat(this.precio_compra)*parseFloat(this.porcentaje_ganancia)/100)+parseFloat(this.precio_compra)
+                    //console.log(this.tasa_dolar.price)
+                    this.precio_bs= (parseFloat(this.precio_compra) * parseFloat(this.tasa_dolar.price)).toFixed(2)
+                    this.ganancia_bs=(( parseInt(this.porcentaje_ganancia)*this.precio_bs)/100).toFixed(2)
+                    this.total_bs=parseFloat(this.precio_bs)+ parseFloat(this.ganancia_bs)
                 }
             },
             computed:{

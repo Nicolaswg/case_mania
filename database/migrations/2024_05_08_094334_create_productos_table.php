@@ -29,6 +29,7 @@ class CreateProductosTable extends Migration
             $table->float('precio_compra')->nullable();
             $table->integer('porcentaje_ganancia')->nullable()->default(30);
             $table->float('precio_venta')->nullable();
+            $table->float('tasa_bcv')->nullable();
             $table->timestamps();
         });
     }
