@@ -12,7 +12,7 @@
         <table class="table table-striped">
             <thead >
                 <tr class="text-center">
-                    <th>Nombre</th>
+                    <th>Producto</th>
                     <th>Cantidad</th>
                     <th>Precio Unitario</th>
                     <th>Subtotal</th>
@@ -21,7 +21,7 @@
             <tbody>
             @foreach(explode(',',$venta->detalle_venta->productos_nombres) as $i=>$producto)
                 <tr class="text-center">
-                    <th>{{ucwords($producto)}}</th>
+                    <th>00{{explode(',',$venta->detalle_venta->productos_ids)[$i]}}-{{explode(',',$venta->detalle_venta->categorias_productos)[$i]}}-{{ucwords($producto)}}</th>
                     <td>{{explode(',',$venta->detalle_venta->cantidad)[$i]}}</td>
                     <td>{{explode(',',$venta->detalle_venta->costo_unitario)[$i] }} $</td>
                     <th>{{number_format((float)explode(',',$venta->detalle_venta->subtotal)[$i] ,2,',','.')}} $</th>

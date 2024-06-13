@@ -130,12 +130,12 @@
         methods:{
             setpreciodolar(){
                 $.ajax({
-                    url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar',
+                    url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
                     method:'GET',
                     dataType:'json',
                     success:function (data){
                         if(data){
-                            helper.tasa_dolar.price=data.monitors.bcv.price
+                            helper.tasa_dolar.price=data.monitors.usd.price
                             helper.tasa_dolar.date=data.datetime.date
                         }
                     },

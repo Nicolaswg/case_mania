@@ -48,7 +48,7 @@
         </select>
     </div>
     <div class="col-md-4">
-        <input type="number" placeholder="CANTIDAD" name="cantidad" :max="maximo_producto" v-model="cantidad" class="form-control text-center" @keyup="verifimax()" :class="{'field-error': cantidad === '' || errormax}">
+        <input type="number" placeholder="CANTIDAD" min="1" name="cantidad" :max="maximo_producto" v-model="cantidad" class="form-control text-center" @keyup="verifimax()" :class="{'field-error': cantidad === '' || errormax}">
         <p class="note text-danger" v-if="errormax">La maxima cantidad disponible para este producto es de @{{ maximo_producto }} unidades</p>
     </div>
 
@@ -65,21 +65,27 @@
     <table class="table align-items-center mb-0" id="tabla_datos">
         <thead>
         <tr>
-            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7">#</th>
-            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Producto</th>
-            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Cantidad</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" >#</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Codigo Producto</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Categoria Producto</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Nombre Producto</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2" >Cantidad</th>
             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Precio Unitario</th>
-            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Costo</th>
+            <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2" >Subtotal</th>
+            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7" >Total a Pagar</th>
             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Acciones</th>
         </tr>
         </thead>
         <tbody>
             <tr v-for="(venta,index) in lista_venta.nombres ">
                 <td class="align-middle text-center text-sm">@{{ index +1 }}</td>
-                <td class="align-middle text-center text-sm">@{{ lista_venta.categoria[index] }} - @{{ venta }}</td>
+                <td class="align-middle text-center text-sm">00@{{ lista_venta.ids[index] }} </td>
+                <td class="align-middle text-center text-sm">@{{ lista_venta.categoria[index] }}</td>
+                <td class="align-middle text-center text-sm">@{{ venta }}</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_venta.cantidad[index] }}</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_venta.precio_unitario[index] }} $</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_venta.subtotal[index] }} $</td>
+                <td class="align-middle text-center text-sm"> @{{ parseFloat(lista_venta.subtotal[index]) + parseFloat( lista_venta.subtotal[index] * 0.16)}} $</td>
                 <td align=middle>
                     <a class="btn btn-outline-danger btn-sm" type="button" @click.prevent="deletefila(index)"><i class="bi bi-trash3-fill"></i></a>
                 </td>
@@ -133,7 +139,7 @@
                     <td class="text-center">@{{  bs.subtotal }} </td>
                 </tr>
                 <tr align="right">
-                    <td colspan="3">IVA (19%)</td>
+                    <td colspan="3">IVA (16%)</td>
                     <td colspan="2"> @{{ lista_venta.iva }} $</td>
                     <td class="text-center">@{{ bs.iva }} </td>
                 </tr>
