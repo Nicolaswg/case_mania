@@ -28,12 +28,10 @@ class UserSeeder extends Seeder
 
         ]);
         $user->profile()->create([
-            'bio' => 'Creador del sistema',
             'ubicacion'=>'San Cristobal',
             'num_cel'=>'0424-7324441',
             'tipo_documento'=>'V',
             'num_documento'=>'23897456',
-            'profesion' => 'Ingeniero',
             'sucursal_id'=>$sucursal->id,
         ]);
 

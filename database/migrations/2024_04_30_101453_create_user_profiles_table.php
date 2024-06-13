@@ -15,12 +15,10 @@ class CreateUserProfilesTable extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('bio', 1000);
             $table->string('ubicacion');
             $table->string('num_cel');
             $table->string('tipo_documento');
             $table->string('num_documento')->unique();
-            $table->string('profesion');
             $table->foreignId('user_id')
                 ->references('id')
                 ->on('users')->onDelete('CASCADE');

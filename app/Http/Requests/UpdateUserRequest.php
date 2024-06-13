@@ -23,7 +23,6 @@ class UpdateUserRequest extends FormRequest
             'email' => ['required',Rule::unique('users','email')->ignore($this->user),'email:rfc'],
             'password' => 'required',
             'role' => ['required'],
-            'bio' => 'required',
             'ubicacion'=>['required'],
             'sucursal_id'=>'required',
             'num_cel'=>['required'],
@@ -58,9 +57,7 @@ class UpdateUserRequest extends FormRequest
         $user->save();
 
         $user->profile->update([
-            'bio' => $this->bio,
             'ubicacion'=>$this->ubicacion,
-            'profesion' => $this->profesion,
             'num_cel'=>$this->num_cel,
             'tipo_documento'=>$this->tipo_documento,
             'num_documento'=>$this->num_documento,

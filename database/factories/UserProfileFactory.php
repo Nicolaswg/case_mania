@@ -14,12 +14,10 @@ class UserProfileFactory extends Factory
     public function definition()
     {
         return [
-            'bio'=>$this->faker->sentence(10),
             'ubicacion'=>$this->faker->city,
             'num_cel'=>$this->faker->randomNumber(5),
             'tipo_documento'=>$this->faker->randomElement(['V','E','J']),
             'num_documento'=>$this->faker->randomNumber(8),
-            'profesion'=>$this->faker->randomElement(['Licenciado','Ingeniero','Abogado','Comerciante']),
             'sucursal_id'=>random_int(1,2)
         ];
     }
