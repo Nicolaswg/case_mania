@@ -21,6 +21,7 @@ class CreateProductosTable extends Migration
             $table->foreignId('sucursal_id')
                 ->references('id')->on('sucursals')->onUpdate('cascade');
             $table->integer('cantidad');
+            $table->integer('cantidad_devueltos')->nullable();
             $table->string('nombre');
             $table->string('photo',255)->nullable();
             $table->string('descripcion')->nullable();

@@ -15,6 +15,12 @@ class CreateDevolucionsTable extends Migration
     {
         Schema::create('devolucions', function (Blueprint $table) {
             $table->id();
+            $table->date('fecha_devolucion');
+            $table->string('user');
+            $table->string('motivo_devolucion');
+            $table->foreignId('venta_id')
+                ->references('id')
+                ->on('ventas')->onUpdate('CASCADE')->onDelete('CASCADE');
             $table->timestamps();
         });
     }

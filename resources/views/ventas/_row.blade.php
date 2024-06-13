@@ -37,10 +37,20 @@
             <span><strong>No Solicitado</strong></span>
         @endif
     </td>
+    <td  class=" @if($venta->status == 'devuelto') text-danger @else text-success @endif">
+        {{$venta->status == 'devuelto' ? 'Productos Devueltos': 'Activa'}}
+        @if($venta->status == 'devuelto')
+            <br>
+            Motivo: <strong>{{ucfirst($venta->devolucion->motivo_devolucion)}}</strong>
+        @endif
+    </td>
 
     <td class="text-center">
+        @if($venta->status == null)
         <a href="{{ route('ventas.showpdf', $venta) }}" target="_blank" class="btn btn-outline-secondary btn-sm"><i class="bi bi-file-earmark-break"></i></a>
         <a href="{{ route('ventas.edit', $venta) }}" class="btn btn-outline-secondary btn-sm"><i class="bi bi-pencil-fill"></i></a>
+        <a href="{{ route('devoluciones.create', $venta->id) }}" class="btn btn-outline-danger btn-sm"><i class="bi bi-box-arrow-up"></i></a>
+        @endif
         <button  type="button" class="btn btn-outline-danger btn-sm"  @click="deleteventa({{$venta->id}})"><i class="bi bi-trash3-fill"></i></button>
     </td>
 </tr>

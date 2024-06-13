@@ -4,6 +4,7 @@ use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraController;
 use App\Http\Controllers\DeliveryController;
+use App\Http\Controllers\DevolucionController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ServicioTecnicoController;
@@ -109,6 +110,11 @@ Route::group(['middleware'=>['auth','servicio']],function (){
     Route::post('clientes',[ClienteController::class,'store'])->name('clientes.store');
     Route::put('/clientes/{cliente}', [ClienteController::class, 'update']);
     Route::post('/cliente/delete',[ClienteController::class,'delete'])->name('cliente.delete');
+
+    //DEVOLUCIONES
+    Route::get('devoluciones/{venta}/create',[DevolucionController::class,'create'])->name('devoluciones.create');
+    Route::get('devoluciones/index',[DevolucionController::class,'index'])->name('devoluciones.index');
+    Route::post('devolucion',[DevolucionController::class,'store']);
 });
 
 

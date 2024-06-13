@@ -52,18 +52,32 @@ class HomeController extends Controller
 
         //DELIVERIS
         $deliveris=Delivery::query()->get();
-        foreach ($deliveris as $i=>$deliveri){
-            $pendientes=$deliveri->where('status','pendiente')->get();
-            $proceso=$deliveri->where('status','proceso')->get();
-            $entregadas=$deliveri->where('status','entregado')->get();
+        if(count($deliveris)!= 0){
+            foreach ($deliveris as $i=>$deliveri){
+                $pendientes=$deliveri->where('status','pendiente')->get();
+                $proceso=$deliveri->where('status','proceso')->get();
+                $entregadas=$deliveri->where('status','entregado')->get();
+            }
+        }else{
+            $pendientes=[];
+            $proceso=[];
+            $entregadas=[];
         }
-        //SERVICIO TECNICO
-        $servicios=ServicioTecnico::query()->get();
-        foreach ($servicios as $i=>$servicio) {
-            $pendie = $servicio->where('status', 'recibido')->get();
-            $entregados = $servicio->where('status', 'entregado')->get();
 
+        //SERVICIO TECNICO
+
+        $servicios=ServicioTecnico::query()->get();
+        if(count($servicios)!= 0) {
+            foreach ($servicios as $i => $servicio) {
+                $pendie = $servicio->where('status', 'recibido')->get();
+                $entregados = $servicio->where('status', 'entregado')->get();
+
+            }
+        }else{
+            $pendie=[];
+            $entregados=[];
         }
+
         //Productos
         $productos=Producto::query()->where('cantidad','<=',5)->get();
 

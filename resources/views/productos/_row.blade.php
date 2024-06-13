@@ -15,25 +15,14 @@
     <td>
         {{ucwords($producto->categoria->nombre)}}
     </td>
-
-    <td align="center">
-        {{$producto->cantidad}} <br>
-        <span class="note">Sucursal: <strong> {{ucwords($producto->sucursal->nombre)}}</strong>  </span>
+    <td>
+        <li class="list-group-item"> <strong>{{$producto->precio_compra}} $</strong></li>
     </td>
     <td>
-        @if(auth()->user()->isAdmin())
-            @if($producto->status != 'inactivo')
-        <ul class="list-unstyled list-group-item ">
-            <li>Precio de Compra: <strong>{{$producto->precio_compra}} $</strong></li>
-            <li>% de Ganancia: <strong> {{$producto->porcentaje_ganancia}} % ->({{$producto->precio_compra * ($producto->porcentaje_ganancia)/100}} $)</strong> </li>
-            <li class="text-success">Precio de Venta: <strong>{{$producto->precio_venta == null ? 'No disponible' : $producto->precio_venta . '$'}} </strong></li>
-        </ul>
-            @else
-                <p class="text-danger"> Debes Ajustar <br>Precio de Compra y Venta <br>para el Producto</p>
-            @endif
-        @else
-            <p class=" @if($producto->precio_venta == null) text-danger @else text-success @endif"><li>Precio de Venta: <strong>{{$producto->precio_venta == null ? 'No disponible' : $producto->precio_venta . '$'}} </strong></li></p>
-        @endif
+        <li class="list-group-item"> <strong> {{$producto->porcentaje_ganancia}} % ->({{$producto->precio_compra * ($producto->porcentaje_ganancia)/100}} $)</strong> </li>
+    </td>
+    <td>
+        <li class="text-success list-group-item"> <strong>{{$producto->precio_venta == null ? 'No disponible' : $producto->precio_venta . '$'}} </strong></li>
     </td>
     <td class="text-right">
         <a href="{{ route('productos.edit', $producto) }}" class="btn btn-outline-success btn-sm"><i class="bi bi-pencil-fill"></i></a>

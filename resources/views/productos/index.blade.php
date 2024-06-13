@@ -39,8 +39,9 @@
                     <th scope="col"><a href="{{$sortable->url('nombre')}}" class="{{ $sortable->classes('nombre') }}">Nombre <i class="icon-sort"></i></a></th>
                     <th scope="col">Descripcion</th>
                     <th scope="col">Categoria </th>
-                    <th scope="col">Cantidad Disponible </th>
-                    <th scope="col">Datos Comerciales </th>
+                    <th scope="col">Precio de Compra </th>
+                    <th scope="col">% Ganancia </th>
+                    <th scope="col">Precio de Venta </th>
                     <th scope="col" class="text-right th-actions">Acciones</th>
                 </tr>
                 </thead>

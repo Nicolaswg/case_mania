@@ -16,6 +16,7 @@ class Venta extends Model
         'subtotal_dolar',
         'iva_dolar',
         'total_dolar',
+        'status',
     ];
     public function cliente()
     {
@@ -28,6 +29,10 @@ class Venta extends Model
     public function detalle_venta()
     {
         return $this->hasOne(DetalleVenta::class);
+    }
+    public function devolucion()
+    {
+        return $this->hasOne(Devolucion::class);
     }
     public function delivery()
     {

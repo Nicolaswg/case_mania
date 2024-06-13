@@ -39,6 +39,7 @@
                     <th scope="col">Cliente </th>
                     <th scope="col">Productos Vendidos</th>
                     <th scope="col">Delivery</th>
+                    <th scope="col">Estatus</th>
                     <th scope="col" class="text-center th-actions">Acciones</th>
                 </tr>
                 </thead>

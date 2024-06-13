@@ -25,6 +25,7 @@ class CreateVentasTable extends Migration
             $table->float('subtotal_dolar');
             $table->float('iva_dolar');
             $table->float('total_dolar');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }
