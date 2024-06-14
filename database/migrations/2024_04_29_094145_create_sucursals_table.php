@@ -19,6 +19,7 @@ class CreateSucursalsTable extends Migration
             $table->string('nombre');
             $table->string('estado');
             $table->string('ciudad');
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

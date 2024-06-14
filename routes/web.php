@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlmacenController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\DevolucionController;
 use App\Http\Controllers\ProductoController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\ServicioTecnicoController;
+use App\Http\Controllers\SucursalController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VentaController;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +33,8 @@ Auth::routes(['register'=>false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware'=>['auth','vendedor']],function (){
-    //ALAMACEN
+    //ALMACEN
+    Route::get('almacen',[ProductoController::class,'index_almacen'])->name('almacen.index');
     //DEVOLUCIONES
 
     //COMPRAS
@@ -130,6 +133,16 @@ Route::group(['middleware'=>['auth','admin']],function (){
     Route::put('/usuarios/{user}', [UserController::class, 'update']);
     Route::post('/usuarios', [UserController::class, 'store']);
     Route::post('/user/delete', [UserController::class, 'destroy'])->name('users.destroy');
+
+    //Sucursales
+
+    Route::get('/sucursales', [SucursalController::class, 'index'])
+        ->name('sucursales.index');
+    Route::get('/sucursales/nuevo', [SucursalController::class, 'create'])->name('sucursales.create');
+    Route::get('/sucursales/{sucursal}/editar', [SucursalController::class, 'edit'])->name('sucursales.edit');
+    Route::post('/sucursales',[SucursalController::class,'store'])->name('sucursales.store');
+    Route::put('/sucursales/{sucursal}', [SucursalController::class, 'update']);
+    Route::post('/sucursales/delete',[SucursalController::class,'delete'])->name('sucursales.delete');
 });
 
 Route::group(['middleware'=>['auth','delivery']],function (){

@@ -43,7 +43,7 @@ class ProductoController extends Controller
     {
         $sucursales=Sucursal::query()->unless(auth()->user()->isAdmin(),function ($q){
         $q->where('id',auth()->user()->profile->sucursal->id);
-    })->orderBy('nombre')->get();
+    })->where('active',true)->orderBy('nombre')->get();
 
             $precio_venta=$producto->precio_venta == null ? 0 : $producto->precio_venta;
             $precio_compra=$producto->precio_compra == null ? 0 : $producto->precio_compra;
@@ -86,7 +86,6 @@ class ProductoController extends Controller
 
         return redirect()->route('productos.index')->with('success','Producto Guardado de Forma Exitosa');
     }
-
     public function edit(Producto $producto)
     {
         return $this->form('productos.edit', $producto,'editar');
@@ -117,7 +116,6 @@ class ProductoController extends Controller
 
         return redirect()->route('productos.index')->with('success','Producto Actualizado de manera Exitosa');
     }
-
     private function updadestateofproduct($productos)
     {
         foreach ($productos as $i=>$producto){
@@ -135,7 +133,6 @@ class ProductoController extends Controller
 
 
     }
-
     public function selecproducto(Request $request){
         $categoria_id=$request->categoria_id;
         $productos= Producto::query()
@@ -198,5 +195,59 @@ class ProductoController extends Controller
 
 
     }
+
+    //ALMACEN
+    public function index_almacen(Request $request,ProductoFilter $filters,Sortable $sortable)
+    {
+
+        $productos = Producto::query()
+            ->with( 'categoria')
+            ->filterBy($filters,$request->only(['search','order','categoria','state','sucursal']))
+            ->orderByDesc('created_at')
+            ->paginate(5);
+        $this->updadestateofproduct($productos);
+        $productos->appends($filters->valid());//para concatenar a la paginacion en busqueda
+        $sortable->appends($filters->valid());
+        $sucursales=Sucursal::query()
+        ->orderBy('nombre')->get();
+        return view('productos.index_almacen', [
+            'productos' => $productos,
+            'sucursales'=>$sucursales,
+            'sortable'=>$sortable,
+            'categorias'=>Categoria::query()->orderBy('nombre')->get()
+        ]);
+    }
+   /* public function traslados_almacen(Producto $producto){
+        $sucursales=Sucursal::query()
+            ->orderBy('nombre')->get();
+        $canti=[];
+        $nombre_sucur=[];
+        foreach ($sucursales as $i=>$sucursal){
+            $nombre_sucur[$i]=$sucursal->nombre;
+            $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
+            if($prod != null){
+                $canti[$i]=$prod->cantidad;
+            }else{
+                $canti[$i]=0;
+            }
+        }
+        return view('productos.traslados',[
+            'producto'=>$producto,
+            'sucursales'=>$sucursales,
+            'cantidad'=>json_encode($canti),
+            'nombre_sucur'=>json_encode($nombre_sucur),
+        ]);
+    }
+    public function traslados_store(Request $request){
+        $producto=Producto::query()->where('id',$request->producto_id)->first();
+        $sucursal=strtolower($producto->sucursal->nombre);
+        $hasta=$request->hasta;
+        $sucur=Sucursal::query()->where('nombre',$hasta)->first();
+        $canti_new=(int)$request->cantidad_ini - (int)$request->cantidad_traslado;
+        $producto->update([
+            'cantidad'=>$canti_new,
+        ]);
+
+    }*/
 
 }

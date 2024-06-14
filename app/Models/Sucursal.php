@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sucursal extends Model
 {
     use HasFactory;
-    protected $fillable=['codigo','nombre','estado','ciudad'];
+    protected $fillable=['codigo','nombre','estado','ciudad','active'];
     public function users()
     {
         return $this->hasMany(UserProfile::class);
@@ -16,6 +16,10 @@ class Sucursal extends Model
     public function ventas()
     {
         return $this->hasMany(Venta::class);
+    }
+    public function productos()
+    {
+        return $this->hasMany(Producto::class);
     }
 
 }

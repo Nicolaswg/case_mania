@@ -70,7 +70,7 @@
                 <hr class="mt-0">
                 <div class="text-center">
                     @foreach($productos as $i=>$producto)
-                            <li class="text-center mb-0 list-group-item"> <strong>{{strtoupper($producto->categoria->nombre)}}-{{strtoupper($producto->nombre)}} </strong> <strong class="text-danger"> #: {{$producto->cantidad}} </strong></li>
+                            <li class="text-center mb-0 list-group-item"> <strong>{{strtoupper($producto->categoria->nombre)}}-{{strtoupper($producto->nombre)}} </strong> <strong class="text-danger"> #: {{$producto->cantidad}} </strong> <span class="note"> Sucursal: {{$producto->sucursal->nombre}}</span></li>
                     @endforeach
                     <a href="{{route('productos.index')}}" class="btn btn-success mt-2 text-center align-content-center" >
                         <i class="bi bi-patch-plus-fill"></i>

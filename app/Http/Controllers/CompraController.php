@@ -48,7 +48,7 @@ class CompraController extends Controller
         $sucursales=Sucursal::query()
             ->unless(auth()->user()->isAdmin(),function ($q){
                 $q->where('id',auth()->user()->profile->sucursal->id);
-            })->orderBy('nombre')->get();
+            })->where('active',true)->orderBy('nombre')->get();
         return view($view, [
             'compra' => $compra,
             'vista'=>$vista,

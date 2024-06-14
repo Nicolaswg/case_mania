@@ -20,6 +20,8 @@ class CreateProductosTable extends Migration
                 ->on('categorias')->onUpdate('CASCADE')->onDelete('SET NULL');
             $table->foreignId('sucursal_id')
                 ->references('id')->on('sucursals')->onUpdate('cascade');
+            $table->foreignId('sucursal2_id')
+                ->references('id')->on('sucursals')->onUpdate('cascade');
             $table->integer('cantidad');
             $table->integer('cantidad_devueltos')->nullable();
             $table->string('nombre');
