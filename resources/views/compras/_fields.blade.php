@@ -88,7 +88,7 @@
                 <td class="align-middle text-center text-sm"> @{{ lista_compras.cantidad[index] }}</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_compras.precio_unitario[index] }} $</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_compras.subtotal[index] }} $</td>
-                <td class="align-middle text-center text-sm"> @{{ parseFloat(lista_compras.subtotal[index]) + parseFloat( lista_compras.subtotal[index] * 0.16)}} $</td>
+                <td class="align-middle text-center text-sm"> @{{ lista_compras.subtotal[index] }} $</td>
                 <td align=middle>
                     <a class="btn btn-outline-danger btn-sm" type="button" @click.prevent="deletefila(index)"><i class="bi bi-trash3-fill"></i></a>
                 </td>

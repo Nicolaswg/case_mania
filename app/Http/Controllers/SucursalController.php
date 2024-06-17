@@ -31,11 +31,17 @@ class SucursalController extends Controller
     {
         $request->validate([
             'nombre'=>'required',
+            'estado'=>'required',
+            'ciudad'=>'required',
+            'codigo'=>'required'
         ]);
 
         Sucursal::create([
             'nombre'=>$request->nombre,
             'active'=> $request->state== 'active',
+            'codigo'=>$request->codigo,
+            'estado'=>$request->estado,
+            'ciudad'=>$request->ciudad,
         ]);
         return redirect()->route('sucursales.index')->with('success','Sucursal Guardado con Exito');
 
@@ -47,12 +53,17 @@ class SucursalController extends Controller
     public function update(Request $request, Sucursal $sucursal)
     {
         $request->validate([
-            'nombre'=>'required'
-
+            'nombre'=>'required',
+            'estado'=>'required',
+            'ciudad'=>'required',
+            'codigo'=>'required'
         ]);
         $sucursal->update([
             'nombre'=>$request->nombre,
-            'active'=> $request->state == 'active',
+            'active'=> $request->state== 'active',
+            'codigo'=>$request->codigo,
+            'estado'=>$request->estado,
+            'ciudad'=>$request->ciudad,
         ]);
         $sucursal->save();
 

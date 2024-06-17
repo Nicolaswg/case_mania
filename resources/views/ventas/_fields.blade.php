@@ -85,7 +85,7 @@
                 <td class="align-middle text-center text-sm"> @{{ lista_venta.cantidad[index] }}</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_venta.precio_unitario[index] }} $</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_venta.subtotal[index] }} $</td>
-                <td class="align-middle text-center text-sm"> @{{ parseFloat(lista_venta.subtotal[index]) + parseFloat( lista_venta.subtotal[index] * 0.16)}} $</td>
+                <td class="align-middle text-center text-sm"> @{{ lista_venta.subtotal[index]}} $</td>
                 <td align=middle>
                     <a class="btn btn-outline-danger btn-sm" type="button" @click.prevent="deletefila(index)"><i class="bi bi-trash3-fill"></i></a>
                 </td>
@@ -140,12 +140,12 @@
                 </tr>
                 <tr align="right">
                     <td colspan="3">IVA (16%)</td>
-                    <td colspan="2"> @{{ lista_venta.iva }} $</td>
+                    <td colspan="2"> 0,00 $</td>
                     <td class="text-center">@{{ bs.iva }} </td>
                 </tr>
                 <tr align="right" class="" style=" border: double #051b11;" >
                     <th colspan="3">TOTAL FACTURA </th>
-                    <th colspan="2"> @{{ lista_venta.total_factura }} $</th>
+                    <th colspan="2"> @{{ lista_venta.subtotal_factura }}  $</th>
                     <td class="text-center  fw-bold ">@{{  bs.total_factura }} </td>
                 </tr>
                 <tr align="right" v-if="delivery && checkdelivery()"style=" border: double #051b11;" >

@@ -26,5 +26,6 @@
     </td>
     <td class="text-right">
         <a href="{{ route('productos.edit', $producto) }}" class="btn btn-outline-success btn-sm"><i class="bi bi-pencil-fill"></i></a>
+        <button  type="button" class="btn btn-outline-danger btn-sm"  @click="deleteproducto({{$producto->id}})"><i class="bi bi-trash3-fill"></i></button>
     </td>
 </tr>

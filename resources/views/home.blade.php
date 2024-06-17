@@ -65,7 +65,7 @@
             @if(auth()->user()->isAdmin() || auth()->user()->isVendedor() )
             <div class="col d-flex align-items-center card card-header">
                 <div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3 ">
-                    <svg class="bi" width="1em" height="2em"><i class="bi bi-box-arrow-down"></i><h3 class="fs-2 ml-2 text-body-emphasis text-center mt-0">Productos Bajo Stock</h3></svg>
+                    <svg class="bi" width="1em" height="2em"><i class="bi bi-box-arrow-down"></i><h3 class="fs-2 ml-2 text-body-emphasis text-center mt-0">Productos en almacen</h3></svg>
                 </div>
                 <hr class="mt-0">
                 <div class="text-center">

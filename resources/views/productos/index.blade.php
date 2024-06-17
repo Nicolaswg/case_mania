@@ -81,10 +81,10 @@
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
-                                url:'/user/delete',
+                                url:'/productos/delete',
                                 method:'POST',
                                 data:{
-                                    'user_id':user_id,
+                                    'producto_id':producto_id,
                                     "_token": "{{ csrf_token() }}"
                                 },
                                 dataType:'json',
@@ -92,7 +92,7 @@
                                     if(data){
                                         Swal.fire(
                                             'Elimininado!',
-                                            'El archivo a sido Eliminado.',
+                                            'El producto a sido Eliminado.',
                                             'success',
                                         ).then(function (){
                                             location.reload()

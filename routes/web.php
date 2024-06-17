@@ -76,6 +76,7 @@ Route::group(['middleware'=>['auth','vendedor']],function (){
     Route::post('/productos', [ProductoController::class, 'store']);
     Route::get('/productos/{producto}/editar', [ProductoController::class, 'edit'])->name('productos.edit');
     Route::put('/productos/{producto}', [ProductoController::class, 'update']);
+    Route::post('/productos/delete',[ProductoController::class,'delete'])->name('productos.delete');
 //RUTA PARA SELECIONAR PRODUCOTS TANTO EN VENTS COMO EN COMPRAS
     Route::post('/selecproducto', [ProductoController::class, 'selecproducto']);
     Route::post('/verificarmaxproducto', [ProductoController::class, 'selecmaxproducto']);

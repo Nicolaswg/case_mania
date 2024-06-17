@@ -195,7 +195,13 @@ class ProductoController extends Controller
 
 
     }
-
+    public function delete(Request $request){
+        $producto = Producto::query()->where('id', $request->producto_id)->first();
+        $producto->forceDelete();
+            return [
+                'status'=>true,
+            ];
+    }
     //ALMACEN
     public function index_almacen(Request $request,ProductoFilter $filters,Sortable $sortable)
     {
@@ -217,6 +223,7 @@ class ProductoController extends Controller
             'categorias'=>Categoria::query()->orderBy('nombre')->get()
         ]);
     }
+
    /* public function traslados_almacen(Producto $producto){
         $sucursales=Sucursal::query()
             ->orderBy('nombre')->get();
