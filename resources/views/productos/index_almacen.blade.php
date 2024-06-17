@@ -41,6 +41,7 @@
                     <th scope="col">Categoria </th>
                     <th scope="col">Cantidad Disponible</th>
                     <th scope="col">Devoluciones</th>
+                    <th scope="col">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>

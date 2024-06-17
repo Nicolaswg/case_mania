@@ -94,6 +94,7 @@
                         data:{
                             'categoria_id':app.categoria_id,
                             'sucursal_id':app.sucursal,
+                            'tipo':'compras',
                             "_token": "{{ csrf_token() }}"
                         },
                         dataType:'json',

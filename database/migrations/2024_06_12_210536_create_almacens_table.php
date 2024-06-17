@@ -15,6 +15,11 @@ class CreateAlmacensTable extends Migration
     {
         Schema::create('almacens', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('sucursal_id')->nullable()
+                ->references('id')->on('sucursals')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('producto_id')
+                ->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }

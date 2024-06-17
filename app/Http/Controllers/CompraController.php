@@ -45,14 +45,11 @@ class CompraController extends Controller
     }
     private function form(string $view, Compra $compra,$vista)
     {
-        $sucursales=Sucursal::query()
-            ->unless(auth()->user()->isAdmin(),function ($q){
-                $q->where('id',auth()->user()->profile->sucursal->id);
-            })->where('active',true)->orderBy('nombre')->get();
+        $sucursal=Sucursal::query()->where('id',1)->first();
         return view($view, [
             'compra' => $compra,
             'vista'=>$vista,
-            'sucursales'=>$sucursales,
+            'sucursal'=>$sucursal,
             'categorias'=>Categoria::query()->orderBy('nombre')->get(),
             'proveedores'=>Proveedor::query()->where('status','active')->orderBy('nombre')->get(),
         ]);
@@ -192,16 +189,13 @@ class CompraController extends Controller
         $subtotal=explode(',',$compra->detalle_compra->subtotal);
         $photos=explode(',',$compra->detalle_compra->photos);
         $categoria=explode(',',$compra->detalle_compra->categorias_productos);
-        $sucursales=Sucursal::query()
-            ->unless(auth()->user()->isAdmin(),function ($q){
-                $q->where('id',auth()->user()->profile->sucursal->id);
-            })->orderBy('nombre')->get();
+        $sucursal=Sucursal::query()->where('id',1)->first();
         $tasa=$compra->tasa_bcv;
         return view($view, [
             'compra' => $compra,
             'vista'=>$vista,
             'tasa'=>$tasa,
-            'sucursales'=>$sucursales,
+            'sucursal'=>$sucursal,
             'categorias'=>Categoria::query()->orderBy('nombre')->get(),
             'proveedores'=>Proveedor::query()->orderBy('nombre')->get(),
             'ids'=>json_encode($ids),

@@ -18,6 +18,9 @@ class Producto extends Model
     {
         return $this->belongsTo(Sucursal::class);
     }
+    public function almacen(){
+        return $this->hasMany(Almacen::class);
+    }
     public function ScopeFilterBy($query,QueryFilter $filters,array $data)
     {
         return $filters->applyTo($query,$data);

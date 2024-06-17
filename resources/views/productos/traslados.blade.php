@@ -23,18 +23,12 @@
                     <p><strong>Precio de Venta ($)</strong>: {{ $producto->precio_venta}}</p>
                     <hr>
                     <h5>Cantidades Disponibles por Sucursal</h5>
-                    @foreach($sucursales as $i=>$sucursal)
-                            <?php
-                            $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
-                            if($prod != null){
-                                $canti=$prod->cantidad;
-                            }else{
-                                $canti=0;
-                            }
+                    <div>
+                        <ul class="list-group-item" v-for="(sucursal,index) in sucursales">
+                        <li> @{{ sucursal }}. Cantidad #: @{{ cantidad[index] }}</li>
+                    </ul>
 
-                            ?>
-                        <li class="">Sucursal {{ucwords( $sucursal->nombre) }} : <strong>{{$canti}}</strong></li>
-                    @endforeach
+                    </div>
                 </div>
             </div>
         </div>
@@ -146,7 +140,7 @@
                                 method:'POST',
                                 data:{
                                     'desde':this.sucursales[this.desde],
-                                    'hasta':this.sucursales[this.hasta],
+                                    'hasta':this.sucursales2[this.hasta],
                                     'producto_id':this.producto_id,
                                     'cantidad_traslado':this.canti_traslado,
                                     'cantidad_ini':this.cantidad_produc,
@@ -154,6 +148,7 @@
                                 },
                                 dataType:'json',
                                 success:function (data){
+                                    console.log(data.datos)
                                     if(data.status=== true){
                                         Swal.fire(
                                             'Exito!',

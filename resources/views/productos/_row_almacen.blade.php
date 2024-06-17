@@ -16,8 +16,50 @@
         {{ucwords($producto->categoria->nombre)}}
     </td>
     <td>
-       {{$producto->cantidad}} <br>
-        <span class="note">Sucursal : {{ucwords($producto->sucursal->nombre)}}</span>
+        <?php
+        $canti=[];
+        $nombre_sucur=[];
+            foreach ($sucursales as $i=>$sucursal){
+                $nombre_sucur[$i]=$sucursal->nombre;
+                $productos=$producto->almacen()->where('sucursal_id',$sucursal->id )->get();
+                if(count($productos) != 0){
+                    $acum=0;
+                    foreach($productos as $x=>$produc){
+                        $acum=(int)$produc->cantidad + $acum;
+                    }
+                    $canti[$i]=(int)$acum;
+                }else{
+                    $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
+                    if($prod != null){
+                        $canti[$i]=$prod->cantidad;
+                    }else{
+                        $canti[$i]=0;
+                    }
+                }
+
+            }
+            $tot=array_sum($canti);
+        ?>
+        <table>
+            <thead>
+                <tr class="text-center">
+                    <th rowspan="">Cantidad Total</th>
+                    <th colspan="4" class="text-center">Distribucion</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr class="text-center">
+                    <th rowspan="{{count($nombre_sucur) + 1}}">{{$tot}}</th>
+                    @foreach($nombre_sucur as $i=>$sucur)
+                        <tr class="text-center">
+                            <td>{{$sucur}} : {{$canti[$i]}}</td>
+                        </tr>
+
+                    @endforeach
+                </tr>
+            </tbody>
+        </table>
     </td>
 
     <td>
@@ -27,5 +69,7 @@
             <p class="text-success">Sin Existencia</p>
         @endif
     </td>
-
+<td>
+    <a href="{{ route('almacen.traslados', $producto) }}" class="btn btn-outline-success btn-sm"><i class="bi bi-truck"></i></a>
+</td>
 </tr>

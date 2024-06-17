@@ -17,6 +17,10 @@ class Sucursal extends Model
     {
         return $this->hasMany(Venta::class);
     }
+    public function almacen()
+    {
+        return $this->hasMany(Almacen::class);
+    }
     public function productos()
     {
         return $this->hasMany(Producto::class);

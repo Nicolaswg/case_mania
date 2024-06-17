@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateProductoRequest;
 use App\Http\Requests\UpdateProductoRequest;
+use App\Models\Almacen;
 use App\Models\Categoria;
 use App\Models\filters\ProductoFilter;
 use App\Models\Producto;
@@ -135,14 +136,23 @@ class ProductoController extends Controller
     }
     public function selecproducto(Request $request){
         $categoria_id=$request->categoria_id;
-        $productos= Producto::query()
-            ->where('status','activo')
-            ->whereHas('sucursal',function ($q) use ($request){
-                $q->where('id',$request->sucursal_id);
-            })
-            ->whereHas('categoria',function ($q) use ($categoria_id){
-                $q->where('id',$categoria_id);
-            })->orderBy('nombre')->get();
+        if($request->tipo == 'compras'){
+            $productos= Producto::query()
+                ->where('status','activo')
+                ->whereHas('categoria',function ($q) use ($categoria_id){
+                    $q->where('id',$categoria_id);
+                })->orderBy('nombre')->get();
+        }else{
+            $productos= Producto::query()
+                ->where('status','activo')
+                ->whereHas('sucursal',function ($q) use ($request){
+                    $q->where('id',$request->sucursal_id);
+                })
+                ->whereHas('categoria',function ($q) use ($categoria_id){
+                    $q->where('id',$categoria_id);
+                })->orderBy('nombre')->get();
+        }
+
         $nombres=[];
         $ids=[];
         $photos=[];
@@ -211,11 +221,13 @@ class ProductoController extends Controller
             ->filterBy($filters,$request->only(['search','order','categoria','state','sucursal']))
             ->orderByDesc('created_at')
             ->paginate(5);
+
         $this->updadestateofproduct($productos);
         $productos->appends($filters->valid());//para concatenar a la paginacion en busqueda
         $sortable->appends($filters->valid());
         $sucursales=Sucursal::query()
         ->orderBy('nombre')->get();
+
         return view('productos.index_almacen', [
             'productos' => $productos,
             'sucursales'=>$sucursales,
@@ -224,20 +236,30 @@ class ProductoController extends Controller
         ]);
     }
 
-   /* public function traslados_almacen(Producto $producto){
+  public function traslados_almacen(Producto $producto){
         $sucursales=Sucursal::query()
             ->orderBy('nombre')->get();
-        $canti=[];
-        $nombre_sucur=[];
-        foreach ($sucursales as $i=>$sucursal){
-            $nombre_sucur[$i]=$sucursal->nombre;
-            $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
-            if($prod != null){
-                $canti[$i]=$prod->cantidad;
-            }else{
-                $canti[$i]=0;
-            }
-        }
+      $canti=[];
+      $nombre_sucur=[];
+      foreach ($sucursales as $i=>$sucursal){
+          $nombre_sucur[$i]=$sucursal->nombre;
+          $productos=$producto->almacen()->where('sucursal_id',$sucursal->id )->get();
+          if(count($productos) != 0){
+              $acum=0;
+              foreach($productos as $x=>$produc){
+                  $acum=(int)$produc->cantidad + $acum;
+              }
+              $canti[$i]=(int)$acum;
+          }else{
+              $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
+              if($prod != null){
+                  $canti[$i]=$prod->cantidad;
+              }else{
+                  $canti[$i]=0;
+              }
+          }
+
+      }
         return view('productos.traslados',[
             'producto'=>$producto,
             'sucursales'=>$sucursales,
@@ -248,13 +270,36 @@ class ProductoController extends Controller
     public function traslados_store(Request $request){
         $producto=Producto::query()->where('id',$request->producto_id)->first();
         $sucursal=strtolower($producto->sucursal->nombre);
-        $hasta=$request->hasta;
-        $sucur=Sucursal::query()->where('nombre',$hasta)->first();
-        $canti_new=(int)$request->cantidad_ini - (int)$request->cantidad_traslado;
-        $producto->update([
-            'cantidad'=>$canti_new,
-        ]);
+        $hasta=$request->hasta;//para que sucursl va
+        $desde=$request->desde;//de que sucursal viene
+        $sucur_desde=Sucursal::query()->where('nombre',$desde)->first();
+        $sucur_hasta=Sucursal::query()->where('nombre',$hasta)->first();
+        $canti_traslado=$request->cantidad_traslado;
 
-    }*/
+        if($producto->sucursal->id == $sucur_desde->id){
+            $resta=(int) $producto->cantidad - (int)$canti_traslado;
+            $producto->update([
+                'cantidad'=>$resta
+            ]);
+            $producto->save();
+        }
+        if($producto->sucursal->id == $sucur_hasta->id){
+            $suma=(int) $producto->cantidad + (int)$canti_traslado;
+            $producto->update([
+                'cantidad'=>$suma
+            ]);
+            $producto->save();
+        }
+        Almacen::create([
+            'producto_id'=>$producto->id,
+            'sucursal_id'=>$sucur_hasta->id,
+            'cantidad'=>(int)$canti_traslado,
+        ]);
+       return [
+           'status'=>true,
+       ];
+
+
+    }
 
 }

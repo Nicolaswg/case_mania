@@ -35,6 +35,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::group(['middleware'=>['auth','vendedor']],function (){
     //ALMACEN
     Route::get('almacen',[ProductoController::class,'index_almacen'])->name('almacen.index');
+    Route::get('almacen/{producto}/traslados',[ProductoController::class,'traslados_almacen'])->name('almacen.traslados');
+    Route::post('traslado/update',[ProductoController::class,'traslados_store'])->name('almacen.traslados.update');
     //DEVOLUCIONES
 
     //COMPRAS

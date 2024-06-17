@@ -1,6 +1,6 @@
 @csrf
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <h5>Proveedor</h5>
         <select name="proveedor_id" :disabled="datos" v-model="proveedor" id="proveedor_id" class="form-control text-center" :class="{'field-error': proveedor === ''  && error}">
             <option value="">--SELECCIONA--</option>
@@ -10,18 +10,8 @@
                 </option>
             @endforeach
         </select>
+        <input type="hidden" value="{{$sucursal->id}}" name="sucursal_id">
     </div>
-    <div class="col-md-4">
-        <h5>Sucursal</h5>
-        <select name="sucursal" @change="selecproductos()" v-model="sucursal" :disabled="datos" v-model="sucursal" id="sucursal_id" class="form-control text-center" >
-            @foreach($sucursales as $sucursal)
-                <option value="{{ $sucursal->id }}"{{ old('sucursal_id')}} >
-                    {{ ucwords($sucursal->nombre)}}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
 </div>
 <hr>
 <h5>Producto</h5>

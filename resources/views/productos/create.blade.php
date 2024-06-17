@@ -107,7 +107,7 @@
                     //console.log(this.tasa_dolar.price)
                     this.precio_bs= (parseFloat(this.precio_compra) * parseFloat(this.tasa_dolar.price)).toFixed(2)
                     this.ganancia_bs=(( parseInt(this.porcentaje_ganancia)*this.precio_bs)/100).toFixed(2)
-                    this.total_bs=parseFloat(this.precio_bs)+ parseFloat(this.ganancia_bs)
+                    this.total_bs=(parseFloat(this.precio_bs)+ parseFloat(this.ganancia_bs)).toFixed(2)
                 }
             },
             computed:{
