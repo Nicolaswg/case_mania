@@ -34,12 +34,15 @@ class HomeController extends Controller
         $montos=[];
         $acum_sucur=[];
         $num_ventas=[];
+        $devo=[];
         foreach ($sucursales as $i=>$sucursal){
             $nombre_sucur[$i]=$sucursal->nombre;
             if(count($sucursal->ventas) != 0){
                 foreach ($sucursal->ventas as $x=>$venta){
-                    $num_ventas[$i]=$x + 1;
-                    $montos[$i][$x]=round($venta->total_dolar,2);
+                    if($venta->status != 'devuelto'){
+                        $num_ventas[$i]=$x + 1;
+                        $montos[$i][$x]=round($venta->subtotal_dolar,2);
+                    }
                 }
                 $acum_sucur[$i]=array_sum($montos[$i]);
             }else{
@@ -79,9 +82,46 @@ class HomeController extends Controller
         }
 
         //Productos
-        $productos=Producto::query()->where('cantidad','<=',5)->get();
+        $productos=Producto::query()->orderBy('nombre')->get();
+        $canti=[];
+        $nombre_sucur=[];
+        $nombre_producto=[];
+        $array=[];
+        $categorias=[];
+        $tot_devoluciones=[];
+        foreach ($productos as $x=>$producto){
+            $nombre_producto[$x]=$producto->nombre;
+            foreach ($sucursales as $i=>$sucursal){
+                $nombre_sucur[$i]=$sucursal->nombre;
+                if(count($producto->almacen) != 0){
+                    $produc=$sucursal->almacen()->where('sucursal_id',$sucursal->id )->where('producto_id',$producto->id)->orderBy('created_at')->first();
+                    if($produc != null){
+                        $canti[$x][$i]=$produc->cantidad_acumulada;
+                    }else{
+                        $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
+                        $canti[$x][$i]=$prod->cantidad;
+                    }
+                }else{
+                    $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
+                    if($prod != null){
+                        $canti[$x][$i]=$prod->cantidad;
+                    }else{
+                        $canti[$x][$i]=0;
+                    }
+                }
+
+            }
+            $tot_devoluciones[$producto->nombre]=$producto->cantidad_devueltos;
+            $tot_produc=array_sum($canti[$x]);
+            $array[$producto->nombre]=$tot_produc;
+            $categorias[$producto->nombre]=$producto->categoria->nombre;
+
+        }
+       // dd($tot_devoluciones);
+
 
         return view('home',[
+            //VENTAS
             'nombre_sucur'=>$nombre_sucur,
             'acum_sucur'=>$acum_sucur,
             'acum_total'=>$acum_total,
@@ -95,7 +135,10 @@ class HomeController extends Controller
             'pendi'=>count($pendie),
             'entregado'=>count($entregados),
             //PRODUCTOS
-            'productos'=>$productos,
+            'productos'=>$array,
+            'categorias'=>$categorias,
+            'devoluciones'=>$tot_devoluciones,
+
         ]);
     }
 }

@@ -147,14 +147,16 @@ class ProductoController extends Controller
 
             $productos= Producto::query()
                 ->where('status','activo')
-                ->whereHas('sucursal',function ($q) use ($request){
-                    $q->where('id',$request->sucursal_id);
-                })
-                ->orwhereHas('almacen',function ($q) use ($request){
-                    $q->where('sucursal_id',$request->sucursal_id);
-                })
                 ->whereHas('categoria',function ($q) use ($categoria_id){
                     $q->where('id',$categoria_id);
+                })
+                ->where(function ($q) use ($request){
+                    $q->whereHas('sucursal',function ($q) use ($request){
+                        $q->where('id',$request->sucursal_id);
+                    })
+                        ->orwhereHas('almacen',function ($q) use ($request){
+                            $q->where('sucursal_id',$request->sucursal_id);
+                        });
                 })->orderBy('nombre')->get();
         }
 

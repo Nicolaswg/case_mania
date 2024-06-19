@@ -15,7 +15,7 @@
                 <hr class="mt-0">
                 <div class="text-center">
                         @foreach($nombre_sucur as $i=>$sucursal)
-                        <li class="text-center mb-0 list-group-item"> <strong> {{strtoupper($sucursal)}} </strong>: <strong>{{$acum_sucur[$i]}} $</strong> # Ventas: {{$num_ventas[$i]}} </li>
+                        <li class="text-center mb-0 list-group-item"> <strong> {{strtoupper($sucursal)}} </strong>: <strong>{{$acum_sucur[$i]}} $</strong>/ # Ventas: <strong class="text-success">{{$num_ventas[$i]}}  </strong>  </li>
                         @endforeach
                     <a href="{{route('ventas.index')}}" class="btn btn-success mt-2 text-center align-content-center" >
                         <i class="bi bi-patch-plus-fill"></i>
@@ -69,10 +69,17 @@
                 </div>
                 <hr class="mt-0">
                 <div class="text-center">
-                    @foreach($productos as $i=>$producto)
-                            <li class="text-center mb-0 list-group-item"> <strong>{{strtoupper($producto->categoria->nombre)}}-{{strtoupper($producto->nombre)}} </strong> <strong class="text-danger"> #: {{$producto->cantidad}} </strong> <span class="note"> Sucursal: {{$producto->sucursal->nombre}}</span></li>
-                    @endforeach
-                    <a href="{{route('productos.index')}}" class="btn btn-success mt-2 text-center align-content-center" >
+
+                        @foreach($productos as $nombre=>$cantidad)
+                        <div class="row">
+                            <div class="col-md-12">
+                                <li class="text-center mb-0 list-group-item"> <strong>{{strtoupper($categorias[$nombre])}}-{{strtoupper($nombre)}} </strong>/  Cantidad: <strong class="text-success"> {{$cantidad}} </strong> @if( $devoluciones[$nombre] != null)/ Devoluciones:  <strong class="text-danger">{{$devoluciones[$nombre]}} @endif </strong> </li>
+                            </div>
+                        </div>
+                        @endforeach
+
+
+                    <a href="{{route('almacen.index')}}" class="btn btn-success mt-2 text-center align-content-center" >
                         <i class="bi bi-patch-plus-fill"></i>
                         Ver mas
                     </a>
