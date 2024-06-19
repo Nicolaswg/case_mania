@@ -10,6 +10,7 @@ use App\Models\filters\ProductoFilter;
 use App\Models\Producto;
 use App\Models\Sortable;
 use App\Models\Sucursal;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Psy\Util\Str;
@@ -143,10 +144,14 @@ class ProductoController extends Controller
                     $q->where('id',$categoria_id);
                 })->orderBy('nombre')->get();
         }else{
+
             $productos= Producto::query()
                 ->where('status','activo')
                 ->whereHas('sucursal',function ($q) use ($request){
                     $q->where('id',$request->sucursal_id);
+                })
+                ->orwhereHas('almacen',function ($q) use ($request){
+                    $q->where('sucursal_id',$request->sucursal_id);
                 })
                 ->whereHas('categoria',function ($q) use ($categoria_id){
                     $q->where('id',$categoria_id);
@@ -188,9 +193,20 @@ class ProductoController extends Controller
     }
     public function selecmaxproducto(Request $request){
         $producto_id=$request->producto_id;
-        $producto= Producto::query()->where('id',$producto_id)->first();
+        $producto= Producto::query()
+            ->where('id',$producto_id)
+            ->first();
+
         if($producto != null){
-            $cantidad=$producto->cantidad;
+            if($producto->almacen != null ){
+               $almacen= Almacen::query()->where('producto_id',$producto->id)->where('sucursal_id',$request->sucursal_id)->first();
+               if($almacen == null){
+                   $cantidad=$producto->cantidad;
+               }else{
+                   $cantidad=$almacen->cantidad_acumulada;
+               }
+            }
+
             return[
                 'status'=>true,
                 'maximo'=>$cantidad,
@@ -235,21 +251,23 @@ class ProductoController extends Controller
             'categorias'=>Categoria::query()->orderBy('nombre')->get()
         ]);
     }
-
-  public function traslados_almacen(Producto $producto){
+    public function traslados_almacen(Producto $producto){
         $sucursales=Sucursal::query()
             ->orderBy('nombre')->get();
       $canti=[];
       $nombre_sucur=[];
+
+      //dd($producto->almacen);
       foreach ($sucursales as $i=>$sucursal){
           $nombre_sucur[$i]=$sucursal->nombre;
-          $productos=$producto->almacen()->where('sucursal_id',$sucursal->id )->get();
-          if(count($productos) != 0){
-              $acum=0;
-              foreach($productos as $x=>$produc){
-                  $acum=(int)$produc->cantidad + $acum;
+          if(count($producto->almacen) != 0){
+              $produc=$sucursal->almacen()->where('sucursal_id',$sucursal->id )->where('producto_id',$producto->id)->orderBy('created_at')->first();
+              if($produc != null){
+                  $canti[$i]=$produc->cantidad_acumulada;
+              }else{
+                  $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
+                  $canti[$i]=$prod->cantidad;
               }
-              $canti[$i]=(int)$acum;
           }else{
               $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
               if($prod != null){
@@ -290,11 +308,22 @@ class ProductoController extends Controller
             ]);
             $producto->save();
         }
-        Almacen::create([
-            'producto_id'=>$producto->id,
-            'sucursal_id'=>$sucur_hasta->id,
-            'cantidad'=>(int)$canti_traslado,
+        $almacen=Almacen::query()->where('producto_id',$producto->id)->where('sucursal_id',$sucur_hasta->id)->orderBy('created_at','desc')->first();
+        if($almacen != null){
+            $canti=$almacen->cantidad_acumulada + $canti_traslado;
+            $almacen->update([
+                'cantidad_acumulada'=>$canti,
+                'created_at'=>Carbon::now(),
+            ]);
+            $almacen->save();
+        }else{
+            Almacen::create([
+                'producto_id'=>$producto->id,
+                'sucursal_id'=>$sucur_hasta->id,
+                'cantidad'=>(int)$canti_traslado,
+                'cantidad_acumulada'=>(int) $canti_traslado,
         ]);
+        }
        return [
            'status'=>true,
        ];

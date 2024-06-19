@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Almacen;
 use App\Models\Categoria;
 use App\Models\Cliente;
 use App\Models\DetalleVenta;
@@ -85,9 +86,18 @@ class VentaController extends Controller
         });
         foreach ($request->ids_productos as $i=>$id){
             $producto=Producto::query()->where('id',$id)->first();
-            $producto->update([
-                'cantidad'=>$producto->cantidad - (int) $request->cantidad_productos[$i]
-            ]);
+            if($producto->almacen != null ){
+                $almacen= Almacen::query()->where('producto_id',$producto->id)->where('sucursal_id',$request->sucursal_id)->first();
+                if($almacen == null){
+                    $producto->update([
+                        'cantidad'=>$producto->cantidad - (int) $request->cantidad_productos[$i]
+                    ]);
+                }else{
+                    $almacen->update([
+                        'cantidad_acumulada'=>$almacen->cantidad_acumulada - (int) $request->cantidad_productos[$i],
+                    ]);
+                }
+            }
         }
         return [
             'status'=>true,

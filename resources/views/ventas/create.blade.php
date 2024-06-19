@@ -152,6 +152,7 @@
                         method:'POST',
                         data:{
                             'producto_id':app.productos.ids[this.index_producto],
+                            'sucursal_id':app.sucursal,
                             "_token": "{{ csrf_token() }}"
                         },
                         dataType:'json',

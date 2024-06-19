@@ -20,6 +20,7 @@ class CreateAlmacensTable extends Migration
             $table->foreignId('producto_id')
                 ->references('id')->on('productos')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('cantidad');
+            $table->integer('cantidad_acumulada');
             $table->timestamps();
         });
     }

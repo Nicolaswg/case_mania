@@ -19,25 +19,26 @@
         <?php
         $canti=[];
         $nombre_sucur=[];
-            foreach ($sucursales as $i=>$sucursal){
-                $nombre_sucur[$i]=$sucursal->nombre;
-                $productos=$producto->almacen()->where('sucursal_id',$sucursal->id )->get();
-                if(count($productos) != 0){
-                    $acum=0;
-                    foreach($productos as $x=>$produc){
-                        $acum=(int)$produc->cantidad + $acum;
-                    }
-                    $canti[$i]=(int)$acum;
+        foreach ($sucursales as $i=>$sucursal){
+            $nombre_sucur[$i]=$sucursal->nombre;
+            if(count($producto->almacen) != 0){
+                $produc=$sucursal->almacen()->where('sucursal_id',$sucursal->id )->where('producto_id',$producto->id)->orderBy('created_at')->first();
+                if($produc != null){
+                    $canti[$i]=$produc->cantidad_acumulada;
                 }else{
                     $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
-                    if($prod != null){
-                        $canti[$i]=$prod->cantidad;
-                    }else{
-                        $canti[$i]=0;
-                    }
+                    $canti[$i]=$prod->cantidad;
                 }
-
+            }else{
+                $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
+                if($prod != null){
+                    $canti[$i]=$prod->cantidad;
+                }else{
+                    $canti[$i]=0;
+                }
             }
+
+        }
             $tot=array_sum($canti);
         ?>
         <table>

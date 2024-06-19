@@ -2,6 +2,7 @@
 @section('title', "Crear Traslado")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
+    <li class="breadcrumb-item"><a href="{{route('almacen.index')}}" class="link-dark">Almacen</a></li>
     <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
 @endsection
 @section('content')
