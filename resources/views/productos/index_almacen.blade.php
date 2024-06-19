@@ -27,7 +27,7 @@
         </p>
     </div>
 
-    @include('productos._filters')
+    @include('productos._filtersalmacen')
     @if ($productos->isNotEmpty())
         <p>Viendo pagina {{$productos->currentPage()}} de {{$productos->lastPage()}}</p>
         <div class="table-responsive-lg">

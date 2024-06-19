@@ -268,7 +268,11 @@ class ProductoController extends Controller
                   $canti[$i]=$produc->cantidad_acumulada;
               }else{
                   $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
-                  $canti[$i]=$prod->cantidad;
+                  if($prod != null){
+                      $canti[$i]=$prod->cantidad;
+                  }else{
+                      $canti[$i]=0;
+                  }
               }
           }else{
               $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();

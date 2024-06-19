@@ -69,7 +69,6 @@
                 </div>
                 <hr class="mt-0">
                 <div class="text-center">
-
                         @foreach($productos as $nombre=>$cantidad)
                         <div class="row">
                             <div class="col-md-12">
@@ -77,8 +76,6 @@
                             </div>
                         </div>
                         @endforeach
-
-
                     <a href="{{route('almacen.index')}}" class="btn btn-success mt-2 text-center align-content-center" >
                         <i class="bi bi-patch-plus-fill"></i>
                         Ver mas
@@ -86,7 +83,6 @@
                 </div>
             </div>
             @endif
-            <div class="col d-flex align-items-center"></div>
             <div class="col d-flex align-items-center"></div>
 
         </div>

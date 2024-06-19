@@ -104,12 +104,12 @@
                 </tr>
                 <tr align="right">
                     <td colspan="3">IVA (16%)</td>
-                    <td colspan="2"> @{{ lista_compras.iva }} $</td>
+                    <td colspan="2"> - </td>
                     <td class="text-center">@{{ bs.iva }} </td>
                 </tr>
                 <tr align="right" class="" style=" border: double #051b11;" >
                     <th colspan="3">TOTAL FACTURA </th>
-                    <th colspan="2"> @{{ lista_compras.total_factura }} $</th>
+                    <th colspan="2">@{{ lista_compras.subtotal_factura }} $ </th>
                     <td class="text-center  fw-bold ">@{{  bs.total_factura }} </td>
                 </tr>
                 </tbody>
