@@ -14,9 +14,9 @@
                 </div>
                 <hr class="mt-0">
                 <div class="text-center">
-                        @foreach($nombre_sucur as $i=>$sucursal)
-                        <li class="text-center mb-0 list-group-item"> <strong> {{strtoupper($sucursal)}} </strong>: <strong>{{$acum_sucur[$i]}} $</strong>/ # Ventas: <strong class="text-success">{{$num_ventas[$i]}}  </strong>  </li>
-                        @endforeach
+                    {!! $chart_ventas->container() !!}
+                    <script src="{{ $chart_ventas->cdn() }}"></script>
+                    {{ $chart_ventas->script() }}
                     <a href="{{route('ventas.index')}}" class="btn btn-success mt-2 text-center align-content-center" >
                         <i class="bi bi-patch-plus-fill"></i>
                        Ver mas
@@ -30,11 +30,11 @@
                 </div>
                 <hr class="mt-0">
                 <div class="text-center">
-                    <ul class="list-unstyled mb-0 mt-0">
-                        <li class="text-center mb-0 list-group-item text-danger" > <strong> Pendientes </strong>: <strong>{{$pendientes}}</strong>  </li>
-                        <li class="text-center mb-0 list-group-item text-warning"> <strong> Proceso </strong>: <strong>{{$proceso}} </strong>  </li>
-                        <li class="text-center mb-0 list-group-item text-success"> <strong> Entregadas </strong>: <strong>{{$entregadas}} </strong> </li>
-                    </ul>
+                    {!! $chart->container() !!}
+
+                    <script src="{{ $chart->cdn() }}"></script>
+
+                    {{ $chart->script() }}
                     <a href="{{route('deliverys.index')}}" class="btn btn-success mt-1 text-center align-content-center" >
                         <i class="bi bi-patch-plus-fill"></i>
                         Ver mas
@@ -48,10 +48,11 @@
                 </div>
                 <hr class="mt-0">
                 <div class="text-center">
-                    <ul class="list-unstyled mb-0 mt-0">
-                        <li class="text-center mb-0 list-group-item text-danger" > <strong> Pendientes </strong>: <strong>{{$pendi}}</strong>  </li>
-                        <li class="text-center mb-0 list-group-item text-success"> <strong> Entregados </strong>: <strong>{{$entregado}} </strong> </li>
-                    </ul>
+                    {!! $chart1->container() !!}
+
+                    <script src="{{ $chart1->cdn() }}"></script>
+
+                    {{ $chart1->script() }}
                     <a href="{{route('servicios.index')}}" class="btn btn-success mt-2 text-center align-content-center" >
                         <i class="bi bi-patch-plus-fill"></i>
                         Ver mas
@@ -69,13 +70,11 @@
                 </div>
                 <hr class="mt-0">
                 <div class="text-center">
-                        @foreach($productos as $nombre=>$cantidad)
-                        <div class="row">
-                            <div class="col-md-12">
-                                <li class="text-center mb-0 list-group-item"> <strong>{{strtoupper($categorias[$nombre])}}-{{strtoupper($nombre)}} </strong>/  Cantidad: <strong class="text-success"> {{$cantidad}} </strong> @if( $devoluciones[$nombre] != null)/ Devoluciones:  <strong class="text-danger">{{$devoluciones[$nombre]}} @endif </strong> </li>
-                            </div>
-                        </div>
-                        @endforeach
+                    {!! $chart_productos->container() !!}
+
+                    <script src="{{ $chart_productos->cdn() }}"></script>
+
+                    {{ $chart_productos->script() }}
                     <a href="{{route('almacen.index')}}" class="btn btn-success mt-2 text-center align-content-center" >
                         <i class="bi bi-patch-plus-fill"></i>
                         Ver mas
@@ -86,6 +85,10 @@
             <div class="col d-flex align-items-center"></div>
 
         </div>
+        <div class="row">
+
+        </div>
+
     </div>
 @endsection
 @section('script')

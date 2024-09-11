@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\HomeCharts;
 use App\Models\Delivery;
 use App\Models\Producto;
 use App\Models\ServicioTecnico;
@@ -27,7 +28,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(HomeCharts $charts)
     {
         $sucursales=Sucursal::query()->get();
         $nombre_sucur=[];
@@ -82,7 +83,7 @@ class HomeController extends Controller
         }
 
         //Productos
-        $productos=Producto::query()->orderBy('nombre')->get();
+        $productos=Producto::query()->where('cantidad','<=',10)->orderBy('nombre')->get();
         $canti=[];
         $nombre_sucur=[];
         $nombre_producto=[];
@@ -138,6 +139,11 @@ class HomeController extends Controller
             'productos'=>$array,
             'categorias'=>$categorias,
             'devoluciones'=>$tot_devoluciones,
+            //GRAFICOS
+            'chart'=>$charts->build_deliveris(count($pendientes),count($proceso),count($entregadas)),
+            'chart1'=>$charts->build_servicio(count($pendie),count($entregados)),
+            'chart_ventas'=>$charts->build_ventas($nombre_sucur,$acum_sucur),
+            'chart_productos'=>$charts->build_productos($array,$categorias,$tot_devoluciones),
 
         ]);
     }
