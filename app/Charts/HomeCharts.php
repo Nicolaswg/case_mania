@@ -24,17 +24,17 @@ class HomeCharts
             ->setHeight(200)
             ;
     }
-    public function build_servicio($pendientes,$entregadas): \ArielMejiaDev\LarapexCharts\PieChart
+    public function build_servicio($pendientes,$entregadas): \ArielMejiaDev\LarapexCharts\DonutChart
     {
-        return $this->chart->pieChart()
+        return $this->chart->donutChart()
             ->setTitle('Servicio Tecnico')
             ->setSubtitle('Estatus')
-            ->setLabels(['Pendientes','Entregadas'])
-            ->addData([$pendientes,$entregadas])
+            ->addPieces([$pendientes,$entregadas])
             ->setColors(['#FF0000','#008000'])
+            ->setLabels(['Pendientes','Entregadas'])
             ->setHeight(200);
     }
-    public function build_ventas($nombre_sucur,$acum_sucur): \ArielMejiaDev\LarapexCharts\PolarAreaChart
+    public function build_ventas($nombre_sucur,$acum_sucur): \ArielMejiaDev\LarapexCharts\PieChart
     {
         $nom=[];
         $acum=[];
@@ -42,12 +42,13 @@ class HomeCharts
             $nom[]=$nombre;
             $acum[]=$acum_sucur[$i];
         }
-        $var= $this->chart->polarAreaChart()
+        //dd($nombre_sucur);
+        $var= $this->chart->pieChart()
                 ->setTitle('Ventas por Sucursal')
                 ->setSubtitle('Acumulado ($)')
                 ->setLabels($nom)
                 ->setHeight(250)
-                ->addPolarAreas($acum)
+                ->addPieces($acum)
                 ->setColors([ '#008FFB', '#00E396', '#feb019', '#ff455f', '#775dd0', '#80effe',
                     '#0077B5', '#ff6384', '#c9cbcf', '#0057ff', '00a9f4', '#2ccdc9', '#5e72e4'])
                 ->setDataLabels();
@@ -62,6 +63,9 @@ class HomeCharts
             ->setHeight(200);*/
     }
     public function build_productos($producto,$categorias,$devoluciones){
+
+        if($producto != null){
+
 
         $nombres=array_keys($producto);
         $cantidad=array_values($producto);
@@ -90,6 +94,7 @@ class HomeCharts
             ->setDataLabels();
 
         return $var;
+        }
 
     }
 

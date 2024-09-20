@@ -16,17 +16,18 @@
 <body>
 <div class="d-flex" id="wrapper"x|>
     <!-- Sidebar-->
-    <div class="border-end bg-white" id="sidebar-wrapper">
-        <div class="sidebar-heading border-bottom bg-light"><img src="{{asset('images/logo.png')}}" width="150" class="img-thumbnail rounded" alt="CaseMania"></div>
-        <div class="list-group list-group-flush text-center">
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('home')}}"><i class="bi bi-house-door-fill"></i> Inicio</a>
+
+    <div class="border-end " id="sidebar-wrapper">
+        <div class="sidebar-heading border-bottom bg-primary bg-gradient"><img src="{{asset('images/logo.png')}}" width="150" class="img-thumbnail rounded" alt="CaseMania"></div>
+        <div class="list-group text-center">
+            <a class="list-group-item list-group-item-action p-3  bg-gradient" href="{{route('home')}}"><i class="bi bi-house-door-fill"></i> Inicio</a>
           @admin
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('users.index')}}"><i class="bi bi-people-fill"></i> Usuarios</a>
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('sucursales.index')}}"><i class="bi bi-bank"></i> Sucursales</a>
+            <a class="list-group-item list-group-item-action bg-gradient p-3" href="{{route('users.index')}}"><i class="bi bi-people-fill"></i> Usuarios</a>
+            <a class="list-group-item list-group-item-action  p-3" href="{{route('sucursales.index')}}"><i class="bi bi-bank"></i> Sucursales</a>
           @endadmin
             @vendedor
-            <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('almacen.index')}}"><i class="bi bi-collection-fill"></i> Almacen</a>
-            <button class="btn btn-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i>
+            <a class="list-group-item list-group-item-action  p-3" href="{{route('almacen.index')}}"><i class="bi bi-collection-fill"></i> Almacen</a>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i>
                 Registros <i class="bi bi-caret-down-fill"></i>
             </button>
             <div class="collapse" id="home-collapse">
@@ -35,37 +36,37 @@
                     <li><a href="{{route('productos.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Productos</a></li>
                 </ul>
             </div>
-            <button class="btn btn-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#compras" aria-expanded="true"><i class="bi bi-cart-fill"></i>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#compras" aria-expanded="true"><i class="bi bi-cart-fill"></i>
                 Compras <i class="bi bi-caret-down-fill"></i>
             </button>
             <div class="collapse" id="compras">
-                <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
+                <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
                     <li><a href="{{route('proveedores.index')}}" class="link-dark rounded"><i class="bi bi-person-badge-fill"></i> Proveedores</a></li>
                     <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Compras</a></li>
                 </ul>
             </div>
             @endvendedor
             @servicio
-            <button class="btn btn-toggle list-group-item list-group-item-action list-group-item-light p-3" data-bs-toggle="collapse" data-bs-target="#ventas" aria-expanded="true"><i class="bi bi-graph-up-arrow"></i>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ventas" aria-expanded="true"><i class="bi bi-graph-up-arrow"></i>
                 Ventas <i class="bi bi-caret-down-fill"></i>
             </button>
             <div class="collapse" id="ventas">
-                <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
+                <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
                     <li><a href="{{route('clientes.index')}}" class="link-dark rounded"><i class="bi bi-person-plus-fill"></i> Clientes</a></li>
                     <li><a href="{{route('ventas.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Ventas</a></li>
                 </ul>
             </div>
             @endservicio
             @if(auth()->user()->isServicio() || auth()->user()->isAdmin() )
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('servicios.index')}}"><i class="bi bi-exclamation-square-fill"></i> Servicio Tecnico</a>
+                <a class="list-group-item list-group-item-action  p-3" href="{{route('servicios.index')}}"><i class="bi bi-exclamation-square-fill"></i> Servicio Tecnico</a>
             @endif
-                <a class="list-group-item list-group-item-action list-group-item-light p-3" href="{{route('deliverys.index')}}"><i class="bi bi-car-front-fill"></i> Deliverys</a>
+                <a class="list-group-item list-group-item-action  p-3" href="{{route('deliverys.index')}}"><i class="bi bi-car-front-fill"></i> Deliverys</a>
         </div>
     </div>
     <!-- Page content wrapper-->
     <div id="page-content-wrapper">
         <!-- Top navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-gradient border-bottom">
             <div class="container-fluid">
                 <button class="btn btn-dark" id="sidebarToggle"><i class="bi bi-arrow-left-right"></i></button>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -131,7 +132,7 @@
         methods:{
             setpreciodolar(){
                 $.ajax({
-                    url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                    url:'https://pydolarve.org/api/v1/dollar?page=bcv',
                     method:'GET',
                     dataType:'json',
                     success:function (data){

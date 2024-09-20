@@ -85,7 +85,7 @@ class HomeController extends Controller
         //Productos
         $productos=Producto::query()->where('cantidad','<=',10)->orderBy('nombre')->get();
         $canti=[];
-        $nombre_sucur=[];
+        $nombre_su=[];
         $nombre_producto=[];
         $array=[];
         $categorias=[];
@@ -93,7 +93,7 @@ class HomeController extends Controller
         foreach ($productos as $x=>$producto){
             $nombre_producto[$x]=$producto->nombre;
             foreach ($sucursales as $i=>$sucursal){
-                $nombre_sucur[$i]=$sucursal->nombre;
+                $nombre_su[$i]=$sucursal->nombre;
                 if(count($producto->almacen) != 0){
                     $produc=$sucursal->almacen()->where('sucursal_id',$sucursal->id )->where('producto_id',$producto->id)->orderBy('created_at')->first();
                     if($produc != null){

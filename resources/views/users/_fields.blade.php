@@ -41,7 +41,7 @@
     </div>
     <div class="form-group col-md-4">
         <label for="num_cel">Numero de Telefono</label>
-        <input type="number" class="form-control @if( $errors->get('num_cel')) field-error @endif" name="num_cel" id="num_cel" placeholder="0276-3431103"
+        <input type="tel" class="form-control @if( $errors->get('num_cel')) field-error @endif" name="num_cel" id="num_cel" placeholder="0276-3431103"
                value="{{ old('num_cel', $user->profile->num_cel) }}"
                pattern="[0-9]{4}-[0-9]{7}"
                title=" Los 4 primeros digitos separados por un guion y luego los 7 digitos restantes" >

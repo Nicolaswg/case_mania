@@ -70,11 +70,15 @@
                 </div>
                 <hr class="mt-0">
                 <div class="text-center">
+                    @if($productos != null)
                     {!! $chart_productos->container() !!}
 
                     <script src="{{ $chart_productos->cdn() }}"></script>
 
                     {{ $chart_productos->script() }}
+                    @else
+                        <h3>No hay Productos Bajo Stock</h3>
+                    @endif
                     <a href="{{route('almacen.index')}}" class="btn btn-success mt-2 text-center align-content-center" >
                         <i class="bi bi-patch-plus-fill"></i>
                         Ver mas

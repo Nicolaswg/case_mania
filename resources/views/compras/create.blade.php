@@ -73,7 +73,7 @@
             methods:{
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        url:'https://pydolarve.org/api/v1/dollar?page=bcv',
                         method:'GET',
                         dataType:'json',
                         success:function (data){
