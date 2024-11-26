@@ -21,10 +21,6 @@
         <div class="sidebar-heading border-bottom bg-primary bg-gradient"><img src="{{asset('images/logo.png')}}" width="150" class="img-thumbnail rounded" alt="CaseMania"></div>
         <div class="list-group text-center">
             <a class="list-group-item list-group-item-action p-3  bg-gradient" href="{{route('home')}}"><i class="bi bi-house-door-fill"></i> Inicio</a>
-          @admin
-            <a class="list-group-item list-group-item-action bg-gradient p-3" href="{{route('users.index')}}"><i class="bi bi-people-fill"></i> Usuarios</a>
-            <a class="list-group-item list-group-item-action  p-3" href="{{route('sucursales.index')}}"><i class="bi bi-bank"></i> Sucursales</a>
-          @endadmin
             @vendedor
             <a class="list-group-item list-group-item-action  p-3" href="{{route('almacen.index')}}"><i class="bi bi-collection-fill"></i> Almacen</a>
             <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i>
@@ -61,6 +57,18 @@
                 <a class="list-group-item list-group-item-action  p-3" href="{{route('servicios.index')}}"><i class="bi bi-exclamation-square-fill"></i> Servicio Tecnico</a>
             @endif
                 <a class="list-group-item list-group-item-action  p-3" href="{{route('deliverys.index')}}"><i class="bi bi-car-front-fill"></i> Deliverys</a>
+            @admin
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#empleado" aria-expanded="true"><i class="bi bi-person-circle"></i>
+                Empleados <i class="bi bi-caret-down-fill"></i>
+            </button>
+            <div class="collapse" id="empleado">
+                <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
+                    <li><a href="{{route('users.create')}}" class="link-dark rounded"><i class="bi bi bi-plus-lg"></i> Registrar un Empleado</a></li>
+                    <li><a href="{{route('users.index')}}" class="link-dark rounded"><i class="bi bi bi-list-nested"></i>Lista de Empleados</a></li>
+                </ul>
+            </div>
+            <a class="list-group-item list-group-item-action  p-3" href="{{route('sucursales.index')}}"><i class="bi bi-bank"></i> Sucursales</a>
+            @endadmin
         </div>
     </div>
     <!-- Page content wrapper-->
@@ -146,7 +154,8 @@
                     }
                 })
 
-            }
+            },
+
         },
     })
 

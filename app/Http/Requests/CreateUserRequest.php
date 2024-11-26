@@ -38,6 +38,10 @@ class CreateUserRequest extends FormRequest
             'state'=>[Rule::in(['active','inactive'])],
             'tipo_documento'=>'required',
             'num_documento'=>['required',Rule::unique('user_profiles','num_documento')],
+            'pregunta_1'=>'required',
+            'pregunta_2'=>'required',
+            'respuesta_1'=>'required',
+            'respuesta_2'=>'required',
         ];
     }
     public function messages()
@@ -68,6 +72,12 @@ class CreateUserRequest extends FormRequest
                     'tipo_documento'=>$this->input('tipo_documento'),
                     'num_documento'=>$this->input('num_documento'),
                     'sucursal_id'=>$this->input('sucursal_id'),
+                ]);
+                $user->seguridad()->create([
+                    'pregunta_1'=>$this->input('pregunta_1'),
+                    'pregunta_2'=>$this->input('pregunta_2'),
+                    'respuesta_1'=>$this->input('respuesta_1'),
+                    'respuesta_2'=>$this->input('respuesta_2'),
                 ]);
 
             });

@@ -35,6 +35,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Delivery::class);
     }
+    public function seguridad()//seguridad
+    {
+        return $this->hasOne(Seguridad::class)->withDefault();
+    }
     public function isAdmin(){
         return $this->role === 'admin';
     }

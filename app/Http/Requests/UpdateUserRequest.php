@@ -28,6 +28,10 @@ class UpdateUserRequest extends FormRequest
             'num_cel'=>['required'],
             'tipo_documento'=>'required',
             'num_documento'=>['required',Rule::unique('user_profiles','num_documento')->ignore($this->user->profile)],
+            'pregunta_1'=>'required',
+            'pregunta_2'=>'required',
+            'respuesta_1'=>'required',
+            'respuesta_2'=>'required',
             ];
     }
     public function messages()
@@ -62,6 +66,12 @@ class UpdateUserRequest extends FormRequest
             'tipo_documento'=>$this->tipo_documento,
             'num_documento'=>$this->num_documento,
             'sucursal_id'=>$this->sucursal_id,
+        ]);
+        $user->seguridad()->update([
+            'pregunta_1'=>$this->input('pregunta_1'),
+            'pregunta_2'=>$this->input('pregunta_2'),
+            'respuesta_1'=>$this->input('respuesta_1'),
+            'respuesta_2'=>$this->input('respuesta_2'),
         ]);
 
     }

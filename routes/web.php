@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlmacenController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\CompraController;
@@ -30,7 +31,10 @@ Route::get('/', function () {
 });
 
 Auth::routes(['register'=>false]);
-
+Route::get('password_reset',[LoginController::class,'reset_pasword'])->name('reset_pasword');
+Route::post('verificar/email',[LoginController::class,'verificar_email'])->name('verificar_email');
+Route::post('contraseña/update',[LoginController::class,'updatecontraseña'])->name('update_contraseña');
+Route::post('verificar/preguntas',[LoginController::class,'verificar_preguntas'])->name('verificar_preguntas');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware'=>['auth','vendedor']],function (){
     //ALMACEN
