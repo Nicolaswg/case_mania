@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', "Añadir Producto")
+@section('title', "Añadir un Producto")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('productos.index')}}" class="link-dark">Productos</a></li>
@@ -12,8 +12,8 @@
     <form method="POST" action="{{ url('productos') }}" id="app" enctype="multipart/form-data">
         @include('productos._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="submit"  class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Añadir Producto</button>
-            <a href="{{ route('productos.index') }}" class="btn btn-link">Regresar</a>
+            <button type="submit"  class="btn btn-primary"><i class="bi bi-save-fill"></i> Guardar Producto</button>
+            <a href="{{ route('productos.index') }}" class="btn btn-link">Regresar a Listado de Productos</a>
         </div>
     </form>
     @endcard
@@ -68,12 +68,12 @@
                 },
                 deleteuser:function (user_id){
                     Swal.fire({
-                        title: '¿Seguro que deseas eliminar el Usuario?',
+                        title: '¿Seguro que deseas eliminar el producto?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Eliminarlo!'
+                        confirmButtonText: 'Si, Eliminar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -87,8 +87,8 @@
                                 success:function (data){
                                     if(data){
                                         Swal.fire(
-                                            'Elimininado!',
-                                            'El archivo a sido Eliminado.',
+                                            'Eliminado',
+                                            'El producto ha sido eliminado exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()

@@ -57,7 +57,7 @@ class ClienteController extends Controller
             'email'=>$request->email,
         ]);
 
-        return redirect()->route('clientes.index')->with('success','Cliente Guardado con Exito');
+        return redirect()->route('clientes.index')->with('success','Cliente Guardado con Exitosamente');
     }
     public function edit(Cliente $cliente)
     {

@@ -9,7 +9,7 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         table {
-            font-size: 10px;
+            font-size: 15px;
             border-collapse: collapse;
             color: #1a202c;
         }
@@ -42,22 +42,27 @@
 
     <div class="row">
         <div class="col-md-6 text-center" >
-            <img src="{{asset('images/logo.png')}}" alt="Logo" height="120px" width="50%">
+            <img src="{{asset('images/logo.png')}}" alt="Logo" height="120px" width="40%">
         </div>
         <div class="col-md-6 text-center">
-            <p class="m-0">Rif: J-5165131</p>
-            <p class="m-0">Numero de Contacto: 0426-8796544</p>
+            <p class="m-0">Dirección: AV. Aviadores Centro Comercial Multicentro Locatel local 056</p>
+            <p class="m-0">Maracay - Estado Aragua</p>
+            <p class="m-0">Rif: J-50227944-0</p>
+            <p class="m-0">Número de Contacto: 0414-5432112</p>
         </div>
     </div>
     <hr>
 <div class="">
+    <h4>--- Datos del Cliente ---</h4>
     Cliente: <strong> {{ucwords($venta->cliente->nombre)}}</strong> / {{ucfirst($venta->cliente->tipo_documento)}}-{{$venta->cliente->num_documento}}<br>
-    Numero de Telefono: <strong>{{$venta->cliente->telefono}} </strong>  <br>
-    Fecha de Compra: <strong>{{\Carbon\Carbon::parse($venta->fecha_venta)->format('d-m-Y')}}</strong>
-
+    Número de Teléfono: <strong>{{$venta->cliente->telefono}} </strong>  <br>
+    Fecha de la Venta: <strong>{{\Carbon\Carbon::parse($venta->fecha_venta)->format('d-m-Y')}}</strong>
+    <hr>
+    <h5 class="text-center">Estimado Usuario, usted está adquiriendo una <strong>Nota de Entrega</strong>, para consignar su factura debe dirigirse a la tienda correspondiente</h5>
+    <hr>
     <table  width="100%" class="">
         <caption class="">
-            <h5 class="text-dark text-center">Detalles de Venta</h5>
+            <h5 class="text-dark text-center">Detalles de la Venta</h5>
         </caption>
         <thead>
         <tr class="text-center">
@@ -70,6 +75,9 @@
             </th>
             <th scope="col">
                Subtotal ($)
+            </th>
+            <th scope="col">
+               Tasa BCV
             </th>
         </tr>
         </thead>
@@ -93,6 +101,9 @@
                     <td class="text-center"  style="vertical-align: middle">
                         {{number_format($subtotal[$i],2,',','.')}}
                     </td>
+                    <td class="text-center"  style="vertical-align: middle">
+                       
+                    </td>
                 </tr>
             @endforeach
 
@@ -107,25 +118,25 @@
                 <thead class="table-dark">
                     <tr class="text-center">
                         <th colspan="4" class="">Monto a Pagar</th>
-                        <th >Dolar</th>
-                        <th>Bs</th>
+                        <th >Dólares</th>
+                        <th>Bolívares</th>
                     </tr>
                 </thead>
                 <tbody>
                 <tr class="text-center">
                     <th colspan="4">
-                        SUBTOTAL FACTURA
+                        Total a Pagar
                     </th>
                     <th>
                         {{number_format($venta->subtotal_dolar,2,',','.')}} $
                     </th>
                     <th>
-                        {{number_format(((float)$venta->subtotal_dolar* (float)$venta->tasa_bcv),2,',','.')}} Bs
+                        {{number_format(((float)$venta->subtotal_dolar * (float)$venta->tasa_bcv),2,',','.')}} Bs
                     </th>
                 </tr>
-                <tr class="text-center">
+                <!-- <tr class="text-center">
                     <th colspan="4">
-                        IVA (16%)
+                        I.V.A (16%)
                     </th>
                     <th>
                         {{number_format($venta->iva_dolar,2,',','.')}} $
@@ -136,7 +147,7 @@
                 </tr>
                 <tr class="text-center" style="border-style: double">
                     <th colspan="4">
-                        TOTAL FACTURA
+                        Total de la Nota de Entrega
                     </th>
                     <th>
                         {{number_format($venta->total_dolar,2,',','.')}} $
@@ -144,11 +155,11 @@
                     <th>
                         {{number_format(((float)$venta->total_dolar* (float)$venta->tasa_bcv),2,',','.')}} Bs
                     </th>
-                </tr>
+                </tr> -->
                 @if($venta->delivery->id != null)
                 <tr class="text-center" style="border-style: double">
                     <th colspan="4">
-                        COSTO DELIVERY
+                        Costo del Servicio a Domicilio
                     </th>
                     <th>
                         {{number_format($venta->delivery->costo_delivery,2,',','.')}} $
@@ -162,12 +173,6 @@
             </table>
         </div>
     </div>
-
-
-
-
-
-
     <br>
 </div>
 

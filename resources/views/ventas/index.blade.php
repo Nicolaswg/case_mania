@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Ventas')
+@section('title', 'Lista de Ventas')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Ventas</li>
@@ -22,8 +22,7 @@
            Lista de Ventas
         </h1>
         <p>
-            <a href="{{ route('ventas.create') }}" class="btn btn-dark">Añadir Nueva</a>
-
+            <a href="{{ route('ventas.create') }}" class="btn btn-primary bi bi-plus-lg"> Regisitrar Nueva Venta</a>
         </p>
     </div>
 
@@ -34,12 +33,11 @@
             <table class="table table-sm" id="app">
                 <thead class="thead-dark">
                 <tr class="" style="justify-content: center" align="center">
-                    <th scope="col">#</th>
                     <th scope="col"><a href="{{$sortable->url('fecha_venta')}}" class="{{ $sortable->classes('fecha_venta') }}">Fecha de Venta <i class="icon-sort"></i></a></th>
                     <th scope="col">Cliente </th>
                     <th scope="col">Productos Vendidos</th>
-                    <th scope="col">Delivery</th>
-                    <th scope="col">Estatus</th>
+                    <th scope="col">Servicio a Domicilio</th>
+                    <th scope="col">Estado</th>
                     <th scope="col" class="text-center th-actions">Acciones</th>
                 </tr>
                 </thead>
@@ -53,7 +51,7 @@
             {{ $ventas->links()}}
         </div>
     @else
-        <p>No hay Ventas registradas.</p>
+        <p>No hay Ventas Registradas.</p>
     @endif
 @endsection
 
@@ -75,7 +73,7 @@
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Eliminarlo!'
+                        confirmButtonText: 'Si, Eliminar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -89,8 +87,8 @@
                                 success:function (data){
                                     if(data.status=== true){
                                         Swal.fire(
-                                            'Elimininado!',
-                                            'la venta a sido Eliminado.',
+                                            'Eliminado',
+                                            'La venta ha sido eliminada exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()

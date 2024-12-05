@@ -27,7 +27,7 @@ class HomeCharts
     public function build_servicio($pendientes,$entregadas): \ArielMejiaDev\LarapexCharts\DonutChart
     {
         return $this->chart->donutChart()
-            ->setTitle('Servicio Tecnico')
+            ->setTitle('Servicios Técnicos')
             ->setSubtitle('Estatus')
             ->addPieces([$pendientes,$entregadas])
             ->setColors(['#FF0000','#008000'])

@@ -1,5 +1,5 @@
 <tr class="" align="center">
-    <td>{{$i + 1}}</td>
+<!--     <td>{{$i + 1}}</td> -->
     <td>
         <div style="display: flex; justify-content: center">
             <img src="{{asset('storage/productos/'.$producto->photo)}}" class="img-thumbnail" width="100" height="100" alt="{{'Foto'.$producto->photo}}">
@@ -15,7 +15,7 @@
     <td>
         {{ucwords($producto->categoria->nombre)}}
     </td>
-    <td>
+<!--    <td>
         <li class="list-group-item"> <strong>{{$producto->precio_compra}} $</strong></li>
     </td>
     <td>
@@ -23,7 +23,7 @@
     </td>
     <td>
         <li class="text-success list-group-item"> <strong>{{$producto->precio_venta == null ? 'No disponible' : $producto->precio_venta . '$'}} </strong></li>
-    </td>
+    </td>-->
     <td class="text-right">
         <a href="{{ route('productos.edit', $producto) }}" class="btn btn-outline-success btn-sm"><i class="bi bi-pencil-fill"></i></a>
         <button  type="button" class="btn btn-outline-danger btn-sm"  @click="deleteproducto({{$producto->id}})"><i class="bi bi-trash3-fill"></i></button>

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', "Editar Venta")
+@section('title', "Editar una Venta")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('ventas.index')}}" class="link-dark">Ventas</a></li>
@@ -12,8 +12,8 @@
     <form method="POST" action="{{ url('ventas') }}" id="app">
         @include('ventas._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="button" :disabled="(!datos || ini)"  class="btn btn-primary" @click="editardata()"><i class="bi bi-save-fill"></i> Editar Venta</button>
-            <a href="{{ route('ventas.index') }}" class="btn btn-link">Regresar</a>
+            <button type="button" :disabled="(!datos || ini)"  class="btn btn-primary" @click="editardata()"><i class="bi bi-pencil"></i> Editar Venta</button>
+            <a href="{{ route('ventas.index') }}" class="btn btn-link">Regresar a Lista de Ventas</a>
         </div>
     </form>
     @endcard

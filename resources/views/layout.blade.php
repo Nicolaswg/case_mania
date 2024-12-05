@@ -18,45 +18,11 @@
     <!-- Sidebar-->
 
     <div class="border-end " id="sidebar-wrapper">
-        <div class="sidebar-heading border-bottom bg-primary bg-gradient"><img src="{{asset('images/logo.png')}}" width="150" class="img-thumbnail rounded" alt="CaseMania"></div>
+        <div class="sidebar-heading border-bottom bg-info bg-opacity-50 text-center"><img src="{{asset('images/logo.png')}}" width="150" class="img-thumbnail rounded" alt="CaseMania"><label class="text-white text-center">J-50227944-0</label></div>
         <div class="list-group text-center">
+
+     <!-- Botones del Menú -->
             <a class="list-group-item list-group-item-action p-3  bg-gradient" href="{{route('home')}}"><i class="bi bi-house-door-fill"></i> Inicio</a>
-            @vendedor
-            <a class="list-group-item list-group-item-action  p-3" href="{{route('almacen.index')}}"><i class="bi bi-collection-fill"></i> Almacen</a>
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i>
-                Registros <i class="bi bi-caret-down-fill"></i>
-            </button>
-            <div class="collapse" id="home-collapse">
-                <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
-                    <li><a href="{{route('categorias.index')}}" class="link-dark rounded"><i class="bi bi-card-list"></i> Categorias de Productos</a></li>
-                    <li><a href="{{route('productos.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Productos</a></li>
-                </ul>
-            </div>
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#compras" aria-expanded="true"><i class="bi bi-cart-fill"></i>
-                Compras <i class="bi bi-caret-down-fill"></i>
-            </button>
-            <div class="collapse" id="compras">
-                <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
-                    <li><a href="{{route('proveedores.index')}}" class="link-dark rounded"><i class="bi bi-person-badge-fill"></i> Proveedores</a></li>
-                    <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Compras</a></li>
-                </ul>
-            </div>
-            @endvendedor
-            @servicio
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ventas" aria-expanded="true"><i class="bi bi-graph-up-arrow"></i>
-                Ventas <i class="bi bi-caret-down-fill"></i>
-            </button>
-            <div class="collapse" id="ventas">
-                <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
-                    <li><a href="{{route('clientes.index')}}" class="link-dark rounded"><i class="bi bi-person-plus-fill"></i> Clientes</a></li>
-                    <li><a href="{{route('ventas.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Ventas</a></li>
-                </ul>
-            </div>
-            @endservicio
-            @if(auth()->user()->isServicio() || auth()->user()->isAdmin() )
-                <a class="list-group-item list-group-item-action  p-3" href="{{route('servicios.index')}}"><i class="bi bi-exclamation-square-fill"></i> Servicio Tecnico</a>
-            @endif
-                <a class="list-group-item list-group-item-action  p-3" href="{{route('deliverys.index')}}"><i class="bi bi-car-front-fill"></i> Deliverys</a>
             @admin
             <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#empleado" aria-expanded="true"><i class="bi bi-person-circle"></i>
                 Empleados <i class="bi bi-caret-down-fill"></i>
@@ -67,18 +33,99 @@
                     <li><a href="{{route('users.index')}}" class="link-dark rounded"><i class="bi bi bi-list-nested"></i>Lista de Empleados</a></li>
                 </ul>
             </div>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#compras" aria-expanded="true"><i class="bi bi-cart-fill"></i>
+                Compras <i class="bi bi-caret-down-fill"></i>
+            </button>
+            <div class="collapse" id="compras">
+                <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
+                    <li><a href="{{route('compras.create')}}" class="link-dark rounded"><i class="bi bi-plus-lg"></i> Registrar una Compra</a></li>
+                    <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Compras</a></li>
+                    <li><a href="{{route('proveedores.index')}}" class="link-dark rounded"><i class="bi bi-person-badge-fill"></i> Lista de Proveedores</a></li>
+                </ul>
+            </div>
+        @endadmin
+
+        @if(auth()->user()->isServicio() || auth()->user()->isAdmin() || auth()->user()->isVendedor() )
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ventas" aria-expanded="true"><i class="bi bi-graph-up-arrow"></i>
+                Ventas <i class="bi bi-caret-down-fill"></i>
+            </button>
+            <div class="collapse" id="ventas">
+                <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
+                    <li><a href="{{route('ventas.create')}}" class="link-dark rounded"><i class="bi bi bi-plus-lg"></i> Realizar una Venta</a></li>
+                    <li><a href="{{route('ventas.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Ventas</a></li>
+                    <li><a href="{{route('clientes.index')}}" class="link-dark rounded"><i class="bi bi-people-fill"></i> Lista de Clientes</a></li>
+                </ul>
+            </div>
+            <a class="list-group-item list-group-item-action  p-3" href="{{route('almacen.index')}}"><i class="bi bi-collection-fill"></i> Almacén</a>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i>
+                Productos <i class="bi bi-caret-down-fill"></i>
+            </button>
+            <div class="collapse" id="home-collapse">
+                <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
+                    <li><a href="{{route('categorias.index')}}" class="link-dark rounded"><i class="bi bi-card-list"></i> Categorías de Productos</a></li>
+                    <li><a href="{{route('productos.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Productos</a></li>
+                </ul>
+            </div>
+        @endif
+
+        @if(auth()->user()->isServicio() || auth()->user()->isAdmin() )
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#servicio" aria-expanded="true"><i class="bi bi-phone"></i>
+                Servicio Técnico <i class="bi bi-caret-down-fill"></i>
+            </button>
+            <div class="collapse" id="servicio">
+                    <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
+                        <li><a href="{{route('servicios.create')}}" class="link-dark rounded"><i class="bi bi-plus-lg"></i> Registrar Servicio Técnico</a></li>
+                        <li><a href="{{route('servicios.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Servicios Técnicos</a></li>
+                    </ul>
+            </div>
+        @endif
+
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ser_domicilio" aria-expanded="true"><i class="bi bi-car-front-fill"></i>
+                Servicio a Domicilio <i class="bi bi-caret-down-fill"></i>
+                </button>
+                <div class="collapse" id="ser_domicilio">
+                    <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
+                        <li><a href="{{route('deliverys.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Servicios a Domicilio</a></li>
+                    </ul>
+            </button>
+            </div>
+
+        @admin
             <a class="list-group-item list-group-item-action  p-3" href="{{route('sucursales.index')}}"><i class="bi bi-bank"></i> Sucursales</a>
-            @endadmin
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#herramientas" aria-expanded="true"><i class="bi bi-tools"></i>
+                Herramientas <i class="bi bi-caret-down-fill"></i>
+                </button>
+                <div class="collapse" id="herramientas">
+                    <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
+                        <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-person-lines-fill"></i> Auditoría</a></li>
+                        <li><a href="{{route('base_datos')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-hdd"></i> Base de Datos</a></li>
+                    </ul>
+                </div>
+        @endadmin
+
+                <!-- <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ayuda" aria-expanded="true"><i class="bi bi-question-square-fill"></i>
+                Ayuda <i class="bi bi-caret-down-fill"></i>
+                </button>
+                <div class="collapse" id="ayuda">
+                    <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
+                        <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-book-half"></i> Manual de Usuario</a></li>
+                    </ul>
+                </div>  -->
+
+
+
         </div>
     </div>
-    <!-- Page content wrapper-->
+
+
+<!-- Page content wrapper-->
     <div id="page-content-wrapper">
-        <!-- Top navigation-->
-        <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-gradient border-bottom">
+        <!-- Tope de la Navegación-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-info bg-opacity-50 border-bottom">
             <div class="container-fluid">
-                <button class="btn btn-dark" id="sidebarToggle"><i class="bi bi-arrow-left-right"></i></button>
+                <button data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Contraer/Expandir" class="btn btn-dark" id="sidebarToggle"><i class="bi bi-arrow-left-right"></i></button>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <nav aria-label="breadcrumb" class="ml-3 mt-1">
+                <nav aria-label="breadcrumb" class="ml-3 mt-1 text-black">
                     <ol class="breadcrumb">
                         @yield('breadcrumb')
                     </ol>
@@ -86,12 +133,12 @@
                 <div class="collapse navbar-collapse" id="helper">
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
 
-                        <li class="nav-item active nav-link">Tasa BCV: <span class="fw-bold">@{{ tasa_dolar.price }}</span> Bs/Dolar</li>
+                        <li class="nav-item active nav-link text-black">Tasa BCV: <span class="fw-bold">@{{ tasa_dolar.price }}</span> Bs/Dólar</li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{auth()->user()->name}}</a>
+                            <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>{{strtolower(auth()->user()->role)}}</strong></a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 {{--<div class="dropdown-divider"></div>--}}
-                                 {{--  LOGOUT--}}
+                                 {{-- Cerrar Sesión--}}
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

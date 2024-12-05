@@ -9,7 +9,7 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         table {
-            font-size: 10px;
+            font-size: 15px;
             border-collapse: collapse;
             color: #1a202c;
         }
@@ -42,22 +42,26 @@
 
     <div class="row">
         <div class="col-md-6 text-center" >
-            <img src="{{asset('images/logo.png')}}" alt="Logo" height="120px" width="50%">
+            <img src="{{asset('images/logo.png')}}" alt="Logo" height="120px" width="40%">
         </div>
         <div class="col-md-6 text-center">
-            <p class="m-0">Rif: J-5165131</p>
-            <p class="m-0">Numero de Contacto: 0426-8796544</p>
+            <p class="m-0">Dirección: AV. Aviadores Centro Comercial Multicentro Locatel local 056</p>
+            <p class="m-0">Maracay - Estado Aragua</p>
+            <p class="m-0">Rif: J-50227944-0</p>
+            <p class="m-0">Número de Contacto: 0414-5432112</p>
         </div>
     </div>
     <hr>
 <div class="">
+    <h4>--- Datos del Proveedor ---</h4>
     Proveedor: <strong> {{ucwords($compra->proveedor->nombre)}}</strong> <br>
-    Numero de Telefono: <strong>{{$compra->proveedor->num_cel}} </strong>  <br>
-    Fecha de Compra: <strong>{{\Carbon\Carbon::parse($compra->fecha_compra)->format('d-m-Y')}}</strong>
+    Número de Teléfono: <strong>{{$compra->proveedor->num_cel}} </strong>  <br>
+    Fecha de la Compra: <strong>{{\Carbon\Carbon::parse($compra->fecha_compra)->format('d-m-Y')}}</strong>
+    
 
     <table  width="100%" class="">
         <caption class="">
-            <h5 class="text-dark text-center">Detalles de Compra</h5>
+            <h5 class="text-dark text-center">Detalles de la Compra</h5>
         </caption>
         <thead>
         <tr class="text-center">
@@ -107,14 +111,14 @@
                 <thead class="table-dark">
                 <tr class="text-center">
                     <th colspan="4" class="">Monto a Pagar</th>
-                    <th >Dolar</th>
-                    <th>Bs</th>
+                    <th >Dólares</th>
+                    <th>Bolívares</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr class="text-center">
                     <th colspan="4">
-                        SUBTOTAL FACTURA
+                        Subtotal de la Orden de Compra
                     </th>
                     <th>
                         {{number_format($compra->subtotal,2,',','.')}} $
@@ -125,18 +129,29 @@
                 </tr>
                 <tr class="text-center">
                     <th colspan="4">
-                        IVA (16%)
+                        I.V.A (16%)
                     </th>
                     <th>
-                        {{number_format($compra->iva,2,',','.')}} $
+                         -
                     </th>
                     <th>
                         {{number_format(((float)$compra->iva* (float)$compra->tasa_bcv),2,',','.')}} Bs
                     </th>
                 </tr>
+                <tr class="text-center">
+                    <th colspan="4">
+                        I.G.T.F
+                    </th>
+                    <th>
+                        {{number_format($compra->total,2,',','.')}} $
+                    </th>
+                    <th>
+                         -
+                    </th>
+                </tr>
                 <tr class="text-center" style="border-style: double">
                     <th colspan="4">
-                        TOTAL FACTURA
+                        Total de la Orden de Compra
                     </th>
                     <th>
                         {{number_format($compra->total,2,',','.')}} $

@@ -1,9 +1,9 @@
 @csrf
 <div class="row">
     <div class="col-md-3">
-        <label for="sucursal_id">Categoria</label>
+        <label for="sucursal_id">* Categoría:</label>
         <select name="categoria_id" id="categoria_id" class="form-control text-center @if( $errors->get('categoria_id')) field-error @endif">
-            <option value="">--SELECCIONA--</option>
+            <option value="">-- Seleccionar Categoría --</option>
             @foreach($categorias as $categoria)
                 <option value="{{ $categoria->id }}"{{ old('categoria_id',$producto->categoria_id)==$categoria->id ? ' selected' : '' }}>
                     {{ ucwords($categoria->nombre) }}
@@ -12,8 +12,8 @@
         </select>
     </div>
     <div class="col-md-3">
-        <label for="sucursal">Sucursal</label>
-        <select name="sucursal_id"  id="sucursal_id" class="form-control text-center" >
+        <label for="sucursal">* Sucursal:</label>
+        <select name="sucursal_id"  id="sucursal_id" class="form-control text-center">
             @foreach($sucursales as $sucursal)
                 <option value="{{ $sucursal->id }}"{{ old('sucursal_id'.$producto->sucursal_id) == $sucursal->id ? 'selected' : ''}} >
                     {{ ucwords($sucursal->nombre)}}
@@ -23,26 +23,36 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="nombre" class="form-control @if( $errors->get('nombre')) field-error @endif" name="nombre" id="nombre" value="{{ old('nombre', $producto->nombre) }}">
+            <label for="nombre">* Nombre del Producto:</label>
+            <input type="nombre" class="form-control @if( $errors->get('nombre')) field-error @endif" name="nombre" id="nombre" value="{{ old('nombre', $producto->nombre) }}" placeholder="Ej: Audífonos Samsung" autocomplete="off">
         </div>
     </div>
 
 </div>
 <div class="row">
-    <div class="form-group col-md-4">
+<!--    <div class="form-group col-md-4">
         <label for="cantidad">Cantidad</label>
         <input type="number" min="0" class="form-control text-center @if( $errors->get('cantidad')) field-error @endif" name="cantidad" id="cantidad"  value="{{ old('cantidad',$producto->cantidad) }}">
+    </div>-->
+    <div class="col-md-4">
+        <p>* Imagen referencial del Producto</p>
+        <input style="background-color: #0dcaf0 " type="file" name="photo" class="form-input-file @if( $errors->get('photo')) field-error @endif" accept="image/*" >
+        @if($producto->photo)
+            <div class="container mt-2" style="display: flex; justify-content: center">
+                <p><strong>Imagen Actual</strong></p>
+                <img src="{{asset('storage/productos/'. $producto->photo)}}" class="card-img" height="200" width="200" alt="producto">
+            </div>
+        @endif
     </div>
 
-    <div class="form-group col-md-8">
-        <label for="descripcion">Descripcion</label>
-        <input type="text" class="form-control @if( $errors->get('descripcion')) field-error @endif" name="descripcion" id="descripcion" value="{{ old('descripcion', $producto->descripcion) }}">
+    <div class="form-group col-md-7 ml-5">
+        <label for="descripcion">* Descripción del Producto:</label>
+        <textarea type="text" class="form-control @if( $errors->get('descripcion')) field-error @endif" name="descripcion" id="descripcion" value="{{ old('descripcion',$producto->descripcion) }}" placeholder="Ej: Audífonos Samsung Galaxy Buds - Negro"></textarea>
     </div>
 </div>
 @if(auth()->user()->isAdmin())
     <hr>
-<div class="row card-header">
+<!--<div class="row card-header">
     <div class="col-md-4 text-center">
         <label for="precio_compra"> <strong>Precio Compra ($)</strong></label>
         <input type="number" min="0" class="form-control text-center @if( $errors->get('precio_compra')) field-error @endif" name="precio_compra" id="precio_compra" @keyup="setprecio()" v-model="precio_compra"  value="{{ old('precio_compra',$producto->precio_compra) }}">
@@ -62,22 +72,9 @@
         <label for="precio_compra"> <strong>Precio Venta (Bs)</strong></label>
         <input type="number" readonly :value="total_bs" class="form-control text-center"  >
     </div>
-</div>
+</div>-->
     <hr>
 @endif
-<div class="row">
-    <div class="col-md-4">
-        <label for="">Imagen</label>
-        <input style="background-color: #0dcaf0 " type="file" name="photo" class="form-input-file @if( $errors->get('photo')) field-error @endif" accept="image/*" >
-        @if($producto->photo)
-            <div class="container mt-2" style="display: flex; justify-content: center">
-                <p><strong>Imagen Actual</strong></p>
-                <img src="{{asset('storage/productos/'. $producto->photo)}}" class="card-img" height="200" width="200" alt="producto">
-            </div>
-        @endif
-    </div>
-</div>
-
 <hr>
 
 

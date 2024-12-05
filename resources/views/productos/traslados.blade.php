@@ -1,8 +1,8 @@
 @extends('layout')
-@section('title', "Crear Traslado")
+@section('title', "Realizar un Traslado")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="{{route('almacen.index')}}" class="link-dark">Almacen</a></li>
+    <li class="breadcrumb-item"><a href="{{route('almacen.index')}}" class="link-dark">Almacén</a></li>
     <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
 @endsection
 @section('content')
@@ -13,20 +13,21 @@
     <div class="col-md-6 ">
         <div class="card">
             <div class="card-header">
-                Datos del Producto
+                <h5>Datos del Producto</h5>
             </div>
             <div class="card-body">
-                <h5 class="card-title">CODIGO: 00{{$producto->id }} NOMBRE: {{ucwords($producto->nombre)}}</h5>
+                <p><strong>Código: </strong>{{$producto->id }}<p>
+                <p><strong>Nombre: </strong>{{ucwords($producto->nombre)}}</p>
                 <div class="card-text">
-                    <p><strong>Categoria</strong>: {{ucwords( $producto->categoria->nombre) }}</p>
-                    <p><strong>Descripcion</strong>: {{ucfirst( $producto->descripcion) }}</p>
-                    <p><strong>Precio de Compra ($)</strong>: {{ $producto->precio_compra }}</p>
-                    <p><strong>Precio de Venta ($)</strong>: {{ $producto->precio_venta}}</p>
+                    <p><strong>Categoría: </strong> {{ucwords( $producto->categoria->nombre) }}</p>
+                    <p><strong>Descripción: </strong> {{ucfirst( $producto->descripcion) }}</p>
+                    <p><strong>Precio de Compra ($): </strong> {{ $producto->precio_compra }}</p>
+                    <p><strong>Precio de Venta ($): </strong> {{ $producto->precio_venta}}</p>
                     <hr>
                     <h5>Cantidades Disponibles por Sucursal</h5>
                     <div>
                         <ul class="list-group-item" v-for="(sucursal,index) in sucursales">
-                        <li> @{{ sucursal }}. Cantidad #: @{{ cantidad[index] }}</li>
+                        <li> @{{ sucursal }}. Cantidad: @{{ cantidad[index] }}</li>
                     </ul>
 
                     </div>
@@ -39,25 +40,26 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header">
-               SELECCIONA
+            <h5>Seleccionar Sucursal para el Traslado</h5>
             </div>
             <div class="card-body">
-                <label for="">Desde</label>
+                <label for="">Sucursal de Origen:</label>
                 <select name="" id="" v-model="desde" class="form-control" @change="setcantidad()">
-                    <option value="">--SELECCIONA--</option>
+                    <option value="">-- Seleccionar Sucursal de Origen --</option>
                     <option value="" v-for="(sucur,index) in sucursales" :value="index">@{{ sucur }}</option>
                 </select>
                 <hr>
-                <label for="">Hasta</label>
+                <label for="">Sucursal de Destino:</label>
                 <select name="" id="" class="form-control" v-model="hasta" @change="configcantidad()" :disabled="desde===''">
+                    <option value="">-- Seleccionar Sucursal de Destino --</option>
                     <option value="" v-for="(sucur,index) in sucursales2" :value="index">@{{ sucur }}</option>
                 </select>
                 <div v-if="selec_cantidad">
                     <hr>
-                    <label for="">Cantidad</label>
-                    <input type="number" min="1" class="form-control" :max="cantidad_produc " v-model="canti_traslado" @keyup="validate()">
+                    <label for="">Cantidad a Trasladar</label>
+                    <input type="number" minlength="1" class="form-control" :max="cantidad_produc " v-model="canti_traslado" @keyup="validate()">
                     <div class="text-center">
-                        <button type="button" @click="savetraslado()" :disabled="!validar" class="btn btn-primary mt-2" style="align-content: center">Trasladar</button>
+                        <button type="button" @click="savetraslado()" :disabled="!validar" class="btn btn-success mt-2 bi bi-box" style="align-content: center"> Trasladar Producto</button>
                     </div>
 
                 </div>

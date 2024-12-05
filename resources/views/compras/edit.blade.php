@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', "Editar Compra")
+@section('title', "Editar una Compra")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('compras.index')}}" class="link-dark">Compras</a></li>
@@ -7,13 +7,13 @@
 @endsection
 @section('content')
     @card
-    @slot('header', 'Editar Compra')
+    @slot('header', 'Editar una Compra')
     @include('shared._errors')
     <form method="POST" action="{{ url('compras') }}" id="app">
         @include('compras._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="button" :disabled="(!datos || ini)"  class="btn btn-primary" @click="editardata()"><i class="bi bi-save-fill"></i> Editar Factura</button>
-            <a href="{{ route('compras.index') }}" class="btn btn-link">Regresar</a>
+            <button type="button" :disabled="(!datos || ini)"  class="btn btn-primary" @click="editardata()"><i class="bi bi-pencil"></i> Editar Factura</button>
+            <a href="{{ route('compras.index') }}" class="btn btn-link">Regresar a Lista de Compras</a>
         </div>
     </form>
     @endcard

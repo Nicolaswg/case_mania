@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Productos')
+@section('title', 'Lista de Productos')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Productos</li>
@@ -22,7 +22,7 @@
            Lista de Productos
         </h1>
         <p>
-            <a href="{{ route('productos.create') }}" class="btn btn-dark">Añadir Nuevo</a>
+            <a href="{{ route('productos.create') }}" class="btn btn-primary bi bi-plus-lg"> Regisitrar Nuevo Producto</a>
 
         </p>
     </div>
@@ -34,14 +34,13 @@
             <table class="table table-sm" id="app">
                 <thead class="thead-dark">
                 <tr class="" style="justify-content: center" align="center">
-                    <th scope="col">#</th>
                     <th scope="col">Imagen</th>
-                    <th scope="col"><a href="{{$sortable->url('nombre')}}" class="{{ $sortable->classes('nombre') }}">Nombre <i class="icon-sort"></i></a></th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Categoria </th>
-                    <th scope="col">Precio de Compra </th>
+                    <th scope="col"><a href="{{$sortable->url('nombre')}}" class="{{ $sortable->classes('nombre') }}">Nombre del Producto <i class="icon-sort"></i></a></th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Categoría </th>
+<!--                    <th scope="col">Precio de Compra </th>
                     <th scope="col">% Ganancia </th>
-                    <th scope="col">Precio de Venta </th>
+                    <th scope="col">Precio de Venta </th>-->
                     <th scope="col" class="text-right th-actions">Acciones</th>
                 </tr>
                 </thead>
@@ -77,7 +76,7 @@
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Eliminarlo!'
+                        confirmButtonText: 'Si, Eliminar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -91,8 +90,8 @@
                                 success:function (data){
                                     if(data){
                                         Swal.fire(
-                                            'Elimininado!',
-                                            'El producto a sido Eliminado.',
+                                            'Eliminado',
+                                            'El producto ha sido eliminado exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()

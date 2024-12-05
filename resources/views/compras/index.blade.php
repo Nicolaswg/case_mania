@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Productos')
+@section('title', 'Lista de Compras')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Compras</li>
@@ -22,7 +22,7 @@
            Lista de Compras
         </h1>
         <p>
-            <a href="{{ route('compras.create') }}" class="btn btn-dark">Añadir Nueva</a>
+            <a href="{{ route('compras.create') }}" class="btn btn-primary bi bi-plus-lg"> Registrar Nueva Compra</a>
 
         </p>
     </div>
@@ -34,7 +34,7 @@
             <table class="table table-sm" id="app">
                 <thead class="thead-dark">
                 <tr class="" style="justify-content: center" align="center">
-                    <th scope="col">#</th>
+                    <th scope="col"># Factura</th>
                     <th scope="col"><a href="{{$sortable->url('fecha_compra')}}" class="{{ $sortable->classes('fecha_compra') }}">Fecha de Compra <i class="icon-sort"></i></a></th>
                     <th scope="col">Proveedor </th>
                     <th scope="col">Productos Adquiridos</th>
@@ -73,7 +73,7 @@
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Eliminarlo!'
+                        confirmButtonText: 'Si, Eliminar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -87,8 +87,8 @@
                                 success:function (data){
                                     if(data.status=== true){
                                         Swal.fire(
-                                            'Elimininado!',
-                                            'El archivo a sido Eliminado.',
+                                            'Eliminado',
+                                            'La compra ha sido eliminada exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()

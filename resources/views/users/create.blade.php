@@ -1,19 +1,19 @@
 @extends('layout')
-@section('title', "Crear usuario")
+@section('title', "Crear un Empleado")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="{{route('users.index')}}" class="link-dark">Usuarios</a></li>
+    <li class="breadcrumb-item"><a href="{{route('users.index')}}" class="link-dark">Empleados</a></li>
     <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
 @endsection
 @section('content')
     @card
-    @slot('header', 'Nuevo usuario')
+    @slot('header', 'Nuevo Empleado')
     @include('shared._errors')
     <form method="POST" action="{{ url('usuarios') }}" id="app">
         @include('users._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="submit" :disabled=" empleado === true && cargo === ''" class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Crear usuario</button>
-            <a href="{{ route('users.index') }}" class="btn btn-link">Regresar al listado de usuarios</a>
+            <button type="submit" :disabled=" empleado === true && cargo === ''" class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Crear Empleado</button>
+            <a href="{{ route('users.index') }}" class="btn btn-link">Regresar al Listado de Empleados</a>
         </div>
     </form>
     @endcard
@@ -39,12 +39,12 @@
                 },
                 deleteuser:function (user_id){
                     Swal.fire({
-                        title: '¿Seguro que deseas eliminar el Usuario?',
+                        title: '¿Seguro que deseas eliminar el empleado?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Eliminarlo!'
+                        confirmButtonText: 'Si, Eliminar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -58,8 +58,8 @@
                                 success:function (data){
                                     if(data){
                                         Swal.fire(
-                                            'Elimininado!',
-                                            'El archivo a sido Eliminado.',
+                                            'Eliminado',
+                                            'El empleado ha sido eliminado exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()

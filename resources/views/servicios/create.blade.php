@@ -1,19 +1,19 @@
 @extends('layout')
-@section('title', "Crear Servicio Tecnico")
+@section('title', "Crear un Servicio Técnico")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
-    <li class="breadcrumb-item"><a href="{{route('servicios.index')}}" class="link-dark">Servicio Tecnico</a></li>
+    <li class="breadcrumb-item"><a href="{{route('servicios.index')}}" class="link-dark">Servicio Técnico</a></li>
     <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
 @endsection
 @section('content')
     @card
-    @slot('header', 'Nuevo Servicio')
+    @slot('header', 'Nuevo Servicio Técnico')
     @include('shared._errors')
     <form method="POST" action="{{ url('servicio') }}" id="app">
         @include('servicios._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="button" :disabled="!datos" class="btn btn-primary" @click="savedata()"><i class="bi bi-person-plus-fill"></i> Guardar</button>
-            <a href="{{ route('servicios.index') }}" class="btn btn-link">Regresar al listado</a>
+            <button type="button" :disabled="!datos" class="btn btn-primary" @click="savedata()"><i class="bi bi-save-fill"></i> Guardar Servicio Técnico</button>
+            <a href="{{ route('servicios.index') }}" class="btn btn-link">Regresar a Listado de Servicios Técnico</a>
         </div>
     </form>
     @endcard

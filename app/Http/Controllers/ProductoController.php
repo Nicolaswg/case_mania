@@ -6,8 +6,10 @@ use App\Http\Requests\CreateProductoRequest;
 use App\Http\Requests\UpdateProductoRequest;
 use App\Models\Almacen;
 use App\Models\Categoria;
+use App\Models\Compra;
 use App\Models\filters\ProductoFilter;
 use App\Models\Producto;
+use App\Models\Proveedor;
 use App\Models\Sortable;
 use App\Models\Sucursal;
 use Carbon\Carbon;
@@ -122,7 +124,7 @@ class ProductoController extends Controller
     {
         foreach ($productos as $i=>$producto){
             if($producto->precio_compra || $producto->precio_venta == null){
-                $producto->status='inactivo';
+                $producto->status='activo';
             }
             if($producto->precio_compra != null){
                 $producto->precio_venta=((float)$producto->precio_compra * ((int)$producto->porcentaje_ganancia/100))+$producto->precio_compra;
@@ -136,15 +138,17 @@ class ProductoController extends Controller
 
     }
     public function selecproducto(Request $request){
-        $categoria_id=$request->categoria_id;
         if($request->tipo == 'compras'){
+            $proveedor_id=$request->proveedor_id;
+            $prove=Proveedor::query()->where('id',$proveedor_id)->first();
+            $categoria_id=$prove->categoria->id;
             $productos= Producto::query()
                 ->where('status','activo')
                 ->whereHas('categoria',function ($q) use ($categoria_id){
                     $q->where('id',$categoria_id);
                 })->orderBy('nombre')->get();
         }else{
-
+            $categoria_id=$request->categoria_id;
             $productos= Producto::query()
                 ->where('status','activo')
                 ->whereHas('categoria',function ($q) use ($categoria_id){
@@ -252,6 +256,22 @@ class ProductoController extends Controller
             'sortable'=>$sortable,
             'categorias'=>Categoria::query()->orderBy('nombre')->get()
         ]);
+    }
+    public function update_productos(Request $request){
+        foreach ($request->ids_productos as $i=>$id) {
+            $producto = Producto::query()->where('id', $id)->first();
+            $producto->update([
+                'precio_compra' => (float)$request->precio_productos[$i],
+                'cantidad' => $producto->cantidad + (int)$request->cantidad_productos[$i]
+            ]);
+        }
+        $compra=Compra::query()->where('id',$request->compra_id)->first();
+        $compra->update([
+            'status_carga'=>true,
+        ]);
+       return [
+           'status'=>true
+       ];
     }
     public function traslados_almacen(Producto $producto){
         $sucursales=Sucursal::query()

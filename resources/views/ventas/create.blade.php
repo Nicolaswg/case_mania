@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', "Regitrar Venta")
+@section('title', "Realizar una Venta")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('ventas.index')}}" class="link-dark">Ventas</a></li>
@@ -7,13 +7,13 @@
 @endsection
 @section('content')
     @card
-    @slot('header', 'Registrar Venta')
+    @slot('header', 'Realizar Venta')
     @include('shared._errors')
     <form method="POST" action="{{ url('ventas') }}" id="app" >
         @include('ventas._fields')
         <div class="form-group mt-4" align="middle">
             <button type="button" :disabled="!datos || !checkdelivery()"  class="btn btn-primary" @click="savedata()"><i class="bi bi-save-fill"></i> Guardar Venta</button>
-            <a href="{{ route('ventas.index') }}" class="btn btn-link">Regresar</a>
+            <a href="{{ route('ventas.index') }}" class="btn btn-link">Regresar a Lista de Ventas</a>
         </div>
     </form>
     @endcard
@@ -325,6 +325,9 @@
                             console.log(jqXHR.responseJSON)
                         }
                     })
+                },
+                validar(){
+
                 }
 
             },

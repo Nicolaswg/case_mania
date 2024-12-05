@@ -68,8 +68,8 @@ class CompraController extends Controller
         $photos=explode(',',$compra->detalle_compra->photos);
         $categoria=explode(',',$compra->detalle_compra->categorias_productos);
         $tasa=$compra->tasa_bcv;
-
         return[
+            'status'=>true,
             'compra_id'=>$compra,
             'ids'=>($ids),
             'cantidad'=>($cantidad),
@@ -82,7 +82,11 @@ class CompraController extends Controller
             'subtotal_factura'=>$compra->subtotal,
             'iva'=>$compra->iva,
             'total_factura'=>$compra->total,
-            'proveedor_id'=>$compra->proveedor->id
+            'proveedor_id'=>$compra->proveedor->id,
+            'proveedor_nombre'=>$compra->proveedor->nombre,
+            'proveedor_rif'=>$compra->proveedor->tipo.'-'.$compra->proveedor->rif,
+            'fecha_compra'=>Carbon::parse($compra->fecha_compra)->format('d-m-Y'),
+            'subtotal_compra'=>$compra->subtotal,
         ];
     }
     public function update(Request $request){
@@ -137,6 +141,7 @@ class CompraController extends Controller
                 'sucursal_id'=>$request->sucursal_id,
                 'iva' => $request->iva_factura,
                 'total' => $request->total_factura,
+                'status_carga'=>false,
             ]);
 
             DetalleCompra::create([
@@ -150,15 +155,26 @@ class CompraController extends Controller
                 'subtotal' => implode(',', $request->subtotal_productos),
             ]);
         });
-        foreach ($request->ids_productos as $i=>$id){
+        /*foreach ($request->ids_productos as $i=>$id){
             $producto=Producto::query()->where('id',$id)->first();
             $producto->update([
                 'precio_compra'=>(float)$request->precio_productos[$i],
                 'cantidad'=>$producto->cantidad + (int) $request->cantidad_productos[$i]
             ]);
-        }
+        }*/
         return [
           'status'=>true,
+        ];
+    }
+    public function cargar_compras(){
+        $compras=Compra::query()->where('status_carga',false)->orderBy('id')->get();
+        return view('compras.cargar',[
+            'compras'=>$compras,
+        ]);
+    }
+    public function selec_data_factura(){
+        return [
+            'status'=>true,
         ];
     }
     public function showpdf(Compra $compra){

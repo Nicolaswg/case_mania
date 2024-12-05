@@ -4,7 +4,7 @@
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" value="pendiente" {{'pendiente' == request('delivery') ? 'checked' : ''}} id="" name="delivery">
                 <label class="form-check-label" for="flexCheckDefault">
-                    Delivery Pendiente
+                Servicios a Domicilio Pendientes
                 </label>
             </div>
         </div>
@@ -12,8 +12,8 @@
     <div class="row row-filters">
         <div class="col-md-10">
             <div class="form-inline form-search">
-                <input type="search" name="search" value="{{ request('search') }}" size="80" class="form-control form-control-sm" placeholder="Buscar...">
-                <button type="submit" class="btn btn-md btn-primary">Filtrar</button>
+                <input type="search" name="search" value="{{ request('search') }}" size="80" class="form-control form-control-sm" placeholder="Buscar venta..." autocomplete="off">
+                <button type="submit" class="btn btn-md btn-primary">Buscar</button>
             </div>
         </div>
     </div>

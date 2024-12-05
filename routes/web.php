@@ -45,12 +45,15 @@ Route::group(['middleware'=>['auth','vendedor']],function (){
 
     //COMPRAS
     Route::get('compras',[CompraController::class,'index'])->name('compras.index');
+    Route::get('compras/cargar',[CompraController::class,'cargar_compras'])->name('compras.cargar');
+    Route::post('compras/selecdata',[CompraController::class,'selecdata']);
     Route::get('/compras/nueva', [CompraController::class, 'create'])->name('compras.create');
     Route::post('compras',[CompraController::class,'store'])->name('compras.store');
     Route::get('compras/{compra}/mostrar',[CompraController::class,'show'])->name('compras.show');
     Route::get('compras/{compra}/pdf',[CompraController::class,'showpdf'])->name('compras.showpdf');
     Route::get('compras/{compra}/editar',[CompraController::class,'edit'])->name('compras.edit');
     Route::post('cargarproducto',[CompraController::class,'selecdata']);
+    Route::post('compras/update_productos',[ProductoController::class,'update_productos']);
     Route::post('compra/update',[CompraController::class,'update']);
     Route::post('/compra/delete',[CompraController::class,'delete'])->middleware('password.confirm')->name('compras.delete');
 
@@ -140,7 +143,16 @@ Route::group(['middleware'=>['auth','admin']],function (){
     Route::put('/usuarios/{user}', [UserController::class, 'update']);
     Route::post('/usuarios', [UserController::class, 'store']);
     Route::post('/user/delete', [UserController::class, 'destroy'])->name('users.destroy');
-
+    Route::get('base_datos',function (){
+        $ubicacionArchivoTemporal = getcwd() . DIRECTORY_SEPARATOR . "Respaldo_" . uniqid(date("Y-m-d") . "_", true) . ".sql";
+        $salida = "";
+        $comando = sprintf("%s --user=\"%s\" --password=\"%s\" %s > %s", env("UBICACION_MYSQLDUMP"), env("DB_USERNAME"), env("DB_PASSWORD"), env("DB_DATABASE"), $ubicacionArchivoTemporal);
+        exec($comando, $salida, $codigoSalida);
+        if ($codigoSalida !== 0) {
+            return "Código de salida distinto de 0, se obtuvo código (" . $codigoSalida . "). Revise los ajustes e intente de nuevo";
+        }
+        return response()->download($ubicacionArchivoTemporal);
+    })->name('base_datos');
     //Sucursales
 
     Route::get('/sucursales', [SucursalController::class, 'index'])
@@ -161,7 +173,6 @@ Route::group(['middleware'=>['auth','delivery']],function (){
     Route::post('/delivery/update/repartidor',[DeliveryController::class,'updaterepartidor']);
     Route::post('/delivery/registrar',[DeliveryController::class,'update']);
 });
-
 
 
 

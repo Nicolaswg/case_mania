@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\filters\ProveedorFilter;
 use App\Models\Proveedor;
 use App\Models\Sortable;
@@ -32,6 +33,7 @@ class ProveedorController extends Controller
     {
         return view($view, [
             'proveedor' => $proveedor,
+            'categorias'=>Categoria::query()->orderBy('nombre')->get(),
             'vista'=>$vista
         ]);
     }
@@ -42,15 +44,16 @@ class ProveedorController extends Controller
            'num_cel'=>'required',
            'tipo'=>'required',
            'nombre'=>'required',
+           'categoria_id'=>'required'
 
        ]);
-
         Proveedor::create([
             'nombre'=>$request->nombre,
             'num_cel'=>$request->num_cel,
             'tipo'=>$request->tipo,
             'rif'=>$request->rif,
             'status'=>$request->state,
+            'categoria_id'=>$request->categoria_id,
         ]);
 
         return redirect()->route('proveedores.index')->with('success','Proveedor Guardado con Exito');
@@ -66,6 +69,8 @@ class ProveedorController extends Controller
             'num_cel'=>'required',
             'tipo'=>'required',
             'nombre'=>'required',
+            'categoria_id'=>'required'
+
         ]);
         $proveedor->update([
             'nombre'=>$request->nombre,
@@ -73,6 +78,7 @@ class ProveedorController extends Controller
             'tipo'=>$request->tipo,
             'rif'=>$request->rif,
             'status'=>$request->state,
+            'categoria_id'=>$request->categoria_id,
         ]);
         $proveedor->save();
 

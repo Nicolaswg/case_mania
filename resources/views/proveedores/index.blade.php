@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Proveedores')
+@section('title', 'Lista de Proveedores')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Proveedores</li>
@@ -22,20 +22,32 @@
             Lista de Proveedores
         </h1>
         <p>
-            <a href="{{ route('proveedores.create') }}" class="btn btn-dark">Nuevo Proveedor</a>
+            <a href="{{ route('proveedores.create') }}" class="btn btn-primary bi bi-plus-lg"> Registrar Nuevo Proveedor</a>
         </p>
     </div>
 
-    @include('proveedores._filters')
+   @include('proveedores._filters')
     @if ($proveedores->isNotEmpty())
-        <p>Viendo pagina {{$proveedores->currentPage()}} de {{$proveedores->lastPage()}}</p>
+    <!-- <div class="d-flex justify-content-between align-items-end mb-2">
+        <p>
+            <a href="{{ route('proveedores.create') }}" class="btn btn-primary bi bi-plus-lg"> Registrar Nuevo Proveedor</a>
+        </p>
+    </div> -->
+    <div class="card col-md-3" align="left">
+        <div class="text-center"><label><strong >Leyenda</strong></label></div>
+            <label>Estado Activo = <strong class="text-success">Verde</strong></label>
+            <label>Estado Inactivo = <strong class="text-danger">Rojo</strong></label>
+    </div>
+        <br><p>Viendo pagina {{$proveedores->currentPage()}} de {{$proveedores->lastPage()}}</p>
         <div class="table-responsive-lg">
             <table class="table table-sm" id="app">
-                <thead class="thead-dark">
+                <thead class="thead-dark ">
                 <tr class="">
-                    <th scope="col">#</th>
-                    <th scope="col"><a href="{{$sortable->url('nombre')}}" class="{{ $sortable->classes('nombre') }}">Nombre <i class="icon-sort"></i></a></th>
-                    <th scope="col">Registro</th>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col"><a href="{{$sortable->url('nombre')}}" class="{{ $sortable->classes('nombre') }}">Razón Social <i class="icon-sort"></i></a></th>
+                    <th scope="col" class="">Contacto</th>
+                    <th scope="col" class="text-center">Fecha de Registro</th>
+                    <th scope="col" class="text-center">Categoría Asociada</th>
                     <th scope="col" class="text-right th-actions">Acciones</th>
                 </tr>
                 </thead>
@@ -71,7 +83,7 @@
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Desactivarlo!'
+                        confirmButtonText: 'Si, Desactivar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -85,8 +97,8 @@
                                 success:function (data){
                                     if(data){
                                         Swal.fire(
-                                            'Desactivado!',
-                                            'El Proveedor a sido Desactivado de Forma Exitosa.',
+                                            'Desactivado',
+                                            'El Proveedor ha sido desactivado de exitosamente.',
                                             'success',
                                         ).then(function (){
                                             location.reload()

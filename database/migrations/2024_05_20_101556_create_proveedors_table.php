@@ -17,6 +17,9 @@ class CreateProveedorsTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('rif');
+            $table->foreignId('categoria_id')->nullable()
+                ->references('id')
+                ->on('categorias')->onUpdate('CASCADE')->onDelete('set null');
             $table->string('tipo');
             $table->string('status');
             $table->string('num_cel');

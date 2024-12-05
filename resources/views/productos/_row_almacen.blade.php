@@ -1,5 +1,5 @@
 <tr class="" align="center">
-    <td>{{$i + 1}}</td>
+<!--     <td>{{$i + 1}}</td> -->
     <td>
         <div style="display: flex; justify-content: center">
             <img src="{{asset('storage/productos/'.$producto->photo)}}" class="img-thumbnail" width="100" height="100" alt="{{'Foto'.$producto->photo}}">
@@ -15,7 +15,6 @@
     <td>
         {{ucwords($producto->categoria->nombre)}}
     </td>
-    <td>
         <?php
         $canti=[];
         $nombre_sucur=[];
@@ -45,17 +44,14 @@
         }
             $tot=array_sum($canti);
         ?>
+        <th>
+        {{$tot}}
+        </th>
+        <td>
         <table>
-            <thead>
-                <tr class="text-center">
-                    <th rowspan="">Cantidad Total</th>
-                    <th colspan="4" class="text-center">Distribucion</th>
-                </tr>
-            </thead>
             <tbody>
-
                 <tr class="text-center">
-                    <th rowspan="{{count($nombre_sucur) + 1}}">{{$tot}}</th>
+                    <!-- <th rowspan="{{count($nombre_sucur) + 1}}">{{$tot}}</th> -->
                     @foreach($nombre_sucur as $i=>$sucur)
                         <tr class="text-center">
                             <td>{{$sucur}} : {{$canti[$i]}}</td>

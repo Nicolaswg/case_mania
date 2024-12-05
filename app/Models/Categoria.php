@@ -13,6 +13,10 @@ class Categoria extends Model
     {
         return $this->hasMany(Producto::class);
     }
+    public function proveedores()
+    {
+        return $this->hasMany(Proveedor::class);
+    }
     public function setStateAttribute($value){
         $this->attributes['active'] = $value=='active';
     }

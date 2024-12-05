@@ -27,7 +27,7 @@
 <div class="row">
     <div class="form-group col-md-4">
         <label for="name">* Nombre y Apellido:</label>
-        <input type="text" class="form-control @if( $errors->get('name')) field-error @endif" name="name" id="name" placeholder="Ej: Pedro Perez" value="{{ old('name', $user->name) }}" autocomplete="off" oninput="Sololetras(this)" minlength="4">
+        <input type="text" class="form-control @if( $errors->get('name')) field-error @endif" name="name" id="name" placeholder="Ej: Pedro Perez" value="{{ old('name', $user->name) }}" autocomplete="off" minlength="4">
     </div>
     <div class="form-group col-md-4">
         <label for="email">* Correo Electrónico:</label>
@@ -54,7 +54,7 @@
 <div class="row">
     <div class="form-group col-md-4">
         <label for="num_cel">* Número de Teléfono:</label>
-        <input type="tel" class="form-control @if( $errors->get('num_cel')) field-error @endif" name="num_cel" id="num_cel" placeholder="Ej: 0276-3431103" oninput="NumTel(this)" minlength="12" maxlength="12"
+        <input type="tel" class="form-control @if( $errors->get('num_cel')) field-error @endif" name="num_cel" id="num_cel" placeholder="Ej: 0276-3431103" minlength="12" maxlength="12"
                value="{{ old('num_cel', $user->profile->num_cel) }}"
                pattern="[0-9]{4}-[0-9]{7}"
                title=" Los 4 primeros digitos separados por un guion y luego los 7 digitos restantes" autocomplete="off">

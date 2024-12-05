@@ -12,7 +12,7 @@
     <form method="POST" action="{{ url('compras') }}" id="app" >
         @include('compras._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="button" :disabled="!datos"  class="btn btn-primary" @click="savedata()"><i class="bi bi-save-fill"></i> Guardar Factura</button>
+            <button type="button" :disabled="!datos"  class="btn btn-primary" @click="savedata()"><i class="bi bi-save-fill"></i> Guardar Orden de Compra</button>
             <a href="{{ route('compras.index') }}" class="btn btn-link">Regresar</a>
         </div>
     </form>
@@ -32,7 +32,8 @@
                     price:0,
                     date:'',
                 },
-            categoria_id:'',
+                categoria_id:'',
+                categoria_nombre:'',
                 productos:{
                     nombres:[],
                     ids:[],
@@ -88,11 +89,12 @@
                     })
                 },
                 selecproductos(){
+                console.log(this.proveedor)
                     $.ajax({
                         url:'/selecproducto',
                         method:'POST',
                         data:{
-                            'categoria_id':app.categoria_id,
+                            'proveedor_id':app.proveedor,
                             'sucursal_id':app.sucursal,
                             'tipo':'compras',
                             "_token": "{{ csrf_token() }}"
@@ -100,10 +102,12 @@
                         dataType:'json',
                         success:function (data){
                             if(data){
+
                                 app.productos.nombres=data.nombres
                                 app.productos.ids=data.ids
                                 app.productos.photos=data.photos
                                 app.productos.nombre_categoria=data.nombre_categoria
+                                console.log( app.productos.nombres)
                             }
                         },
                         error:function (jqXHR){

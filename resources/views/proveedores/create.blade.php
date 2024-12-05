@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', "Crear Proveedor")
+@section('title', "Crear un Proveedor")
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('proveedores.index')}}" class="link-dark">Proveedores</a></li>
@@ -12,8 +12,8 @@
     <form method="POST" action="{{ url('proveedores') }}" id="app">
         @include('proveedores._fields')
         <div class="form-group mt-4" align="middle">
-            <button type="submit" class="btn btn-primary"><i class="bi bi-person-plus-fill"></i> Guardar Proveedor</button>
-            <a href="{{ route('proveedores.index') }}" class="btn btn-link">Regresar al listado</a>
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save-fill"></i> Guardar Proveedor</button>
+            <a href="{{ route('proveedores.index') }}" class="btn btn-link">Regresar al Listado de Proveedores</a>
         </div>
     </form>
     @endcard

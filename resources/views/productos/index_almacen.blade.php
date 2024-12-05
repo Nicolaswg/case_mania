@@ -1,9 +1,9 @@
 @extends('layout')
 
-@section('title', 'Almacen')
+@section('title', 'Almacén')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Almacen</li>
+    <li class="breadcrumb-item active" aria-current="page">Almacén</li>
 @endsection
 
 @section('content')
@@ -19,11 +19,12 @@
     @endif
     <div class="d-flex justify-content-between align-items-end mb-3">
         <h1 class="pb-1">
-          Productos en Almacen
+          Productos por Sucursal
         </h1>
         <p>
-            <a href="{{ route('compras.create') }}" class="btn btn-dark">Añadir Compra</a>
-            <a href="{{ route('productos.create') }}" class="btn btn-dark">Añadir Producto</a>
+            <a href="{{ route('compras.cargar') }}" class="btn btn-success bi bi-plus-lg">Cargar Compra</a>
+            <a href="{{ route('compras.create') }}" class="btn btn-primary bi bi-plus-lg">Registrar Nueva Compra</a>
+            <a href="{{ route('productos.create') }}" class="btn btn-primary bi bi-plus-lg">Registrar Nuevo Producto</a>
         </p>
     </div>
 
@@ -34,12 +35,12 @@
             <table class="table table-sm" id="app">
                 <thead class="thead-dark">
                 <tr class="" style="justify-content: center" align="center">
-                    <th scope="col">#</th>
                     <th scope="col">Imagen</th>
-                    <th scope="col"><a href="{{$sortable->url('nombre')}}" class="{{ $sortable->classes('nombre') }}">Nombre <i class="icon-sort"></i></a></th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Categoria </th>
-                    <th scope="col">Cantidad Disponible</th>
+                    <th scope="col" class="text-center"><a href="{{$sortable->url('nombre')}}" class="{{ $sortable->classes('nombre') }}">Nombre <i class="icon-sort"></i></a></th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Categoría</th>
+                    <th scope="col">Cantidad Total</th>
+                    <th scope="col">Disponible por Sucursal</th>
                     <th scope="col">Devoluciones</th>
                     <th scope="col">Acciones</th>
                 </tr>
@@ -76,7 +77,7 @@
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Eliminarlo!'
+                        confirmButtonText: 'Si, Eliminar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -90,8 +91,8 @@
                                 success:function (data){
                                     if(data){
                                         Swal.fire(
-                                            'Elimininado!',
-                                            'El archivo a sido Eliminado.',
+                                            'Eliminado',
+                                            'El producto ha sido eliminado exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()

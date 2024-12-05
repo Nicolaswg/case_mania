@@ -25,6 +25,7 @@ class CreateComprasTable extends Migration
             $table->float('subtotal');
             $table->float('iva');
             $table->float('total');
+            $table->boolean('status_carga')->default(false);
 
             $table->timestamps();
         });

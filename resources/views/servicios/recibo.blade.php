@@ -9,7 +9,7 @@
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <style>
         table {
-            font-size: 10px;
+            font-size: 15px;
             border-collapse: collapse;
             color: #1a202c;
         }
@@ -42,23 +42,26 @@
 
     <div class="row">
         <div class="col-md-6 text-center" >
-            <img src="{{asset('images/logo.png')}}" alt="Logo" height="120px" width="50%">
+            <img src="{{asset('images/logo.png')}}" alt="Logo" height="120px" width="40%">
         </div>
         <div class="col-md-6 text-center">
-            <p class="m-0">Rif: J-5165131</p>
-            <p class="m-0">Numero de Contacto: 0426-8796544</p>
+            <p class="m-0">Dirección: AV. Aviadores Centro Comercial Multicentro Locatel local 056</p>
+            <p class="m-0">Maracay - Estado Aragua</p>
+            <p class="m-0">Rif: J-50227944-0</p>
+            <p class="m-0">Número de Contacto: 0414-5432112</p>
         </div>
     </div>
     <hr>
 <div class="">
+    <h4>--- Datos del Cliente ---</h4>
     Cliente: <strong> {{ucwords($servicio->cliente->nombre)}}</strong> / {{ucfirst($servicio->cliente->tipo_documento)}}-{{$servicio->cliente->num_documento}}<br>
-    Numero de Telefono: <strong>{{$servicio->cliente->telefono}} </strong>  <br>
+    Número de Teléfono: <strong>{{$servicio->cliente->telefono}} </strong>  <br>
     Recibido por: <strong>{{ucwords($servicio->user)}}</strong> <br>
-    Fecha Recepcion: <strong>{{\Carbon\Carbon::parse($servicio->fecha_recibido)->format('d-m-Y h:i A')}}</strong>
-    <h5 class="@if($servicio->status == 'recibido') text-info @else text-success  @endif ">ESTATUS: {{strtoupper($servicio->status)}}</h5>
+    Fecha de Recepción: <strong>{{\Carbon\Carbon::parse($servicio->fecha_recibido)->format('d-m-Y h:i A')}}</strong>
+    <h5 class="@if($servicio->status == 'recibido') text-info @else text-success  @endif ">Estado: {{strtoupper($servicio->status)}}</h5>
     <table  width="100%" class="">
         <caption class="">
-            <h5 class="text-dark text-center">Detalles del Servicio</h5>
+            <h5 class="text-dark text-center">Detalles del Servicio Técnico</h5>
         </caption>
         <thead>
         <tr class="text-center">
@@ -71,7 +74,7 @@
             </th>
             @if($servicio->status == 'entregado')
                 <th>
-                    Estatus Fallas
+                    Estado de la Falla
                 </th>
             @endif
             <th scope="col">
@@ -116,8 +119,8 @@
                     <th colspan="2" class="">Monto a Pagar</th>
                 </tr>
                 <tr class="text-center">
-                    <th >Dolar</th>
-                    <th>Bs</th>
+                    <th >Dólar</th>
+                    <th>Bolívares</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -142,8 +145,8 @@
         <table class="table mt-5 table-borderless" size="10px">
             <thead>
                 <tr class="text-center">
-                    <th>Firma Cliente</th>
-                    <th>Firma {{ucwords($servicio->status)}}</th>
+                    <th>Firma del Cliente</th>
+                    <th>Firma del Empleado</th><br>
                 </tr>
             </thead>
             <tbody>

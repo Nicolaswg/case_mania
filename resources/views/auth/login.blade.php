@@ -8,7 +8,7 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="sidebar-heading text-center"><img src="{{asset('images/logo.jpg')}}"  class="img-thumbnail rounded" alt="CaseMania" height="100px" width="49%"></div>
+            <div class="sidebar-heading text-center"><img src="{{asset('images/logosis.jpg')}}"  class="img-thumbnail rounded" alt="CaseMania" height="100px" width="49%"></div>
             <div class="col-md-6 pt-2">
                 <div class="card">
                     <div class="card-header bg-info text-black bg-opacity-100">Inicio de Sesión</div>

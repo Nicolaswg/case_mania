@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Servicios Tecnicos')
+@section('title', 'Servicios Técnicos')
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Servicio Tecnico</li>
@@ -19,7 +19,7 @@
     @endif
     <div class="d-flex justify-content-between align-items-end mb-3">
         <h1 class="pb-1">
-            Servicio Tecnico
+            Servicios Técnicos
         </h1>
         <p>
             <a href="{{ route('servicios.create') }}" class="btn btn-dark">Nuevo Servicio</a>

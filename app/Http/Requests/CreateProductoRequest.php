@@ -26,7 +26,7 @@ class CreateProductoRequest extends FormRequest
         return [
             'categoria_id'=>'required',
             'nombre'=>'required',
-            'cantidad'=>'required',
+            'cantidad'=>'',
             'descripcion'=>'required',
             'photo'=>['required','mimes:png,jpg,jpeg'],
             'sucursal_id'=>'required'
