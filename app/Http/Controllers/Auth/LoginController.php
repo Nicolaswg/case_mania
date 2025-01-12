@@ -48,7 +48,7 @@ class LoginController extends Controller
             return redirect()->back()
                 ->withInput($request->only($this->username(), 'remember'))
                 ->withErrors([
-                    $this->username() => 'El email no es correcto',
+                    $this->username() => 'El Correo Electrónico es Incorrecto',
                 ]);
         }
         if ( !User::where('email', $request->email)->where('password', bcrypt($request->password))->first() ) {
@@ -59,12 +59,12 @@ class LoginController extends Controller
                 ]);
         }
     }
-    public function verificar_email(\Illuminate\Http\Request $request){
+    public function verificar_email(\Illuminate\Http\Request $request){ //Función para verificar el correo electrónico
         $user=User::query()
             ->where('email',$request->email)->first();
         if($user == null){
             return redirect()->back()->withErrors([
-                'email' => 'El correo no se encuentra registrado',
+                'email' => 'El Correo no se Encuentra Registrado',
             ]);
         }else{
             $pregunta1=$user->seguridad->pregunta_1;
@@ -82,7 +82,7 @@ class LoginController extends Controller
         }
 
     }
-    public function reset_pasword(){
+    public function reset_pasword(){ //Función para cambiar la contraseña
         $pregunta1='';
         $respuesta1='';
         $pregunta2='';
@@ -96,7 +96,7 @@ class LoginController extends Controller
             'respuesta2'=>$respuesta2,
         ]);
     }
-    public function verificar_preguntas(\Illuminate\Http\Request $request){
+    public function verificar_preguntas(\Illuminate\Http\Request $request){ //Función para verificar las preguntas de seguridad
         $user=User::query()
             ->where('id',$request->user_id)->first();
         $respuesta1=$user->seguridad->respuesta_1;
@@ -116,12 +116,12 @@ class LoginController extends Controller
                 ->with([
                     'status'=>'false',
                     'status_preguntas'=>'false',
-                    'error' => 'Las respuestas no coinciden',
+                    'error' => 'Las Respuestas no Coinciden',
                 ]);
         }
 
     }
-    public function updatecontraseña(\Illuminate\Http\Request $request){
+    public function updatecontraseña(\Illuminate\Http\Request $request){ //Función para actualizar la contraseña
         $user=User::query()
             ->where('id',$request->user_id)->first();
         $contra1=$request->contraseña;
@@ -140,7 +140,7 @@ class LoginController extends Controller
                     'status_preguntas'=>'true',
                     'user_id'=>$user->id,
                     'email'=>$user->email,
-                    'error' => 'Las respuestas no coinciden',
+                    'error' => 'Las Respuestas no Coinciden',
                 ]);
         }
 

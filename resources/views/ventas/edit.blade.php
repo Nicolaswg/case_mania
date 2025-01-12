@@ -1,6 +1,9 @@
 @extends('layout')
 @section('title', "Editar una Venta")
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('ventas.index')}}" class="link-dark">Ventas</a></li>
     <li class="breadcrumb-item active" aria-current="page">Editar</li>
@@ -11,9 +14,9 @@
     @include('shared._errors')
     <form method="POST" action="{{ url('ventas') }}" id="app">
         @include('ventas._fields')
-        <div class="form-group mt-4" align="middle">
+        <div class="form-group mt-4" align="middle"> <!-- Botón de editar venta y regresar al listado -->
             <button type="button" :disabled="(!datos || ini)"  class="btn btn-primary" @click="editardata()"><i class="bi bi-pencil"></i> Editar Venta</button>
-            <a href="{{ route('ventas.index') }}" class="btn btn-link">Regresar a Lista de Ventas</a>
+            <a href="{{ route('ventas.index') }}" class="btn btn-link">Regresar al Listado de Ventas</a>
         </div>
     </form>
     @endcard
@@ -82,7 +85,7 @@
                 this.cargardatosventa()
             },
             methods:{
-                checkdelivery(){
+                checkdelivery(){ //Función para verificar el estado del servicio a domicilio
                     if(this.delivery){
                         if(this.direccion_delivery === '' || this.referencia_delivery === '' || this.costo_delivery === '' ){
                             this.ini=true
@@ -95,7 +98,7 @@
                         return true
                     }
                 },
-                configdelivery(){
+                configdelivery(){ //Función para configurar el servicio a domicilio
                     if(this.delivery){
                         this.delivery=false
                         this.costo_delivery=''
@@ -117,7 +120,7 @@
                     }
 
                 },
-                cargardatosventa(){
+                cargardatosventa(){ //Función para actualizar los datos de la venta
                     $.ajax({
                         url:'/cargarventa',
                         method:'POST',
@@ -159,7 +162,7 @@
                 },
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv', //Función para obtener el valor del BCV
                         method:'GET',
                         dataType:'json',
                         success:function (data){
@@ -173,7 +176,7 @@
                         }
                     })
                 },
-                selecproductos(){
+                selecproductos(){ //Función para seleccionar los productos de la venta
                     $.ajax({
                         url:'/selecproducto',
                         method:'POST',
@@ -198,7 +201,7 @@
                         }
                     })
                 },
-                verificarproducto(){
+                verificarproducto(){ //Función para verificar la cantidad del producto
                     $.ajax({
                         url:'/verificarmaxproducto',
                         method:'POST',
@@ -217,7 +220,7 @@
                         }
                     })
                 },
-                verifimax(){
+                verifimax(){ //Función para verificar la cantidad máxima del producto
                     let adicional=0
                     this.lista_venta.ids.forEach((id, index)=>{
                         if(id === this.productos.ids[this.index_producto]){
@@ -243,7 +246,7 @@
                     }
 
                 },
-                checkfields() {
+                checkfields() { 
                     if(this.cantidad === '' || this.index_producto === ''  || this.cliente === '' || this.errormax=== true){
                         this.disabled=true
                         return false
@@ -251,7 +254,7 @@
                         return true
                     }
                 },
-                agregarfila(){
+                agregarfila(){ //Función para agregar filas
                     let status=this.checkfields()
                     if(status){
                         this.datos=true
@@ -272,7 +275,7 @@
                         }
                         this.resetfields()
                     }else{
-                        Swal.fire({
+                        Swal.fire({ //Función para dar mensaje de error
                             icon: "error",
                             title: "Error",
                             text: "Verifica que los campos no contengan un Error",
@@ -296,7 +299,7 @@
                     this.calculofactura()
                     return band
                 },
-                calculofactura(){
+                calculofactura(){ //Función para el cálculo de la factura
                     let acum=0
                     this.lista_venta.subtotal.forEach((subtotal, index)=>{
                             acum=acum+parseFloat(subtotal)
@@ -320,7 +323,7 @@
                         }).format((parseFloat(this.lista_venta.total_factura) * parseFloat(this.tasa_dolar.price)))
                     }
                 },
-                deletefila(indice){
+                deletefila(indice){ //Función para eliminar la fila
                     this.lista_venta.nombres.splice(indice,1)
                     this.lista_venta.ids.splice(indice,1)
                     this.lista_venta.cantidad.splice(indice,1)
@@ -341,13 +344,13 @@
                     this.index_producto=''
                     this.categoria_id=''
                 },
-                editardata(){
+                editardata(){ //Función para confirmar los cambios de la venta
                     Swal.fire({
                         title: "Seguro que quieres editar la Venta?",
                         showDenyButton: true,
                         showCancelButton: true,
                         icon:'info',
-                        confirmButtonText: "Guardar",
+                        confirmButtonText: "Si, Guardar",
                         cancelButtonText: "Cancelar",
                         allowOutsideClick:false,
                         denyButtonText: `No`
@@ -382,10 +385,10 @@
                                 success:function (data){
                                     if(data.status=== true){
                                         console.log(data.delivery)
-                                        Swal.fire({
+                                        Swal.fire({ //Función para confirmación de cambios en la venta
                                             icon: "success",
-                                            title: "Exito",
-                                            text: "Venta Modificada Exitosamente",
+                                            title: "Realizado",
+                                            text: "Venta modificada exitosamente",
                                             confirmButtonText: 'Enterado',
                                             allowOutsideClick:false,
                                             footer: '<a class="note" href="/ventas/nueva">Deseas Agregar otra venta?</a>'

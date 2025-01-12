@@ -1,19 +1,22 @@
 @extends('layout')
 @section('title', "Editar Servicio")
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('servicios.index')}}" class="link-dark">Servicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Editar</li>
 @endsection
 @section('content')
     @card
-    @slot('header', 'Editar Servicio Tecnico')
+    @slot('header', 'Editar Servicio Técnico')
     @include('shared._errors')
     <form method="POST" action="{{ url('servicio') }}" id="app">
         @include('servicios._fields')
-        <div class="form-group mt-4" align="middle">
-            <button type="button" :disabled="!datos || ini" class="btn btn-primary" @click="editdata()"><i class="bi bi-person-plus-fill"></i> Guardar</button>
-            <a href="{{ route('servicios.index') }}" class="btn btn-link">Regresar al listado</a>
+        <div class="form-group mt-4" align="middle"> <!-- Botones de actuliazar servicio tecnico y regresar al listado -->
+            <button type="button" :disabled="!datos || ini" class="btn btn-primary" @click="editdata()"><i class="bi bi-arrow-repeat"></i> Actualizar Servicio Ténico</button>
+            <a href="{{ route('servicios.index') }}" class="btn btn-link">Regresar al Listado de Servicios Técnicos</a>
         </div>
     </form>
     @endcard
@@ -61,7 +64,7 @@
             methods:{
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar',
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar', //Función para obtener el valor del BCV
                         method:'GET',
                         dataType:'json',
                         success:function (data){
@@ -75,13 +78,13 @@
                         }
                     })
                 },
-                setcostobs(){
+                setcostobs(){ //Función para obtener el costo del servicio técnico
                     this.ini=false
                     this.costo_unitario_bs=(parseFloat(this.costo_unitario)*parseFloat(this.tasa_dolar.price)).toFixed(2)
                     this.total_dolar=(parseFloat(this.costo_unitario)*parseInt(this.cantidad)).toFixed(2)
                     this.total_bs=(parseFloat(this.total_dolar)*parseFloat(this.tasa_dolar.price)).toFixed(2)
                 },
-                agregarfila(){
+                agregarfila(){ //Función para agregar las filas
                     this.ini=false
                     let status=this.checkfields()
                     if(status){
@@ -94,7 +97,7 @@
                         this.cont=this.cont+1
                         this.resetfields()
                     }else{
-                        Swal.fire({
+                        Swal.fire({ //Función para dar mensaje de error
                             icon: "error",
                             title: "Error",
                             text: "Todos los campos deben estar llenos",
@@ -104,7 +107,7 @@
                     }
 
                 },
-                deletefila(indice){
+                deletefila(indice){ //Función para eliminar fila
                     this.ini=false
                     this.lista_servicio.productos.splice(indice,1)
                     this.lista_servicio.cantidad.splice(indice,1)
@@ -165,10 +168,10 @@
                         success:function (data){
                             //console.log(data.costo)
                             if(data.status=== true){
-                                Swal.fire({
+                                Swal.fire({ //Función para mostrar mensajes de confirmación
                                     icon: "success",
-                                    title: "Exito",
-                                    text: "Servicio Tecnico Actualizado de Forma Exitosa",
+                                    title: "Realizado",
+                                    text: "Servicio Técnico actualizado exitosamente",
                                     confirmButtonText: 'Enterado',
                                     allowOutsideClick:false,
                                     footer: '<a class="note" href="/servicio/nuevo">Deseas Agregar otro servicio?</a>'

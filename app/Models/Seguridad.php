@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Seguridad extends Model
 {
     use HasFactory;
-    protected $fillable=['pregunta_1','pregunta_2','respuesta_1','respuesta_2'];
+    protected $fillable=['pregunta_1','pregunta_2','respuesta_1','respuesta_2','user_id'];
 
     public function user()//Perfiles de Usuarios
     {
         return $this->belongsTo(User::class);
     }
-
 }

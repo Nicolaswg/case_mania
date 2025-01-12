@@ -16,22 +16,22 @@ class ServicioTecnicoController extends Controller
 {
     public function index(Request $request,ServicioFilter $filters)
     {
-        $servicios = ServicioTecnico::query()
+        $servicios = ServicioTecnico::query() //Función para la cantidad de registros por página
             ->filterBy($filters,$request->only(['search']))
             ->orderByDesc('created_at')
-            ->paginate(5);
+            ->paginate(10); //Cantidad de registros por página
 
-        $servicios->appends($filters->valid());//para concatenar a la paginacion en busqueda
+        $servicios->appends($filters->valid());//para concatenar a la paginación en búsqueda
 
 
         return view('servicios.index', [
             'servicios' => $servicios,
         ]);
     }
-    public function create(){
+    public function create(){ //Función para crear los servicios técnicos
         return $this->form('servicios.create', new ServicioTecnico(),'create');
     }
-    public function edit(ServicioTecnico $servicioTecnico){
+    public function edit(ServicioTecnico $servicioTecnico){ //Función para editar los servicios técnicos
         return $this->formedit('servicios.edit',$servicioTecnico,'editar');
     }
 
@@ -60,7 +60,7 @@ class ServicioTecnicoController extends Controller
             'status'=>true,
         ];
     }
-    public function updaterecibo(Request $request){
+    public function updaterecibo(Request $request){ //Función para actualizar el recibo de los servicios técnicos
         $servicio=ServicioTecnico::query()->where('id','=',(int)$request->servicio_id)->first();
         $servicio->update([
             'costo_dolar'=>$request->total_dolar,
@@ -71,7 +71,7 @@ class ServicioTecnicoController extends Controller
             'status'=>true
         ];
     }
-    public function showpdf(ServicioTecnico $servicioTecnico){
+    public function showpdf(ServicioTecnico $servicioTecnico){ //Función para los datos del recibo de los servicios técnicos
         $cliente=$servicioTecnico->cliente->nombre;
         $productos=explode(',',$servicioTecnico->productos);
         $cantidad=explode(',',$servicioTecnico->cantidad);
@@ -88,7 +88,7 @@ class ServicioTecnicoController extends Controller
         ]);
         return $pdf->stream('servicio' . $servicioTecnico->id . $cliente. '.pdf');
     }
-    public function updatestatus(Request $request){
+    public function updatestatus(Request $request){ //Función para validar el estado del servicio técnico y cambiarlo a entregado
         $servicio=ServicioTecnico::query()->where('id','=',(int)$request->servicio_id)->first();
         $servicio->update([
             'status'=>'entregado',

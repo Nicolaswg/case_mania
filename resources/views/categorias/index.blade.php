@@ -1,9 +1,12 @@
 @extends('layout')
 
-@section('title', 'Categorias')
+@section('title', 'Categorías')
 @section('breadcrumb')
+
+    <!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Categorias</li>
+    <li class="breadcrumb-item active" aria-current="page">Categorías</li>
 @endsection
 
 @section('content')
@@ -19,23 +22,28 @@
     @endif
     <div class="d-flex justify-content-between align-items-end mb-3">
         <h1 class="pb-1">
-            Lista de Categorias
+            Lista de Categorías
         </h1>
-        <p>
-            <a href="{{ route('categorias.create') }}" class="btn btn-dark">Nueva Categoria</a>
+        <p> <!-- Botón para crear nueva categoría -->
+        <a href="{{ route('categorias.create') }}" class="btn btn-primary bi bi-plus-lg"> Regisitrar Nueva Categoría</a> 
         </p>
     </div>
+    <div class="card col-md-3" align="left"> <!-- Leyenda -->
+        <div class="text-center"><label><strong >Leyenda</strong></label></div>
+            <label>Estado Activo = <strong class="text-success">Verde</strong></label>
+            <label>Estado Inactivo = <strong class="text-danger">Rojo</strong></label>
+    </div>
     @if ($categorias->isNotEmpty())
-        <p>Viendo pagina {{$categorias->currentPage()}} de {{$categorias->lastPage()}}</p>
+        <p>Viendo Página {{$categorias->currentPage()}} de {{$categorias->lastPage()}}</p> <!-- Paginación -->
         <div class="table-responsive-lg">
-            <table class="table table-sm" id="app">
+            <table class="table table-sm" id="app"> <!-- Detalles de la tabla -->
                 <thead class="thead-dark">
                 <tr class="">
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Productos Asociados</th>
-                    <th scope="col">Registro</th>
-                    <th scope="col" class="text-right th-actions">Acciones</th>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Nombre de la Categoría</th>
+                    <th scope="col" class="text-center">Productos Asociados</th>
+                    <th scope="col" class="text-center">Registro</th>
+                    <th scope="col" class="text-center th-actions">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -44,11 +52,13 @@
                 @endforeach
                 </tbody>
             </table>
-
+            <div class="pt-2 text-center"> <!-- Botón pra regresar al inicio -->
+            <a href="{{ route('login') }}" class="btn btn-primary bi bi-arrow-90deg-left"> Regresar al Inicio</a>
+            </div>
             {{ $categorias->links()}}
         </div>
     @else
-        <p>No hay Categorias registrados.</p>
+        <h2>No hay Categorías registradas.</h2>
     @endif
 @endsection
 
@@ -64,13 +74,13 @@
             },
             methods:{
                 deletecategoria:function (categoria_id){
-                    Swal.fire({
-                        title: '¿Seguro que deseas desactivar esta Categoria?',
+                    Swal.fire({ //Función para desactivar la categoría
+                        title: '¿Seguro que deseas desactivar esta Categoría?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Desactivarla!'
+                        confirmButtonText: 'Si, Desactivar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -83,9 +93,9 @@
                                 dataType:'json',
                                 success:function (data){
                                     if(data){
-                                        Swal.fire(
-                                            'Desactivado!',
-                                            'La categoria a sido Desactivado de Forma Exitosa.',
+                                        Swal.fire( //Confirmación de categoría desactivada
+                                            'Desactivado',
+                                            'La categoría ha sido desactivada exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()

@@ -20,11 +20,11 @@ class VentaController extends Controller
 {
     public function index(Request $request,VentaFilter $filters,Sortable $sortable)
     {
-        $ventas = Venta::query()
+        $ventas = Venta::query() //Función para la cantidad de registros por página
             ->with( 'cliente')
             ->filterBy($filters,$request->only(['search','order','sucursal','delivery']))
             ->orderByDesc('created_at')
-            ->paginate(5);
+            ->paginate(10); //Cantidad de registros por página
 
         $ventas->appends($filters->valid());
         $sortable->appends($filters->valid());
@@ -35,7 +35,7 @@ class VentaController extends Controller
             'sortable'=>$sortable,
         ]);
     }
-    public function create(){
+    public function create(){ //Función para crear una venta
         return $this->form('ventas.create', new Venta,'create');
     }
     private function form(string $view, Venta $venta,$vista)
@@ -103,7 +103,7 @@ class VentaController extends Controller
             'status'=>true,
         ];
     }
-    public function delete(Request $request){
+    public function delete(Request $request){ //Función para borrar la venta
         $venta=Venta::query()->where('id',$request->venta_id)->first();
         $productos_ids=explode(',',$venta->detalle_venta->productos_ids);
         $cantidad_ini=explode(',',$venta->detalle_venta->cantidad);
@@ -119,7 +119,7 @@ class VentaController extends Controller
         ];
 
     }
-    public function showpdf(Venta $venta){
+    public function showpdf(Venta $venta){ //Función para ver todos los datos relacionados en el comprobante de la venta
         $cliente=$venta->cliente->nombre;
         $nombre=explode(',',$venta->detalle_venta->productos_nombres);
         $cantidad=explode(',',$venta->detalle_venta->cantidad);
@@ -217,7 +217,7 @@ class VentaController extends Controller
             'costo_delivery_bs'=>$costo_delivery_bs,
         ];
     }
-    public function update(Request $request){
+    public function update(Request $request){ 
         $venta=Venta::query()->where('id',$request->venta_id)->first();
         $productos_ids=explode(',',(int)$venta->detalle_venta->productos_ids);
         $cantidad_ini=explode(',',$venta->detalle_venta->cantidad);

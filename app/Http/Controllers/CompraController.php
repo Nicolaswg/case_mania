@@ -19,13 +19,13 @@ class CompraController extends Controller
 {
     public function index(Request $request,CompraFilter $filters,Sortable $sortable)
     {
-        $compras = Compra::query()
+        $compras = Compra::query() //Función para la cantidad de registros por página
             ->with( 'proveedor')
             ->filterBy($filters,$request->only(['search','proveedor','order','sucursal']))
             ->orderByDesc('created_at')
-            ->paginate(5);
+            ->paginate(10); //Cantidad de registros por página
 
-        $compras->appends($filters->valid());//para concatenar a la paginacion en busqueda
+        $compras->appends($filters->valid());//para concatenar a la paginación en búsqueda
         $sortable->appends($filters->valid());
 
         $sucursales=Sucursal::query()
@@ -45,7 +45,7 @@ class CompraController extends Controller
     }
     private function form(string $view, Compra $compra,$vista)
     {
-        $sucursal=Sucursal::query()->where('id',1)->first();
+        $sucursal=Sucursal::query()->where('id',1)->first(); //Función para crear las compras
         return view($view, [
             'compra' => $compra,
             'vista'=>$vista,
@@ -54,7 +54,7 @@ class CompraController extends Controller
             'proveedores'=>Proveedor::query()->where('status','active')->orderBy('nombre')->get(),
         ]);
     }
-    public function edit(Compra $compra){
+    public function edit(Compra $compra){ //Función para editar las compras
         return $this->formedit('compras.edit',$compra,'editar');
     }
     public function selecdata(Request $request){
@@ -89,7 +89,7 @@ class CompraController extends Controller
             'subtotal_compra'=>$compra->subtotal,
         ];
     }
-    public function update(Request $request){
+    public function update(Request $request){ //Función para actualizar las compras
         $compra=Compra::query()->where('id',$request->compra_id)->first();
         $productos_ids=explode(',',$compra->detalle_compra->productos_ids);
         $cantidad_ini=explode(',',$compra->detalle_compra->cantidad);
@@ -177,7 +177,7 @@ class CompraController extends Controller
             'status'=>true,
         ];
     }
-    public function showpdf(Compra $compra){
+    public function showpdf(Compra $compra){ //Función para ver todos los datos relacionados con el comprobante de la compra
         $proveedor=$compra->proveedor->nombre;
         $nombre=explode(',',$compra->detalle_compra->productos_nombres);
         $cantidad=explode(',',$compra->detalle_compra->cantidad);
@@ -225,7 +225,7 @@ class CompraController extends Controller
         ]);
 
     }
-    public function delete(Request $request){
+    public function delete(Request $request){ //Función para borrar las compras
         $compra=Compra::query()->where('id',$request->compra_id)->first();
         $productos_ids=explode(',',$compra->detalle_compra->productos_ids);
         $cantidad_ini=explode(',',$compra->detalle_compra->cantidad);

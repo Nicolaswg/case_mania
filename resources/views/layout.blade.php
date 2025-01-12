@@ -15,28 +15,28 @@
 </head>
 <body>
 <div class="d-flex" id="wrapper"x|>
-    <!-- Sidebar-->
+    <!-- Logo de Case Mania con el Rif-->
 
     <div class="border-end " id="sidebar-wrapper">
         <div class="sidebar-heading border-bottom bg-info bg-opacity-50 text-center"><img src="{{asset('images/logo.png')}}" width="150" class="img-thumbnail rounded" alt="CaseMania"><label class="text-white text-center">J-50227944-0</label></div>
         <div class="list-group text-center">
 
      <!-- Botones del Menú -->
-            <a class="list-group-item list-group-item-action p-3  bg-gradient" href="{{route('home')}}"><i class="bi bi-house-door-fill"></i> Inicio</a>
+            <a class="list-group-item list-group-item-action p-3  bg-gradient" href="{{route('home')}}"><i class="bi bi-house-door-fill"></i> Inicio</a> <!-- Botón de Inicio  -->
             @admin
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#empleado" aria-expanded="true"><i class="bi bi-person-circle"></i>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#empleado" aria-expanded="true"><i class="bi bi-person-circle"></i> <!-- Botón de Empleados -->
                 Empleados <i class="bi bi-caret-down-fill"></i>
             </button>
-            <div class="collapse" id="empleado">
+            <div class="collapse" id="empleado"> <!-- Sub-divisiones de Empleados -->
                 <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
                     <li><a href="{{route('users.create')}}" class="link-dark rounded"><i class="bi bi bi-plus-lg"></i> Registrar un Empleado</a></li>
                     <li><a href="{{route('users.index')}}" class="link-dark rounded"><i class="bi bi bi-list-nested"></i>Lista de Empleados</a></li>
                 </ul>
             </div>
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#compras" aria-expanded="true"><i class="bi bi-cart-fill"></i>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#compras" aria-expanded="true"><i class="bi bi-cart-fill"></i> <!-- Botón de Compras -->
                 Compras <i class="bi bi-caret-down-fill"></i>
             </button>
-            <div class="collapse" id="compras">
+            <div class="collapse" id="compras"> <!-- Sub-divisiones de Compras -->
                 <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
                     <li><a href="{{route('compras.create')}}" class="link-dark rounded"><i class="bi bi-plus-lg"></i> Registrar una Compra</a></li>
                     <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Compras</a></li>
@@ -46,21 +46,21 @@
         @endadmin
 
         @if(auth()->user()->isServicio() || auth()->user()->isAdmin() || auth()->user()->isVendedor() )
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ventas" aria-expanded="true"><i class="bi bi-graph-up-arrow"></i>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ventas" aria-expanded="true"><i class="bi bi-graph-up-arrow"></i> <!-- Botón de Ventas -->
                 Ventas <i class="bi bi-caret-down-fill"></i>
             </button>
-            <div class="collapse" id="ventas">
+            <div class="collapse" id="ventas"> <!-- Sub-divisiones de Ventas -->
                 <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
                     <li><a href="{{route('ventas.create')}}" class="link-dark rounded"><i class="bi bi bi-plus-lg"></i> Realizar una Venta</a></li>
                     <li><a href="{{route('ventas.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Ventas</a></li>
                     <li><a href="{{route('clientes.index')}}" class="link-dark rounded"><i class="bi bi-people-fill"></i> Lista de Clientes</a></li>
                 </ul>
             </div>
-            <a class="list-group-item list-group-item-action  p-3" href="{{route('almacen.index')}}"><i class="bi bi-collection-fill"></i> Almacén</a>
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i>
+            <a class="list-group-item list-group-item-action  p-3" href="{{route('almacen.index')}}"><i class="bi bi-collection-fill"></i> Almacén</a> <!-- Botón de Almacén -->
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true"><i class="bi bi-journals"></i> <!-- Botón de Productos -->
                 Productos <i class="bi bi-caret-down-fill"></i>
             </button>
-            <div class="collapse" id="home-collapse">
+            <div class="collapse" id="home-collapse"> <!-- Sub-divisiones de Productos -->
                 <ul class="btn-toggle-nav list-unstyled list-group-item-light fw-normal  list-group-item list-group-item-action">
                     <li><a href="{{route('categorias.index')}}" class="link-dark rounded"><i class="bi bi-card-list"></i> Categorías de Productos</a></li>
                     <li><a href="{{route('productos.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Productos</a></li>
@@ -69,10 +69,10 @@
         @endif
 
         @if(auth()->user()->isServicio() || auth()->user()->isAdmin() )
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#servicio" aria-expanded="true"><i class="bi bi-phone"></i>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#servicio" aria-expanded="true"><i class="bi bi-phone"></i> <!-- Botón de Servicio Técnico -->
                 Servicio Técnico <i class="bi bi-caret-down-fill"></i>
             </button>
-            <div class="collapse" id="servicio">
+            <div class="collapse" id="servicio"> <!-- Sub-divisiones de Servicio Técnico -->
                     <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
                         <li><a href="{{route('servicios.create')}}" class="link-dark rounded"><i class="bi bi-plus-lg"></i> Registrar Servicio Técnico</a></li>
                         <li><a href="{{route('servicios.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Servicios Técnicos</a></li>
@@ -80,10 +80,10 @@
             </div>
         @endif
 
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ser_domicilio" aria-expanded="true"><i class="bi bi-car-front-fill"></i>
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ser_domicilio" aria-expanded="true"><i class="bi bi-car-front-fill"></i> <!-- Botón de Servicio a Domicilio -->
                 Servicio a Domicilio <i class="bi bi-caret-down-fill"></i>
                 </button>
-                <div class="collapse" id="ser_domicilio">
+                <div class="collapse" id="ser_domicilio"> <!-- Sub-divisiones de servicio a domicilio -->
                     <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
                         <li><a href="{{route('deliverys.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-list-nested"></i> Lista de Servicios a Domicilio</a></li>
                     </ul>
@@ -91,29 +91,38 @@
             </div>
 
         @admin
-            <a class="list-group-item list-group-item-action  p-3" href="{{route('sucursales.index')}}"><i class="bi bi-bank"></i> Sucursales</a>
-            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#herramientas" aria-expanded="true"><i class="bi bi-tools"></i>
+            <a class="list-group-item list-group-item-action  p-3" href="{{route('sucursales.index')}}"><i class="bi bi-bank"></i> Sucursales</a> <!-- Botón de Sucursales -->
+            <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#herramientas" aria-expanded="true"><i class="bi bi-tools"></i> <!-- Botón de Herramientas -->
                 Herramientas <i class="bi bi-caret-down-fill"></i>
                 </button>
                 <div class="collapse" id="herramientas">
-                    <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
+                    <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action"> <!-- Sub-divisiones de Herramientas -->
                         <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-person-lines-fill"></i> Auditoría</a></li>
-                        <li><a href="{{route('base_datos')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-hdd"></i> Base de Datos</a></li>
+                        <li><a href="{{route('base_datos')}}" class=" link-dark link-underline-dark rounded" ><i class="bi bi-hdd"></i> Guardar Respaldo </a></li>
+                        <li><a href="{{route('base_datos')}}" class=" link-dark link-underline-dark rounded" ><i class="bi bi-upload"></i> Subir Respaldo </a></li>
                     </ul>
                 </div>
         @endadmin
 
-                <!-- <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ayuda" aria-expanded="true"><i class="bi bi-question-square-fill"></i>
+                <button class="btn btn-toggle list-group-item list-group-item-action  p-3" data-bs-toggle="collapse" data-bs-target="#ayuda" aria-expanded="true"><i class="bi bi-question-square-fill"></i> <!-- Botón de Ayuda para los Manuales de Usuario -->
                 Ayuda <i class="bi bi-caret-down-fill"></i>
                 </button>
-                <div class="collapse" id="ayuda">
+                <div class="collapse" id="ayuda"> <!-- Sub-divisiones para los manuales de usuario -->
                     <ul class="btn-toggle-nav list-unstyled  fw-normal  list-group-item list-group-item-action">
-                        <li><a href="{{route('compras.index')}}" class=" link-dark link-underline-dark rounded"><i class="bi bi-book-half"></i> Manual de Usuario</a></li>
+                        @if( auth()->user()->isAdmin() )
+                        <li><a href="" class=" link-dark link-underline-dark rounded"><i class="bi bi-book-half"></i> MU: Administrador</a></li>
+                        @endif
+                        @if( auth()->user()->isAdmin() || auth()->user()->isVendedor() )
+                        <li><a href="" class=" link-dark link-underline-dark rounded"><i class="bi bi-book-half"></i> MU: Vendedor</a></li>
+                        @endif
+                        @if( auth()->user()->isAdmin() || auth()->user()->isServicio() )
+                        <li><a href="" class=" link-dark link-underline-dark rounded"><i class="bi bi-book-half"></i> MU: Servicio Técnico</a></li>
+                        @endif
+                        @if( auth()->user()->isAdmin() || auth()->user()->isDelivery() )
+                        <li><a href="" class=" link-dark link-underline-dark rounded"><i class="bi bi-book-half"></i> MU: Repartidor</a></li>
+                        @endif
                     </ul>
-                </div>  -->
-
-
-
+                </div>
         </div>
     </div>
 
@@ -123,9 +132,9 @@
         <!-- Tope de la Navegación-->
         <nav class="navbar navbar-expand-lg navbar-light bg-info bg-opacity-50 border-bottom">
             <div class="container-fluid">
-                <button data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Contraer/Expandir" class="btn btn-dark" id="sidebarToggle"><i class="bi bi-arrow-left-right"></i></button>
+                <button data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Contraer/Expandir" class="btn btn-dark" id="sidebarToggle"><i class="bi bi-arrow-left-right"> Expandir/Contraer</i></button> <!-- Botón para expandir y contraer el menú principal -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <nav aria-label="breadcrumb" class="ml-3 mt-1 text-black">
+                <nav aria-label="breadcrumb" class="ml-3 mt-1 text-black"> <!-- Ruta de las páginas -->
                     <ol class="breadcrumb">
                         @yield('breadcrumb')
                     </ol>
@@ -133,12 +142,12 @@
                 <div class="collapse navbar-collapse" id="helper">
                     <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
 
-                        <li class="nav-item active nav-link text-black">Tasa BCV: <span class="fw-bold">@{{ tasa_dolar.price }}</span> Bs/Dólar</li>
+                        <li class="nav-item active nav-link text-black">Tasa BCV: <span class="fw-bold">@{{ tasa_dolar.price }}</span> Bs/Dólar</li> <!-- Exhibición de la tasa del BCV-->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>{{strtolower(auth()->user()->role)}}</strong></a>
+                            <a class="nav-link dropdown-toggle text-white" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><strong>{{strtolower(auth()->user()->role)}}</strong></a> <!-- Rol de Usuario -->
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 {{--<div class="dropdown-divider"></div>--}}
-                                 {{-- Cerrar Sesión--}}
+                                 {{-- Cerrar Sesión--}} <!-- Lista para cerrar la sesión -->
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -201,6 +210,41 @@
                     }
                 })
 
+            },
+            save_data(){
+                console.log('entro aqui')
+                Swal.fire({
+                    icon: "info",
+                    title: "Confirma",
+                    text: "Seguro que deseas crear un respaldo del sistema?",
+                    confirmButtonText: 'Enterado',
+                    showCancelButton: true,
+                    cancelButtonText: "Cancelar",
+                    allowOutsideClick:false,
+                }).then((result)=>{
+                    if(result.isConfirmed){
+                        $.ajax({
+                            url:'base_datos',
+                            method:'GET',
+                            dataType:'json',
+                            success:function (data){
+                                if(data){
+                                    Swal.fire({
+                                        position: 'top-end',
+                                        icon: 'exito',
+                                        title: 'Respaldo Guardado Exitosamente',
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    })
+                                }
+                            },
+                            error:function (jqXHR){
+                                console.log(jqXHR.responseJSON)
+                            }
+                        })
+                    }
+                })
+                href="{{route('base_datos')}}"
             },
 
         },

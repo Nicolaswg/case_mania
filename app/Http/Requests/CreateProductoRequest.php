@@ -21,14 +21,14 @@ class CreateProductoRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules() //Función para validar los campos solicitados
     {
         return [
             'categoria_id'=>'required',
             'nombre'=>'required',
             'cantidad'=>'',
             'descripcion'=>'required',
-            'photo'=>['required','mimes:png,jpg,jpeg'],
+            'photo'=>['required','mimes:png,jpg,jpeg'], //Solo se admite formato png, jpg, jpeg
             'sucursal_id'=>'required'
 
         ];

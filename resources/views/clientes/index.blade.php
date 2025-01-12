@@ -2,6 +2,9 @@
 
 @section('title', 'Clientes')
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Clientes</li>
 @endsection
@@ -21,24 +24,28 @@
         <h1 class="pb-1">
             Lista de Clientes
         </h1>
-        <p>
-            <a href="{{ route('clientes.create') }}" class="btn btn-dark">Nuevo Cliente</a>
+        <p> <!-- Botón para crear un nuevo cliente -->
+        <a href="{{ route('clientes.create') }}" class="btn btn-primary bi bi-plus-lg"> Registrar Nuevo Cliente</a>
         </p>
     </div>
 
-    @include('clientes._filters')
+    @include('clientes._filters') <!-- Filtros de búsqueda -->
     @if ($clientes->isNotEmpty())
-        <p>Viendo pagina {{$clientes->currentPage()}} de {{$clientes->lastPage()}}</p>
+    <div class="card col-md-3" align="left"> <!-- Leyenda -->
+        <div class="text-center"><label><strong >Leyenda</strong></label></div>
+            <label>Estado Activo = <strong class="text-success">Verde</strong></label>
+            <label>Estado Inactivo = <strong class="text-danger">Rojo</strong></label>
+    </div>
+        <p>Viendo Página {{$clientes->currentPage()}} de {{$clientes->lastPage()}}</p> <!-- Paginación -->
         <div class="table-responsive-lg">
-            <table class="table table-sm" id="app">
+            <table class="table table-sm" id="app"> <!-- Detalles de la tabla -->
                 <thead class="thead-dark">
                 <tr class="text-center">
-                    <th scope="col">#</th>
-                    <th scope="col"><a href="{{$sortable->url('nombre')}}" class="{{ $sortable->classes('nombre') }}">Nombre <i class="icon-sort"></i></a></th>
-                    <th scope="col"> Documento</th>
-                    <th scope="col"> Informacion </th>
-                    <th scope="col">Registro</th>
-                    <th scope="col" class="text-right th-actions">Acciones</th>
+                    <th scope="col"><a href="{{$sortable->url('nombre')}}" class="{{ $sortable->classes('nombre') }}">Nombre del Cliente <i class="icon-sort"></i></a></th>
+                    <th scope="col" class="text-center">Contacto</th>
+                    <th scope="col" class="text-center">Dirección</th>
+                    <th scope="col" class="text-center">Fecha de Registro</th>
+                    <th scope="col" class="text-center th-actions">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -50,6 +57,9 @@
 
             {{ $clientes->links()}}
         </div>
+        <div class="pt-2 text-center">
+    <a href="{{ route('login') }}" class="btn btn-primary bi bi-arrow-90deg-left"> Regresar al Inicio</a>
+</div>
     @else
         <p>No hay clientes registrados.</p>
     @endif

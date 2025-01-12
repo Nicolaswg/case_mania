@@ -15,24 +15,24 @@ class HomeCharts
 
     public function build_deliveris($pendientes,$proceso,$entregadas): \ArielMejiaDev\LarapexCharts\DonutChart
     {
-        return $this->chart->donutChart()
-            ->setTitle('Deliveris')
-            ->setSubtitle('Estatus')
+        return $this->chart->donutChart() //Gráfico de los servicios a domicilio
+            ->setTitle('Deliverys')
+            ->setSubtitle('Estado')
             ->setLabels(['Pendientes','En Proceso','Entregadas'])
             ->addPieces([$pendientes,$proceso,$entregadas])
             ->setColors(['#FF0000','#FFF000','#008000'])
-            ->setHeight(200)
+            ->setHeight(1000)
             ;
     }
     public function build_servicio($pendientes,$entregadas): \ArielMejiaDev\LarapexCharts\DonutChart
     {
-        return $this->chart->donutChart()
+        return $this->chart->donutChart() //Gráfico de los servicios técnicos
             ->setTitle('Servicios Técnicos')
-            ->setSubtitle('Estatus')
+            ->setSubtitle('Estado')
             ->addPieces([$pendientes,$entregadas])
             ->setColors(['#FF0000','#008000'])
             ->setLabels(['Pendientes','Entregadas'])
-            ->setHeight(200);
+            ->setHeight(1000);
     }
     public function build_ventas($nombre_sucur,$acum_sucur): \ArielMejiaDev\LarapexCharts\PieChart
     {
@@ -43,11 +43,11 @@ class HomeCharts
             $acum[]=$acum_sucur[$i];
         }
         //dd($nombre_sucur);
-        $var= $this->chart->pieChart()
+        $var= $this->chart->pieChart() //Gráfico de las ventas por sucursal
                 ->setTitle('Ventas por Sucursal')
                 ->setSubtitle('Acumulado ($)')
                 ->setLabels($nom)
-                ->setHeight(250)
+                ->setHeight(1000)
                 ->addPieces($acum)
                 ->setColors([ '#008FFB', '#00E396', '#feb019', '#ff455f', '#775dd0', '#80effe',
                     '#0077B5', '#ff6384', '#c9cbcf', '#0057ff', '00a9f4', '#2ccdc9', '#5e72e4'])
@@ -82,7 +82,7 @@ class HomeCharts
                 $num[]=$dev;
             }
         }
-        $var= $this->chart->barChart()
+        $var= $this->chart->barChart() //Gráfico de los los productos con bajo stock y devoluciones
             ->setTitle('Productos Bajo Stock')
             ->setSubtitle('Bajo Stock vs Devoluciones')
             ->setXAxis($aux_nom)

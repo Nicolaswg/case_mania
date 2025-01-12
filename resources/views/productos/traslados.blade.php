@@ -1,9 +1,12 @@
 @extends('layout')
 @section('title', "Realizar un Traslado")
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('almacen.index')}}" class="link-dark">Almacén</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
+    <li class="breadcrumb-item active" aria-current="page">Traslado</li>
 @endsection
 @section('content')
     @card
@@ -15,7 +18,7 @@
             <div class="card-header">
                 <h5>Datos del Producto</h5>
             </div>
-            <div class="card-body">
+            <div class="card-header"> <!-- Sección de datos del producto -->
                 <p><strong>Código: </strong>{{$producto->id }}<p>
                 <p><strong>Nombre: </strong>{{ucwords($producto->nombre)}}</p>
                 <div class="card-text">
@@ -37,26 +40,26 @@
         <hr>
 
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6"> <!-- Sección de traslado -->
         <div class="card">
             <div class="card-header">
             <h5>Seleccionar Sucursal para el Traslado</h5>
             </div>
             <div class="card-body">
-                <label for="">Sucursal de Origen:</label>
+                <label for="">Sucursal de Origen:</label> <!-- sucursal de origen -->
                 <select name="" id="" v-model="desde" class="form-control" @change="setcantidad()">
                     <option value="">-- Seleccionar Sucursal de Origen --</option>
                     <option value="" v-for="(sucur,index) in sucursales" :value="index">@{{ sucur }}</option>
                 </select>
                 <hr>
-                <label for="">Sucursal de Destino:</label>
+                <label for="">Sucursal de Destino:</label> <!-- sucursal de destino -->
                 <select name="" id="" class="form-control" v-model="hasta" @change="configcantidad()" :disabled="desde===''">
                     <option value="">-- Seleccionar Sucursal de Destino --</option>
                     <option value="" v-for="(sucur,index) in sucursales2" :value="index">@{{ sucur }}</option>
                 </select>
                 <div v-if="selec_cantidad">
                     <hr>
-                    <label for="">Cantidad a Trasladar</label>
+                    <label for="">Cantidad a Trasladar</label> <!-- Cantidad del traslado -->
                     <input type="number" minlength="1" class="form-control" :max="cantidad_produc " v-model="canti_traslado" @keyup="validate()">
                     <div class="text-center">
                         <button type="button" @click="savetraslado()" :disabled="!validar" class="btn btn-success mt-2 bi bi-box" style="align-content: center"> Trasladar Producto</button>
@@ -105,7 +108,7 @@
                     if(this.cantidad[this.desde] <= 1){
                         this.error=true
                         this.sucursales2=[]
-                        Swal.fire({
+                        Swal.fire({ //Función para mostrar mensaje cuando se quiera trasladar mas de la cantidad existente
                             icon: "error",
                             title: "Error",
                             text: "Esta sucursal no tiene suficentes productos",
@@ -128,7 +131,7 @@
                         this.validar=true
                     }
                 },
-                savetraslado(){
+                savetraslado(){ //Función para confirmación del traslado
                     Swal.fire({
                         title: '¿Seguro que deseas registrar el traslado?',
                         icon: 'warning',
@@ -153,7 +156,7 @@
                                 success:function (data){
                                     console.log(data.datos)
                                     if(data.status=== true){
-                                        Swal.fire(
+                                        Swal.fire( //Función para confirmar traslado relizado
                                             'Exito!',
                                             'El traslado se registro de manera exitosa.',
                                             'success',

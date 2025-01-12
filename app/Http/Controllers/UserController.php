@@ -14,13 +14,13 @@ class UserController extends Controller
 {
     public function index(Request $request, UserFilter $filters,Sortable $sortable)
     {
-        $users = User::query()
+        $users = User::query() //Función para la cantidad de registros por página
             ->with( 'profile')
             ->filterBy($filters,$request->only(['state','role','search','order']))
             ->orderByDesc('created_at')
-            ->paginate(5);
+            ->paginate(10); //Cantidad de registros por página
 
-        $users->appends($filters->valid());//para concatenar a la paginacion en busqueda
+        $users->appends($filters->valid());//para concatenar a la paginación en búsqueda
         $sortable->appends($filters->valid());
 
 
@@ -30,14 +30,14 @@ class UserController extends Controller
             'sortable'=>$sortable,
         ]);
     }
-    public function create(){
+    public function create(){ //Función para crear los usuarios
         return $this->form('users.create', new User,'create');
     }
     public function store(CreateUserRequest $request)
     {
         //dd($request->input('empleado'));
         $request->createUser();
-        return redirect()->route('users.index')->with('success','Usuario Guardado con Exito');
+        return redirect()->route('users.index')->with('success','Empleado Creado Exitosamente');
     }
     private function form(string $view, User $user,$vista)
     {
@@ -47,7 +47,7 @@ class UserController extends Controller
             'vista'=>$vista
         ]);
     }
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user) //Función para actualizar los empleados
     {
         $request->updateUser($user);
 
@@ -61,7 +61,7 @@ class UserController extends Controller
     {
         return $this->form('users.edit', $user,'editar');
     }
-    public function destroy(Request $request){
+    public function destroy(Request $request){ //Función para eliminar al usuario
         $user_id=$request->user_id;
         $user= User::where('id',$user_id)->first();
         $user->forceDelete();

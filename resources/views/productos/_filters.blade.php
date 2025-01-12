@@ -1,6 +1,6 @@
 <form method="get" action="{{ url('productos') }}">
     <div class="row row-filters">
-        <div class="col-md-6">
+        <div class="col-md-6"> <!-- Filtro de actividad de los productos -->
             @foreach (trans('users.filters.states') as $value => $text)
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="radio" name="state"
@@ -12,15 +12,15 @@
 
     </div>
     <div class="row row-filters">
-        <div class="col-md-10">
+        <div class="col-md-10"> <!-- Búsqueda de los productos -->
             <div class="form-inline form-search">
                 <input type="search" name="search" value="{{ request('search') }}" size="80" class="form-control form-control-sm" placeholder="Buscar producto..." autocomplete="off">
                 <button type="submit" class="btn btn-md btn-primary">Buscar</button>
             </div>
         </div>
     </div>
-    <div class="row row-filters">
-        <div class="col-md-6">
+    <div class="row row-filters"> <!-- Filtros por sucursal y categorías -->
+        <div class="col-md-6"> <!-- Filtro por sucursal -->
             <div class="form-check-inline">
                 <div class="form-inline form-search">
                     <div class="btn-group ">
@@ -32,8 +32,8 @@
                         </select>
                     </div>
             </div>
-            <div class="form-inline form-search ml-3">
-                <div class="btn-group ">
+            <div class="form-inline form-search ml-3"> <!-- Filtro por categoría -->
+                <div class="btn-group "> 
                     <select name="categoria" id="categoria" class="select-field text-center">
                         <option value="">--Buscar por Categoría--</option>
                         @foreach($categorias as $categoria)

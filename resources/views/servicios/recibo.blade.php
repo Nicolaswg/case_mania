@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <title>Servicio {{$servicio->id}}</title>
-    <link rel="icon" href="{{ asset('images/logo.png') }}">
+    <title>Servicio {{$servicio->id}}</title> <!-- Título del servicio técnico -->
+    <link rel="icon" href="{{ asset('images/logo.png') }}"> <!-- Logo -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -40,11 +40,13 @@
 
 <body>
 
+<!-- Bloque de datos de la empresa -->
+
     <div class="row">
         <div class="col-md-6 text-center" >
-            <img src="{{asset('images/logo.png')}}" alt="Logo" height="120px" width="40%">
+            <img src="{{asset('images/logo.png')}}" alt="Logo" height="120px" width="40%"> <!-- Logo -->
         </div>
-        <div class="col-md-6 text-center">
+        <div class="col-md-6 text-center"> <!-- Detalles de la empresa -->
             <p class="m-0">Dirección: AV. Aviadores Centro Comercial Multicentro Locatel local 056</p>
             <p class="m-0">Maracay - Estado Aragua</p>
             <p class="m-0">Rif: J-50227944-0</p>
@@ -52,19 +54,23 @@
         </div>
     </div>
     <hr>
-<div class="">
-    <h4>--- Datos del Cliente ---</h4>
-    Cliente: <strong> {{ucwords($servicio->cliente->nombre)}}</strong> / {{ucfirst($servicio->cliente->tipo_documento)}}-{{$servicio->cliente->num_documento}}<br>
+<div class=""> <!-- Datos del servicio técnico -->
+    <h5>--- Datos del Servicio Ténico ---</h5>
+    Cliente: <strong> {{ucwords($servicio->cliente->nombre)}}</strong> / <strong>{{ucfirst($servicio->cliente->tipo_documento)}}-{{$servicio->cliente->num_documento}}</strong><br>
     Número de Teléfono: <strong>{{$servicio->cliente->telefono}} </strong>  <br>
+    Dirección de Domicilio: <strong> </strong>  <br>
     Recibido por: <strong>{{ucwords($servicio->user)}}</strong> <br>
-    Fecha de Recepción: <strong>{{\Carbon\Carbon::parse($servicio->fecha_recibido)->format('d-m-Y h:i A')}}</strong>
+    Fecha de Recepción: <strong>{{\Carbon\Carbon::parse($servicio->fecha_recibido)->format('d-m-Y h:i A')}}</strong><br>
+    Posible Fecha de Entrega: <strong></strong><br>
+    Garantía: <strong></strong><br>
     <h5 class="@if($servicio->status == 'recibido') text-info @else text-success  @endif ">Estado: {{strtoupper($servicio->status)}}</h5>
+    <hr>
     <table  width="100%" class="">
-        <caption class="">
+        <caption class=""> <!-- Detalles del servicio técnico -->
             <h5 class="text-dark text-center">Detalles del Servicio Técnico</h5>
         </caption>
         <thead>
-        <tr class="text-center">
+        <tr class="text-center"> <!-- Subtítulos de la tabla -->
             <th scope="col" >Producto</th>
             <th scope="col">
                 Cantidad
@@ -82,7 +88,7 @@
             </th>
         </tr>
         </thead>
-        <tbody class="text-center" >
+        <tbody class="text-center" > <!-- Detalles de los datos ingresados -->
             @foreach($productos as $i=>$producto)
                 <tr class="text-center" >
                     <td  style="vertical-align: middle">
@@ -109,7 +115,7 @@
         </tbody>
     </table>
     <hr>
-    @if($servicio->costo_dolar != null)
+    @if($servicio->costo_dolar != null) <!-- Cálculo del servicio técnico -->
     <div class="row" >
         <div class="col-md-6"></div>
         <div class="col-md-6">
@@ -119,8 +125,8 @@
                     <th colspan="2" class="">Monto a Pagar</th>
                 </tr>
                 <tr class="text-center">
-                    <th >Dólar</th>
-                    <th>Bolívares</th>
+                    <th >Dólar ($)</th>
+                    <th>Bolívares (Bs.)</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -142,7 +148,7 @@
     <div class="row">
         <div class="col-md-12">
 
-        <table class="table mt-5 table-borderless" size="10px">
+        <table class="table mt-5 table-borderless" size="10px"> <!-- Firmas del cliente y del téncico -->
             <thead>
                 <tr class="text-center">
                     <th>Firma del Cliente</th>

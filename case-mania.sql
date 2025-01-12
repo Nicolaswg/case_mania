@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost:3306
--- Tiempo de generación: 02-12-2024 a las 13:27:47
+-- Tiempo de generación: 02-01-2025 a las 22:14:45
 -- Versión del servidor: 8.0.30
 -- Versión de PHP: 8.1.10
 
@@ -37,13 +37,6 @@ CREATE TABLE `almacens` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Volcado de datos para la tabla `almacens`
---
-
-INSERT INTO `almacens` (`id`, `sucursal_id`, `producto_id`, `cantidad`, `cantidad_acumulada`, `created_at`, `updated_at`) VALUES
-(2, 2, 6, 2, 2, '2024-11-30 05:50:09', '2024-11-30 05:50:09');
-
 -- --------------------------------------------------------
 
 --
@@ -63,9 +56,15 @@ CREATE TABLE `categorias` (
 --
 
 INSERT INTO `categorias` (`id`, `nombre`, `active`, `created_at`, `updated_at`) VALUES
-(1, 'forros', 1, '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(3, 'Audífonos', 1, '2024-11-08 01:34:02', '2024-11-29 04:56:12'),
-(4, 'Cornetas', 1, '2024-11-30 04:19:47', '2024-11-30 04:19:47');
+(4, 'Audífonos de Casco Inalámbrico', 1, '2024-12-23 02:02:54', '2024-12-23 02:29:09'),
+(5, 'Cables USB', 1, '2024-12-23 02:06:55', '2024-12-23 02:06:55'),
+(6, 'Cornetas Inalámbrica', 1, '2024-12-23 02:07:21', '2024-12-23 02:07:21'),
+(7, 'Carros de Juguete', 1, '2024-12-23 02:07:54', '2024-12-23 02:07:54'),
+(8, 'Cargador de Teléfono', 1, '2024-12-23 02:09:14', '2024-12-23 02:09:14'),
+(9, 'Tiras de Teléfono', 1, '2024-12-23 02:09:48', '2024-12-23 02:09:48'),
+(10, 'Forros de Teléfono Samsung', 1, '2024-12-23 02:11:33', '2024-12-23 02:11:33'),
+(11, 'Micrófonos de Corbata', 1, '2024-12-23 13:07:21', '2024-12-23 13:07:21'),
+(12, 'Micrófonos Inalámbrico', 1, '2024-12-23 13:12:59', '2024-12-23 13:12:59');
 
 -- --------------------------------------------------------
 
@@ -91,17 +90,19 @@ CREATE TABLE `clientes` (
 --
 
 INSERT INTO `clientes` (`id`, `nombre`, `direccion`, `tipo_documento`, `num_documento`, `telefono`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Humberto Lesch', '760 Jovany Island\nSchummtown, CT 16537', 'J', '4516999', '53932', 'susie21@example.net', 'inactive', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(2, 'Yasmeen Rowe Sr.', '381 Charley Lakes\nSerenamouth, AK 62764', 'E', '7354550', '53336', 'jheller@example.com', 'inactive', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(3, 'Prof. Carolina Streich', '854 Kaleigh Knolls\nEast Triston, MN 01149-2755', 'J', '9459567', '99154', 'shaina73@example.net', 'active', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(4, 'Kelley Satterfield', '4319 Bailey Fork Apt. 337\nNorth Jeromyhaven, NC 31658', 'E', '4984125', '919', 'arjun20@example.com', 'active', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(5, 'Ardella Kemmer', '884 VonRueden Summit Apt. 796\nWest Lerabury, TN 94426-1435', 'V', '2801622', '85734', 'vkoss@example.net', 'active', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(6, 'Jeffrey Hegmann', '95949 Kane Burg Apt. 645\nWest Corine, NY 22825-3461', 'J', '1675908', '16179', 'alford.blick@example.org', 'active', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(7, 'Ms. Onie Roberts', '128 Gusikowski Road Apt. 789\nNorth Ninaville, AR 88576', 'V', '1059402', '54482', 'ncorwin@example.org', 'inactive', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(8, 'Keeley Reynolds', '345 Kuvalis Valley Suite 985\nSporerstad, IN 76319-2251', 'E', '3573406', '59624', 'kevin55@example.net', 'active', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(9, 'Prof. Terrence Heller', '274 O\'Keefe Track\nShaynaside, MI 36525-0029', 'J', '7645208', '36328', 'brisa.will@example.net', 'inactive', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(10, 'Erich Ryan IV', '698 Kautzer Ford\nWeissnatmouth, HI 50370', 'J', '6292166', '73500', 'matt81@example.com', 'active', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(11, 'Rolando Duran', 'AV. Principal La Pedrera Quinta Liliana #170', 'V', '26491343', '0424-3822518', 'rolandofiestero@hotmail.com', 'active', '2024-11-30 04:12:51', '2024-11-30 04:12:51');
+(1, 'Drew Hamill', '157 Rhianna Loop\nLake Paxton, WA 10912-4068', 'V', '4502653', '82149', 'brannon13@example.org', 'inactive', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(2, 'Dr. Kayley Bosco Jr.', '795 Candice Viaduct\nSouth Jenniferport, IN 65823', 'E', '2962849', '27608', 'hodkiewicz.hilda@example.org', 'inactive', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(3, 'Nora Rath I', '373 Alene Port Apt. 953\nSchadenfurt, NH 29668-0215', 'J', '4569289', '57705', 'bhintz@example.net', 'active', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(4, 'Darian Cummings', '377 Randy Overpass Apt. 020\nNew Wilbert, HI 73761', 'J', '4121891', '69370', 'fletcher.keeling@example.org', 'inactive', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(5, 'Fermin Kertzmann', '9505 Bednar Courts Suite 572\nKamrenside, OH 30869', 'J', '4593806', '60116', 'gerhold.adelia@example.org', 'active', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(6, 'Dr. Marilou Kovacek', '91959 Wisozk Heights\nWest Aaron, ME 06482', 'V', '2560437', '66959', 'hand.grady@example.org', 'active', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(7, 'Lura Tremblay PhD', '85040 Mateo Divide Apt. 425\nUptonberg, LA 56243-2233', 'E', '1075828', '40267', 'wswift@example.com', 'inactive', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(8, 'Addie Schuppe', '17406 Rocio Well\nWest Jamel, MS 88130-9436', 'E', '7374223', '56664', 'franecki.savannah@example.org', 'inactive', '2024-12-06 19:04:48', '2024-12-06 19:04:48'),
+(9, 'Lavon Muller', '7060 Leannon Orchard\nSouth Lourdesshire, TN 77058-8594', 'J', '2787882', '58817', 'tyreek.hoppe@example.net', 'inactive', '2024-12-06 19:04:48', '2024-12-21 00:48:14'),
+(10, 'Miss Cecilia Jenkins III', '281 Schoen Ridges Suite 386\nPort Alexzanderhaven, MN 08873', 'E', '2316367', '35366', 'rocky38@example.net', 'inactive', '2024-12-06 19:04:48', '2024-12-06 19:04:48'),
+(11, 'Rolando Duran', 'AV. Principal La Pedrera Callejón Los Cocos Quinta Liliana#170', 'V', '4553635', '0412-9279418', NULL, 'active', '2024-12-29 15:46:30', '2024-12-29 15:46:30'),
+(12, 'Edwin Velásquez', 'El Limón AV. Principal Callejón Delicias #14', 'V', '15274580', '0424-3498925', 'edwinvelasquezm@hotmail.com', 'active', '2024-12-29 15:51:25', '2024-12-29 15:51:25'),
+(13, 'Marlene Martínez', 'Av. Principal La Pedrera Callejón Los Cocos Quinta Liliana #170', 'V', '5262915', '0412-0774397', NULL, 'active', '2024-12-30 16:21:54', '2024-12-30 16:21:54');
 
 -- --------------------------------------------------------
 
@@ -114,11 +115,11 @@ CREATE TABLE `compras` (
   `proveedor_id` bigint UNSIGNED NOT NULL,
   `sucursal_id` bigint UNSIGNED NOT NULL,
   `tasa_bcv` double(8,2) NOT NULL,
-  `status_carga` tinyint DEFAULT NULL,
   `fecha_compra` date NOT NULL,
   `subtotal` double(8,2) NOT NULL,
   `iva` double(8,2) NOT NULL,
   `total` double(8,2) NOT NULL,
+  `status_carga` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -127,12 +128,10 @@ CREATE TABLE `compras` (
 -- Volcado de datos para la tabla `compras`
 --
 
-INSERT INTO `compras` (`id`, `proveedor_id`, `sucursal_id`, `tasa_bcv`, `status_carga`, `fecha_compra`, `subtotal`, `iva`, `total`, `created_at`, `updated_at`) VALUES
-(3, 6, 1, 47.31, 1, '2024-11-29', 6.44, 1.03, 7.47, '2024-11-29 05:32:09', '2024-11-29 05:39:44'),
-(4, 6, 1, 47.31, 1, '2024-11-29', 8.88, 1.42, 10.30, '2024-11-29 07:24:59', '2024-11-29 07:25:58'),
-(6, 7, 1, 47.61, 1, '2024-11-30', 12.50, 2.00, 14.50, '2024-11-30 05:07:50', '2024-11-30 05:08:28'),
-(7, 7, 1, 47.61, 1, '2024-11-30', 12.50, 2.00, 14.50, '2024-11-30 05:14:52', '2024-11-30 05:15:05'),
-(8, 7, 1, 47.61, 1, '2024-11-30', 12.00, 1.92, 13.92, '2024-11-30 05:33:41', '2024-11-30 05:33:56');
+INSERT INTO `compras` (`id`, `proveedor_id`, `sucursal_id`, `tasa_bcv`, `fecha_compra`, `subtotal`, `iva`, `total`, `status_carga`, `created_at`, `updated_at`) VALUES
+(4, 6, 1, 51.64, '2024-12-26', 17.00, 2.72, 19.72, 1, '2024-12-26 18:15:16', '2024-12-26 19:40:18'),
+(5, 2, 1, 51.64, '2024-12-26', 12.00, 1.92, 13.92, 1, '2024-12-26 18:30:39', '2024-12-26 19:41:12'),
+(9, 3, 1, 51.93, '2024-12-29', 76.50, 12.24, 88.74, 1, '2024-12-29 16:04:49', '2024-12-29 16:05:09');
 
 -- --------------------------------------------------------
 
@@ -159,7 +158,9 @@ CREATE TABLE `deliveries` (
 --
 
 INSERT INTO `deliveries` (`id`, `direccion`, `referencia`, `venta_id`, `user_id`, `status`, `costo_delivery`, `detalles_entrega`, `fecha_entrega`, `created_at`, `updated_at`) VALUES
-(2, 'La Soledad', 'Panadería New York', 3, NULL, 'pendiente', 2.00, NULL, NULL, '2024-11-29 06:35:25', '2024-11-29 06:35:25');
+(2, 'Plaza la Soledad', 'Panadería New York', 3, 15, 'proceso', 3.00, NULL, NULL, '2024-12-26 22:29:16', '2024-12-28 06:39:13'),
+(3, 'Barrio Sucre', 'Iglesia Nuestra Señora del Socorro', 4, NULL, 'entregado', 2.00, 'Ottmar García', '28-12-2024 01:54 AM', '2024-12-26 23:31:45', '2024-12-28 05:54:13'),
+(4, 'Barrio Sucre', 'Iglesia Nuestra Señora del Socorro', 5, NULL, 'pendiente', 3.00, NULL, NULL, '2024-12-29 16:07:43', '2024-12-29 16:07:43');
 
 -- --------------------------------------------------------
 
@@ -186,11 +187,9 @@ CREATE TABLE `detalle_compras` (
 --
 
 INSERT INTO `detalle_compras` (`id`, `compra_id`, `productos_nombres`, `categorias_productos`, `productos_ids`, `cantidad`, `costo_unitario`, `subtotal`, `photos`, `created_at`, `updated_at`) VALUES
-(3, 3, 'Forro Sefora Lite Spark Go 2024', 'Forros', '5', '2', '3.22', '6.44', 'forro-sefora-lite-spark-go-2024.jpg', '2024-11-29 05:32:09', '2024-11-29 05:32:09'),
-(4, 4, 'Forro Sefora Lite Spark Go 2024', 'Forros', '5', '4', '2.22', '8.88', 'forro-sefora-lite-spark-go-2024.jpg', '2024-11-29 07:24:59', '2024-11-29 07:24:59'),
-(6, 6, 'Audífono Samsumg Galaxy Buds', 'Audífonos', '6', '5', '2.5', '12.5', 'audifono-samsumg-galaxy-buds.jpg', '2024-11-30 05:07:50', '2024-11-30 05:07:50'),
-(7, 7, 'Audífono Samsumg Galaxy Buds', 'Audífonos', '6', '5', '2.5', '12.5', 'audifono-samsumg-galaxy-buds.jpg', '2024-11-30 05:14:52', '2024-11-30 05:14:52'),
-(8, 8, 'Audífono Samsumg Galaxy Buds', 'Audífonos', '6', '4', '3', '12', 'audifono-samsumg-galaxy-buds.jpg', '2024-11-30 05:33:41', '2024-11-30 05:33:41');
+(4, 4, 'Forro Samsung A22 5G - Deadpool y Wolverine,Forro Samsung A22 5G - Gokú,Forro Samsung A34', 'Forros De Teléfono Samsung,Forros De Teléfono Samsung,Forros De Teléfono Samsung', '13,14,15', '2,2,1', '3.5,3.5,3', '7,7,3', 'forro-samsung-a22-5g-deadpool-y-wolverine.jpg,forro-samsung-a22-5g-goku.jpg,forro-samsung-a34.jpg', '2024-12-26 18:15:16', '2024-12-26 18:15:16'),
+(5, 5, 'Corneta Inalámbrica LM-S376,Corneta Inalámbrica ZQS-1488', 'Cornetas Inalámbrica,Cornetas Inalámbrica', '7,8', '2,1', '4,4', '8,4', 'corneta-inalambrica-lm-s376.jpg,corneta-inalambrica-zqs-1488.jpg', '2024-12-26 18:30:39', '2024-12-26 18:30:39'),
+(9, 9, 'Audífono De Casco P9', 'Audífonos De Casco Inalámbrico', '4', '15', '5.1', '76.5', 'audifono-de-casco-p9.jpg', '2024-12-29 16:04:49', '2024-12-29 16:04:49');
 
 -- --------------------------------------------------------
 
@@ -217,8 +216,9 @@ CREATE TABLE `detalle_ventas` (
 --
 
 INSERT INTO `detalle_ventas` (`id`, `venta_id`, `productos_nombres`, `categorias_productos`, `productos_ids`, `cantidad`, `costo_unitario`, `subtotal`, `photos`, `created_at`, `updated_at`) VALUES
-(3, 3, 'Forro Sefora Lite Spark Go 2024', 'Forros', '5', '1', '6.44', '6.44', 'forro-sefora-lite-spark-go-2024.jpg', '2024-11-29 06:35:25', '2024-11-29 06:35:25'),
-(4, 4, 'Audífono Samsumg Galaxy Buds', 'Audífonos', '6', '3', '12.5', '37.5', 'audifono-samsumg-galaxy-buds.jpg', '2024-11-30 05:27:05', '2024-11-30 05:27:05');
+(3, 3, 'Forro Samsung A22 5G - Deadpool y Wolverine', 'Forros De Teléfono Samsung', '13', '1', '4.55', '4.55', 'forro-samsung-a22-5g-deadpool-y-wolverine.jpg', '2024-12-26 22:29:16', '2024-12-26 22:29:16'),
+(4, 4, 'Forro Samsung A34', 'Forros De Teléfono Samsung', '15', '1', '3.9', '3.9', 'forro-samsung-a34.jpg', '2024-12-26 23:31:45', '2024-12-26 23:31:45'),
+(5, 5, 'Audífono De Casco P9', 'Audífonos De Casco Inalámbrico', '4', '2', '6', '12', 'audifono-de-casco-p9.jpg', '2024-12-29 16:07:43', '2024-12-29 16:07:43');
 
 -- --------------------------------------------------------
 
@@ -307,7 +307,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (17, '2024_06_11_085917_create_servicio_tecnicos_table', 1),
 (18, '2024_06_11_180547_create_devolucions_table', 1),
 (19, '2024_06_12_210536_create_almacens_table', 1),
-(20, '2024_11_07_204408_create_seguridads_table', 1);
+(20, '2024_12_06_145356_create_seguridads_table', 1);
 
 -- --------------------------------------------------------
 
@@ -368,8 +368,18 @@ CREATE TABLE `productos` (
 --
 
 INSERT INTO `productos` (`id`, `categoria_id`, `sucursal_id`, `cantidad`, `cantidad_devueltos`, `nombre`, `photo`, `descripcion`, `status`, `precio_compra`, `porcentaje_ganancia`, `precio_venta`, `tasa_bcv`, `created_at`, `updated_at`) VALUES
-(5, 1, 1, 5, NULL, 'Forro Sefora Lite Spark Go 2024', 'forro-sefora-lite-spark-go-2024.jpg', 'Forro Sefora Lite Spark Go 2024 - Transparente', 'activo', 8.88, NULL, 8.88, 0.00, '2024-11-29 05:29:06', '2024-11-29 07:26:02'),
-(6, 3, 1, 4, NULL, 'Audífono Samsumg Galaxy Buds', 'audifono-samsumg-galaxy-buds.jpg', 'Audífono Samsumg Galaxy Buds - Blanco', 'activo', 12.00, NULL, 12.00, 0.00, '2024-11-30 04:38:51', '2024-11-30 05:50:09');
+(4, 4, 2, 13, NULL, 'Audífono De Casco P9', 'audifono-de-casco-p9.jpg', 'Audífono De Casco P9 Inalámbricos - Blanco', 'activo', 5.10, 30, 6.63, 0.00, '2024-12-23 12:38:36', '2024-12-29 16:11:56'),
+(5, 5, 1, NULL, NULL, 'Cable USB CB-01-Micro', 'cable-usb-cb-01-micro.jpg', 'Cable USB CB-01-Micro USB Carga Rápida Blanco', 'activo', NULL, NULL, NULL, 0.00, '2024-12-23 12:40:30', '2024-12-29 04:43:53'),
+(6, 8, 1, NULL, NULL, 'Cargador Inteligente HCA-01', 'cargador-inteligente-hca-01.jpg', 'Cargador Inteligente HCA-01', 'activo', NULL, NULL, NULL, 0.00, '2024-12-23 12:44:36', '2024-12-29 04:38:30'),
+(7, 6, 1, NULL, NULL, 'Corneta Inalámbrica LM-S376', 'corneta-inalambrica-lm-s376.jpg', 'Corneta Inalámbrica LM-S376 - Azul', 'activo', NULL, NULL, NULL, 0.00, '2024-12-23 12:46:29', '2024-12-29 04:39:59'),
+(8, 6, 1, NULL, NULL, 'Corneta Inalámbrica ZQS-1488', 'corneta-inalambrica-zqs-1488.jpg', 'Corneta Inalámbrica ZQS-1488 - Negro', 'activo', NULL, NULL, NULL, 0.00, '2024-12-23 13:02:02', '2024-12-29 04:40:28'),
+(9, 11, 1, NULL, NULL, 'Micrófono Corbatero M01', 'microfono-corbatero-m01.jpg', 'Micrófono Corbatero M01 - Negro', 'activo', NULL, NULL, NULL, 0.00, '2024-12-23 13:10:31', '2024-12-29 04:40:54'),
+(10, 7, 2, NULL, NULL, 'Carro De Stitch', 'carro-de-stitch.jpg', 'Carro De Stitch a Control Remoto', 'activo', NULL, NULL, NULL, 0.00, '2024-12-23 13:12:02', '2024-12-29 15:20:13'),
+(11, 12, 1, NULL, NULL, 'Micrófono Karaoke WS-858', 'microfono-karaoke-ws-858.jpg', 'Micrófono Karaoke WS-858 Inalámbrico', 'activo', NULL, NULL, NULL, 0.00, '2024-12-23 13:28:45', '2024-12-29 04:00:46'),
+(12, 9, 1, NULL, NULL, 'Tiras de Teléfono', 'tiras-de-telefono.jpg', 'Tiras de Teléfono de varios colores', 'activo', NULL, NULL, NULL, 0.00, '2024-12-23 13:29:49', '2024-12-29 04:42:20'),
+(13, 10, 1, 1, NULL, 'Forro Samsung A22 5G - Deadpool y Wolverine', 'forro-samsung-a22-5g-deadpool-y-wolverine.jpg', 'Forro Samsung A22 5G - Deadpool y Wolverine', 'activo', 3.50, 30, 4.55, 0.00, '2024-12-26 17:54:08', '2024-12-26 22:29:16'),
+(14, 10, 1, 2, NULL, 'Forro Samsung A22 5G - Gokú', 'forro-samsung-a22-5g-goku.jpg', 'Forro Samsung A22 5G - Gokú', 'activo', 3.50, 30, 4.55, 0.00, '2024-12-26 17:54:47', '2024-12-26 22:14:04'),
+(15, 10, 1, 0, NULL, 'Forro Samsung A34', 'forro-samsung-a34.jpg', 'Forro Samsung A34 - Minecraft', 'activo', 3.00, 30, 3.90, 0.00, '2024-12-26 17:57:39', '2024-12-26 23:31:45');
 
 -- --------------------------------------------------------
 
@@ -381,6 +391,7 @@ CREATE TABLE `proveedors` (
   `id` bigint UNSIGNED NOT NULL,
   `nombre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `rif` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categoria_id` bigint UNSIGNED DEFAULT NULL,
   `tipo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `num_cel` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -392,14 +403,13 @@ CREATE TABLE `proveedors` (
 -- Volcado de datos para la tabla `proveedors`
 --
 
-INSERT INTO `proveedors` (`id`, `nombre`, `rif`, `tipo`, `status`, `num_cel`, `created_at`, `updated_at`) VALUES
-(1, 'Reilly, Luettgen and Kertzmann', '5564949467781121', 'v', 'inactive', '1-912-656-7540', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(2, 'Kilback, Senger and Borer', '2395350813222484', 'v', 'active', '231-847-0152', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(3, 'Schamberger PLC', '6011885404820365', 'v', 'inactive', '229-352-6516', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(4, 'Kirlin and Sons', '6011883776895552', 'j', 'active', '831.854.6280', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(5, 'Miller, Kling and Johnston', '5164809387409233', 'j', 'inactive', '501.582.2620', '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(6, 'Minimal Import', '40619570-7', 'J', 'active', '0412-6061005', '2024-11-29 05:30:46', '2024-11-29 06:23:25'),
-(7, 'Videojuegos Rolan98', '50298755-1', 'J', 'active', '0424-3839000', '2024-11-30 04:25:01', '2024-11-30 04:25:01');
+INSERT INTO `proveedors` (`id`, `nombre`, `rif`, `categoria_id`, `tipo`, `status`, `num_cel`, `created_at`, `updated_at`) VALUES
+(1, 'Halvorson and Sons', '6011220034326759', NULL, 'j', 'inactive', '+18164655208', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(2, 'Torphy PLC', '89745632-1', 6, 'V', 'active', '0414-7896541', '2024-12-06 19:04:47', '2024-12-26 17:00:20'),
+(3, 'Kreiger-Stark', '34135414-1', 4, 'J', 'active', '0426-3449875', '2024-12-06 19:04:47', '2024-12-29 15:41:40'),
+(4, 'Kirlin-Huels', '4916992954761', NULL, 'j', 'inactive', '(207) 817-8127', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(5, 'Cremin, Beer and Leffler', '5107894698472518', NULL, 'v', 'inactive', '+1.980.207.7140', '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(6, 'Minimal Import', '40619570-7', 10, 'J', 'active', '0412-6061005', '2024-12-26 13:53:37', '2024-12-26 13:53:37');
 
 -- --------------------------------------------------------
 
@@ -409,11 +419,11 @@ INSERT INTO `proveedors` (`id`, `nombre`, `rif`, `tipo`, `status`, `num_cel`, `c
 
 CREATE TABLE `seguridads` (
   `id` bigint UNSIGNED NOT NULL,
+  `pregunta_1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pregunta_2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `respuesta_1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `respuesta_2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` bigint UNSIGNED NOT NULL,
-  `pregunta_1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `pregunta_2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `respuesta_1` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `respuesta_2` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -422,11 +432,12 @@ CREATE TABLE `seguridads` (
 -- Volcado de datos para la tabla `seguridads`
 --
 
-INSERT INTO `seguridads` (`id`, `user_id`, `pregunta_1`, `pregunta_2`, `respuesta_1`, `respuesta_2`, `created_at`, `updated_at`) VALUES
-(1, 1, 'nombre primera mascota', 'comida favorita', 'perro', 'arepa', '2024-11-08 01:34:02', '2024-11-25 17:27:54'),
-(2, 12, 'nombre de la madre', 'nombre primera mascota', 'adela', 'lazi', '2024-11-08 01:50:22', '2024-11-30 02:21:52'),
-(3, 13, 'deporte favorito', 'nombre primera mascota', 'futbol', 'lucero', '2024-11-29 04:24:01', '2024-11-29 04:32:52'),
-(4, 14, 'comida favorita', 'deporte favorito', 'Cachapa', 'beisbol', '2024-11-30 02:32:48', '2024-11-30 02:32:48');
+INSERT INTO `seguridads` (`id`, `pregunta_1`, `pregunta_2`, `respuesta_1`, `respuesta_2`, `user_id`, `created_at`, `updated_at`) VALUES
+(1, 'deporte favorito', 'Lugar Nacimiento', 'futbol', 'San Cristóbal', 1, '2024-12-06 19:04:47', '2024-12-29 15:38:22'),
+(2, 'Nombre de la Escuela Secundaria', 'Tradicion Familiar', 'gustavo machado', 'cena de noche buena', 12, '2024-12-06 19:28:05', '2024-12-29 15:32:38'),
+(3, 'deporte favorito', 'Nombre de la Primera Mascota', 'Fútbol', 'Lucero', 13, '2024-12-20 17:40:33', '2024-12-29 15:26:47'),
+(4, 'sitio turistico', 'lugar nacimiento', 'Colonia Tovar', 'Maracay', 14, '2024-12-23 00:29:00', '2024-12-23 00:29:00'),
+(5, 'Nombre del Sitio Turistico Favorito', 'Lugar Nacimiento', 'Colonia Tovar', 'Maracay', 15, '2024-12-26 23:36:48', '2024-12-29 15:25:20');
 
 -- --------------------------------------------------------
 
@@ -455,9 +466,8 @@ CREATE TABLE `servicio_tecnicos` (
 --
 
 INSERT INTO `servicio_tecnicos` (`id`, `fecha_recibido`, `falla`, `productos`, `cantidad`, `user`, `serial`, `cliente_id`, `status`, `costo_dolar`, `costo_bolivar`, `created_at`, `updated_at`) VALUES
-(1, '2024-11-25 09:17:41', 'hfhfg', 'jkhjk', '1', 'Henry Espinoza', 'jkk', 10, 'entregado', 5.00, 0.00, '2024-11-25 13:17:41', '2024-11-25 16:58:46'),
-(2, '2024-11-29 03:31:40', 'Daño de la las teclas', 'Redmi 12 Pro', '1', 'Rolando Duran', '574567657', 8, 'entregado', 10.00, 0.00, '2024-11-29 07:31:40', '2024-11-29 07:33:06'),
-(3, '2024-11-30 02:01:30', 'Daño en el pin de carga', 'Samsung J2 Prime', '1', 'Rolando Duran', 'R58KC46S41P', 11, 'recibido', 15.00, 0.00, '2024-11-30 06:01:30', '2024-11-30 06:01:50');
+(1, '2024-12-27 09:34:50', 'Daño de la Pantalla', 'Samsung A30', '1', 'Rolando Duran', 'DFIUGH56756YJU', 5, 'recibido', 2.00, 0.00, '2024-12-27 13:34:50', '2024-12-27 15:06:34'),
+(2, '2024-12-30 12:23:10', 'Daño en los botones de subir volumen', 'Redmi Note 13', '1', 'Rolando Duran', 'DFHFHFGHFG', 13, 'entregado', 5.00, 0.00, '2024-12-30 16:23:10', '2024-12-30 16:24:27');
 
 -- --------------------------------------------------------
 
@@ -481,8 +491,8 @@ CREATE TABLE `sucursals` (
 --
 
 INSERT INTO `sucursals` (`id`, `codigo`, `nombre`, `estado`, `ciudad`, `active`, `created_at`, `updated_at`) VALUES
-(1, 'PRIN-1', 'Principal', 'tachira', 'san cristobal', 1, '2024-11-08 01:34:02', '2024-11-08 01:34:02'),
-(2, 'SEC-1', 'Secundaria', 'aragua', 'maracay', 1, '2024-11-08 01:34:02', '2024-11-29 07:10:46');
+(1, 'PRIN-1', 'Principal', 'tachira', 'san cristobal', 1, '2024-12-06 19:04:47', '2024-12-06 19:04:47'),
+(2, 'SEC-1', 'Secundaria', 'aragua', 'maracay', 1, '2024-12-06 19:04:47', '2024-12-22 01:48:26');
 
 -- --------------------------------------------------------
 
@@ -510,20 +520,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `role`, `last_login`, `remember_token`, `created_at`, `updated_at`, `deleted_at`, `active`) VALUES
-(1, 'Henry Espinoza', 'henry@gmail.com', NULL, '$2y$10$/ASOptROVcWaL8rkKFkbUOI9JztybxSOaaHTBBft5xEswVu8/qBcK', 'admin', '2024-11-29', NULL, '2024-11-08 01:34:02', '2024-11-29 04:18:31', NULL, 1),
-(2, 'Ottmar Araujo', 'ottmara90@hotmail.com', '2024-11-08 01:34:02', '$2y$10$8hFvV6kjJKpCh1Gb0l6dOu503328g5LIvjqbY25ghFDXspZTuAW2C', 'delivery', '2024-11-29', NULL, '2024-09-26 01:34:02', '2024-11-30 02:43:34', NULL, 1),
-(3, 'Luis Carmona', 'rice.name@example.com', '2024-11-08 01:34:02', '$2y$10$ju2ZJS0g869Kz4cLBSdyt.CAyfnXepnv9mqnajwSkXaKtWcbQPdhm', 'vendedor', NULL, NULL, '2024-11-07 01:34:02', '2024-11-30 04:00:04', NULL, 1),
-(4, 'Marietta Flatley III', 'zrutherford@example.org', '2024-11-08 01:34:02', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'servicio', NULL, NULL, '2024-11-03 01:34:02', '2024-11-08 01:34:02', NULL, 1),
-(5, 'Jarod Wolf', 'uschulist@example.org', '2024-11-08 01:34:02', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'delivery', NULL, NULL, '2024-09-19 01:34:02', '2024-11-08 01:34:02', NULL, 1),
-(6, 'Kurt Abshire', 'gusikowski.shaun@example.net', '2024-11-08 01:34:02', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', NULL, NULL, '2024-10-22 01:34:02', '2024-11-08 01:34:02', NULL, 1),
-(7, 'Dedrick D\'Amore', 'myra.stanton@example.org', '2024-11-08 01:34:02', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'vendedor', NULL, NULL, '2024-09-21 01:34:02', '2024-11-08 01:34:02', NULL, 0),
-(8, 'Ms. Josiane Ledner IV', 'cydney.wuckert@example.com', '2024-11-08 01:34:02', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'vendedor', NULL, NULL, '2024-10-26 01:34:02', '2024-11-08 01:34:02', NULL, 1),
-(9, 'Caitlyn Tillman III', 'ghegmann@example.org', '2024-11-08 01:34:02', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'delivery', NULL, NULL, '2024-08-31 01:34:02', '2024-11-08 01:34:02', NULL, 0),
-(10, 'Mrs. Clotilde Runte DDS', 'fokon@example.com', '2024-11-08 01:34:02', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'servicio', NULL, NULL, '2024-09-06 01:34:02', '2024-11-08 01:34:02', NULL, 1),
-(11, 'Prof. Hayden McDermott DVM', 'shana.veum@example.net', '2024-11-08 01:34:02', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin', NULL, NULL, '2024-09-15 01:34:02', '2024-11-08 01:34:02', NULL, 1),
-(12, 'Pedro Perez', 'pedro@gmail.com', NULL, '$2y$10$oZhQrIpaDOkg6fNaybaAHOwd4Y9zNIQ02zFCYgR1CHQ2GMUzsNF5i', 'vendedor', '2024-11-29', NULL, '2024-11-08 01:50:22', '2024-11-30 02:23:12', NULL, 1),
-(13, 'Rolando Duran', 'duran7511@gmail.com', NULL, '$2y$10$.0geHacCQNq73wQRSbXG2u47iTkqofaDB9GvpaYy96AQRxKib12lu', 'admin', '2024-12-02', NULL, '2024-11-29 04:24:00', '2024-12-02 13:16:45', NULL, 1),
-(14, 'Nicolás González', 'nicogonza@hotmail.com', NULL, '$2y$10$0sP1xjxCF0tYH7UYU9XL/.mcBLNiDHi9WPK2rLm.iTXmD4xg5vCkW', 'servicio', '2024-11-29', NULL, '2024-11-30 02:32:48', '2024-11-30 02:34:57', NULL, 1);
+(1, 'Henry Espinoza', 'henry@gmail.com', NULL, '$2y$10$QMm1suB8/IE5EQKoVe.Qbuuh/eaB9j2lbmpapeGRIv7JMm7rHaM4m', 'admin', '2024-12-20', NULL, '2024-12-06 19:04:47', '2024-12-29 15:38:22', NULL, 1),
+(12, 'Pedro Pérez', 'pedro@gmail.com', NULL, '$2y$10$uyZu5mweZrsJxD78Y74iNOmIE5jEsYa75atbFGt4P43wbAgBJqO1K', 'vendedor', '2024-12-23', NULL, '2024-12-06 19:28:05', '2024-12-29 15:32:38', NULL, 1),
+(13, 'Rolando Duran', 'duran7511@gmail.com', NULL, '$2y$10$3mIh0XpsF6MVnwwI.5QXkOf9EXSAfjGHYNovcsMAqXsDZtLhstPyu', 'admin', '2024-12-30', NULL, '2024-12-20 17:40:33', '2024-12-30 13:41:53', NULL, 1),
+(14, 'Nicolás González', 'nicogonza@hotmail.com', NULL, '$2y$10$/X2uzxuT36v3d4MOuqWw0uR7OZIMtDjkxDw7onQ9fh2PRpzv.Pxke', 'servicio', '2024-12-29', NULL, '2024-12-23 00:29:00', '2024-12-29 04:26:04', NULL, 1),
+(15, 'Ottmar García', 'ottmara90@hotmail.com', NULL, '$2y$10$d5/LWUJyjW3tDKEluMJPUO4YMZvsBOypekXp1NT0H9AdgjvvaP.xe', 'delivery', '2024-12-28', NULL, '2024-12-26 23:36:48', '2024-12-29 15:25:20', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -549,20 +550,11 @@ CREATE TABLE `user_profiles` (
 --
 
 INSERT INTO `user_profiles` (`id`, `ubicacion`, `num_cel`, `tipo_documento`, `num_documento`, `user_id`, `sucursal_id`, `created_at`, `updated_at`, `deleted_at`) VALUES
-(1, 'San Cristobal', '0424-7324441', 'V', '23897456', 1, 1, '2024-11-08 01:34:02', '2024-11-08 01:34:02', NULL),
-(2, 'Barrio La Libertad', '0424-3724792', 'V', '20900456', 2, 1, '2024-11-08 01:34:02', '2024-11-30 02:42:21', NULL),
-(3, 'Tremblaystad', '0426-8987654', 'E', '82758424', 3, 1, '2024-11-08 01:34:02', '2024-11-30 04:00:04', NULL),
-(4, 'South Nicolettestad', '43297', 'J', '64174040', 4, 2, '2024-11-08 01:34:02', '2024-11-08 01:34:02', NULL),
-(5, 'Gladyceland', '44976', 'V', '26650876', 5, 2, '2024-11-08 01:34:02', '2024-11-08 01:34:02', NULL),
-(6, 'Marvinland', '94175', 'E', '48023383', 6, 2, '2024-11-08 01:34:02', '2024-11-08 01:34:02', NULL),
-(7, 'Olsonshire', '17795', 'J', '67639849', 7, 2, '2024-11-08 01:34:02', '2024-11-08 01:34:02', NULL),
-(8, 'Port Abbie', '80846', 'V', '38846870', 8, 2, '2024-11-08 01:34:02', '2024-11-08 01:34:02', NULL),
-(9, 'Bernadinebury', '21108', 'J', '90372722', 9, 1, '2024-11-08 01:34:02', '2024-11-08 01:34:02', NULL),
-(10, 'West Dwight', '486', 'J', '90770758', 10, 2, '2024-11-08 01:34:02', '2024-11-08 01:34:02', NULL),
-(11, 'East Jimmieport', '8493', 'J', '6706425', 11, 2, '2024-11-08 01:34:02', '2024-11-08 01:34:02', NULL),
-(12, 'Turmero', '0414-7258954', 'V', '25897466', 12, 1, '2024-11-08 01:50:22', '2024-11-30 02:21:52', NULL),
-(13, 'Maracay', '0424-3822518', 'V', '26491343', 13, 1, '2024-11-29 04:24:01', '2024-11-29 04:24:01', NULL),
-(14, 'Barrio La Pedrera', '0414-0329952', 'V', '21667943', 14, 2, '2024-11-30 02:32:48', '2024-11-30 02:32:48', NULL);
+(1, 'Urbanización San Isidro. Edificio San Isidro Suites II Piso 3', '0424-7324441', 'V', '23897456', 1, 1, '2024-12-06 19:04:47', '2024-12-29 15:38:22', NULL),
+(12, 'Caña de Azúcar Sector 2', '0414-4789563', 'V', '20390946', 12, 1, '2024-12-06 19:28:05', '2024-12-29 15:32:38', NULL),
+(13, 'Av. Principal La Pedrera Quinta Liliana #170', '0424-3822518', 'V', '26491343', 13, 1, '2024-12-20 17:40:33', '2024-12-29 15:26:47', NULL),
+(14, 'Av. Principal La Pedrera Callejón La Grita', '0414-0329952', 'V', '26778009', 14, 1, '2024-12-23 00:29:00', '2024-12-23 00:29:00', NULL),
+(15, 'AV. Constitución Residencias Los Mangos', '0424-3724792', 'V', '25889562', 15, 1, '2024-12-26 23:36:48', '2024-12-29 15:25:20', NULL);
 
 -- --------------------------------------------------------
 
@@ -589,8 +581,9 @@ CREATE TABLE `ventas` (
 --
 
 INSERT INTO `ventas` (`id`, `cliente_id`, `sucursal_id`, `fecha_venta`, `tasa_bcv`, `subtotal_dolar`, `iva_dolar`, `total_dolar`, `status`, `created_at`, `updated_at`) VALUES
-(3, 10, 1, '2024-11-29', 47.31, 6.44, 1.03, 7.47, NULL, '2024-11-29 06:35:25', '2024-11-29 06:35:25'),
-(4, 11, 1, '2024-11-30', 47.61, 37.50, 6.00, 43.50, NULL, '2024-11-30 05:27:04', '2024-11-30 05:27:04');
+(3, 6, 1, '2024-12-26', 51.77, 4.55, 0.73, 5.28, NULL, '2024-12-26 22:29:16', '2024-12-26 22:29:16'),
+(4, 5, 1, '2024-12-26', 51.77, 3.90, 0.62, 4.52, NULL, '2024-12-26 23:31:45', '2024-12-26 23:31:45'),
+(5, 11, 2, '2024-12-29', 51.93, 12.00, 1.92, 13.92, NULL, '2024-12-29 16:07:43', '2024-12-29 16:07:43');
 
 --
 -- Índices para tablas volcadas
@@ -699,7 +692,8 @@ ALTER TABLE `productos`
 -- Indices de la tabla `proveedors`
 --
 ALTER TABLE `proveedors`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `proveedors_categoria_id_foreign` (`categoria_id`);
 
 --
 -- Indices de la tabla `seguridads`
@@ -754,43 +748,43 @@ ALTER TABLE `ventas`
 -- AUTO_INCREMENT de la tabla `almacens`
 --
 ALTER TABLE `almacens`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `clientes`
 --
 ALTER TABLE `clientes`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de la tabla `compras`
 --
 ALTER TABLE `compras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `deliveries`
 --
 ALTER TABLE `deliveries`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_compras`
 --
 ALTER TABLE `detalle_compras`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `detalle_ventas`
 --
 ALTER TABLE `detalle_ventas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `devolucions`
@@ -826,25 +820,25 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedors`
 --
 ALTER TABLE `proveedors`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `seguridads`
 --
 ALTER TABLE `seguridads`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `servicio_tecnicos`
 --
 ALTER TABLE `servicio_tecnicos`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `sucursals`
@@ -856,7 +850,7 @@ ALTER TABLE `sucursals`
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT de la tabla `user_profiles`
@@ -868,7 +862,7 @@ ALTER TABLE `user_profiles`
 -- AUTO_INCREMENT de la tabla `ventas`
 --
 ALTER TABLE `ventas`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas
@@ -919,6 +913,12 @@ ALTER TABLE `devolucions`
 ALTER TABLE `productos`
   ADD CONSTRAINT `productos_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `productos_sucursal_id_foreign` FOREIGN KEY (`sucursal_id`) REFERENCES `sucursals` (`id`) ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `proveedors`
+--
+ALTER TABLE `proveedors`
+  ADD CONSTRAINT `proveedors_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `seguridads`

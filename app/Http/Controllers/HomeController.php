@@ -54,7 +54,7 @@ class HomeController extends Controller
         }
         $acum_total=array_sum($acum_sucur);
 
-        //DELIVERIS
+        //Gráfico de DELIVERYS
         $deliveris=Delivery::query()->get();
         if(count($deliveris)!= 0){
             foreach ($deliveris as $i=>$deliveri){
@@ -68,7 +68,7 @@ class HomeController extends Controller
             $entregadas=[];
         }
 
-        //SERVICIO TECNICO
+        //Gráfico de SERVICIO TÉCNICO
 
         $servicios=ServicioTecnico::query()->get();
         if(count($servicios)!= 0) {

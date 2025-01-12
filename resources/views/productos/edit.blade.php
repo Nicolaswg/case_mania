@@ -2,6 +2,9 @@
 
 @section('title', "Editar Producto")
 @section('breadcrumb')
+
+    <!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('productos.index')}}" class="link-dark">Productos</a></li>
     <li class="breadcrumb-item active" aria-current="page">Editar</li>
@@ -12,14 +15,14 @@
 
     @include('shared._errors')
 
-    <form method="POST" action="{{ url("productos/{$producto->id}") }}" enctype="multipart/form-data" id="app">
+    <form method="POST" action="{{ url("productos/{$producto->id}") }}" enctype="multipart/form-data" id="app"> <!-- Botón de actualizar y regresa al listado -->
         {{ method_field('PUT') }}
 
         @include('productos._fields')
 
-        <div class="form-group mt-4 text-center">
+        <div class="form-group mt-4 text-center"> <!-- Botones de actualizar proveedor y regresar al listado -->
             <button type="submit" class="btn btn-primary"> <i class="bi bi-arrow-repeat"></i> Actualizar Producto</button>
-            <a href="{{ route('productos.index') }}" class="btn btn-link">Regresar</a>
+            <a href="{{ route('productos.index') }}" class="btn btn-link">Regresar al Listado de Productos</a>
         </div>
     </form>
     @endcard
@@ -53,7 +56,7 @@
             methods:{
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv', //Enlce para obtener el valor del BCV
                         method:'GET',
                         dataType:'json',
                         success:function (data){
@@ -75,14 +78,14 @@
                         this.empleado=true
                     }
                 },
-                deleteuser:function (user_id){
+                deleteuser:function (user_id){ //Función para eliminar el producto
                     Swal.fire({
-                        title: '¿Seguro que deseas eliminar el Usuario?',
+                        title: '¿Seguro que deseas eliminar el producto?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Eliminarlo!'
+                        confirmButtonText: 'Si, Eliminar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -95,9 +98,9 @@
                                 dataType:'json',
                                 success:function (data){
                                     if(data){
-                                        Swal.fire(
-                                            'Elimininado!',
-                                            'El archivo a sido Eliminado.',
+                                        Swal.fire( //Confirmación de producto eliminado
+                                            'Eliminado',
+                                            'El producto ha sido eliminado exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()
@@ -111,7 +114,7 @@
                         }
                     })
                 },
-                setprecio(){
+                setprecio(){ //Función para obtener el valor del precio
                     this.precio_venta=(parseFloat(this.precio_compra)*parseFloat(this.porcentaje_ganancia)/100)+parseFloat(this.precio_compra)
                     if(this.tasa !== 0){
                         this.precio_bs= (parseFloat(this.precio_compra) * parseFloat(this.tasa)).toFixed(2)

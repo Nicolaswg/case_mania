@@ -9,15 +9,15 @@ class SucursalController extends Controller
 {
     public function index()
     {
-        $sucursales = Sucursal::query()
+        $sucursales = Sucursal::query() //Función para la cantidad de registros por página
             ->orderBy('nombre')
-            ->paginate(5);
+            ->paginate(10); //Cantidad de registros por página
 
         return view('sucursales.index', [
             'sucursales' => $sucursales,
         ]);
     }
-    public function create(){
+    public function create(){ //Función para crear una sucursal
         return $this->form('sucursales.create', new Sucursal(),'create');
     }
     private function form(string $view, Sucursal $sucursal,$vista)
@@ -29,7 +29,7 @@ class SucursalController extends Controller
     }
     public function store(Request $request)
     {
-        $request->validate([
+        $request->validate([ //Función para validar los campos solicitados
             'nombre'=>'required',
             'estado'=>'required',
             'ciudad'=>'required',
@@ -43,16 +43,16 @@ class SucursalController extends Controller
             'estado'=>$request->estado,
             'ciudad'=>$request->ciudad,
         ]);
-        return redirect()->route('sucursales.index')->with('success','Sucursal Guardado con Exito');
+        return redirect()->route('sucursales.index')->with('success','Sucursal Creada Exitosamente');
 
     }
-    public function edit(Sucursal $sucursal)
+    public function edit(Sucursal $sucursal) //Función para editar la sucursal
     {
         return $this->form('sucursales.edit', $sucursal,'editar');
     }
-    public function update(Request $request, Sucursal $sucursal)
+    public function update(Request $request, Sucursal $sucursal) //Función para actualizar los datos
     {
-        $request->validate([
+        $request->validate([ //Función para validar los campos solicitados
             'nombre'=>'required',
             'estado'=>'required',
             'ciudad'=>'required',
@@ -67,9 +67,9 @@ class SucursalController extends Controller
         ]);
         $sucursal->save();
 
-        return redirect()->route('sucursales.index')->with('success','Sucursal actualizado con Exito');
+        return redirect()->route('sucursales.index')->with('success','Sucursal Actualizada Exitosamente');
     }
-    public function delete(Request $request)
+    public function delete(Request $request) //Función para desactivar la sucursal
     {
         $sucursal = Sucursal::query()->where('id', $request->sucursal_id)->first();
         $sucursal->active = false;

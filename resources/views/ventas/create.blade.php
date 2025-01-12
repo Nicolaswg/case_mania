@@ -1,6 +1,9 @@
 @extends('layout')
 @section('title', "Realizar una Venta")
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('ventas.index')}}" class="link-dark">Ventas</a></li>
     <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
@@ -11,9 +14,9 @@
     @include('shared._errors')
     <form method="POST" action="{{ url('ventas') }}" id="app" >
         @include('ventas._fields')
-        <div class="form-group mt-4" align="middle">
+        <div class="form-group mt-4" align="middle"> <!-- Botón para guardar la venta y regresar al listado -->
             <button type="button" :disabled="!datos || !checkdelivery()"  class="btn btn-primary" @click="savedata()"><i class="bi bi-save-fill"></i> Guardar Venta</button>
-            <a href="{{ route('ventas.index') }}" class="btn btn-link">Regresar a Lista de Ventas</a>
+            <a href="{{ route('ventas.index') }}" class="btn btn-link">Regresar al Listado de Ventas</a>
         </div>
     </form>
     @endcard
@@ -80,7 +83,7 @@
                 this.setpreciodolar()
             },
             methods:{
-                checkdelivery(){
+                checkdelivery(){ //Función para revisar el estado del servicio a domicilio
                     if(this.delivery){
                         if(this.direccion_delivery === '' || this.referencia_delivery === '' || this.costo_delivery === '' ){
                             return false
@@ -91,7 +94,7 @@
                         return true
                     }
                 },
-                configdelivery(){
+                configdelivery(){ //Función para configurar el servicio a domicilio
                     if(this.delivery){
                         this.delivery=false
                         this.costo_delivery=''
@@ -107,7 +110,7 @@
                 },
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarve.org/api/v1/dollar?page=bcv',
+                        url:'https://pydolarve.org/api/v1/dollar?page=bcv', //Función para obtener el valor del servicio a domicilio
                         method:'GET',
                         dataType:'json',
                         success:function (data){
@@ -121,7 +124,7 @@
                         }
                     })
                 },
-                selecproductos(){
+                selecproductos(){ //Función para seleccionar los productos
                     $.ajax({
                         url:'/selecproducto',
                         method:'POST',
@@ -146,7 +149,7 @@
                         }
                     })
                 },
-                verificarproducto(){
+                verificarproducto(){ //Función para verificar la cantidad del producto
                     $.ajax({
                         url:'/verificarmaxproducto',
                         method:'POST',
@@ -166,7 +169,7 @@
                         }
                     })
                 },
-                verifimax(){
+                verifimax(){ //Función para verificar la cantidad máxima del producto y que no se pase de dicha cantidad al momento de hacer la venta
                     let adicional=0
                     this.lista_venta.ids.forEach((id, index)=>{
                         if(id === this.productos.ids[this.index_producto]){
@@ -200,7 +203,7 @@
                         return true
                     }
                 },
-                agregarfila(){
+                agregarfila(){ //Función para agregar las filas de los productos
                     let status=this.checkfields()
                     if(status){
                         this.datos=true
@@ -220,7 +223,7 @@
                         }
                         this.resetfields()
                     }else{
-                        Swal.fire({
+                        Swal.fire({ //Función para aviso de error en la venta
                             icon: "error",
                             title: "Error",
                             text: "Verifica que los campos no contengan un Error",
@@ -244,7 +247,7 @@
                     this.calculofactura()
                     return band
                 },
-                calculofactura(){
+                calculofactura(){ //Función para el cálculo de la factura
                     let acum=0
                     this.lista_venta.subtotal.forEach((subtotal, index)=>{
                             acum=acum+subtotal
@@ -258,7 +261,7 @@
                     this.bs.iva= new Intl.NumberFormat('de-DE',{ style: 'currency',currency: 'BsF'}).format((parseFloat(this.lista_venta.iva )* parseFloat(this.tasa_dolar.price)))
                     this.bs.total_factura=  new Intl.NumberFormat('de-DE',{ style: 'currency',currency: 'BsF' }).format((parseFloat(this.lista_venta.total_factura) * parseFloat(this.tasa_dolar.price)))
                 },
-                deletefila(indice){
+                deletefila(indice){ //Función para eliminar la fila
                     this.lista_venta.nombres.splice(indice,1)
                     this.lista_venta.ids.splice(indice,1)
                     this.lista_venta.cantidad.splice(indice,1)
@@ -307,10 +310,10 @@
                         dataType:'json',
                         success:function (data){
                             if(data.status=== true){
-                                Swal.fire({
+                                Swal.fire({ //Función para la confirmación de la venta
                                     icon: "success",
-                                    title: "Exito",
-                                    text: "Venta Registrada Exitosamente",
+                                    title: "Realizado",
+                                    text: "Venta registrada exitosamente",
                                     confirmButtonText: 'Enterado',
                                     allowOutsideClick:false,
                                     footer: '<a class="note" href="/ventas/nueva">Deseas Agregar otra venta?</a>'

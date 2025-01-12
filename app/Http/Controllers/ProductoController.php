@@ -22,13 +22,13 @@ class ProductoController extends Controller
     public function index(Request $request,ProductoFilter $filters,Sortable $sortable)
     {
 
-        $productos = Producto::query()
+        $productos = Producto::query() //Función para la cantidad de registros por página
             ->with( 'categoria')
             ->filterBy($filters,$request->only(['search','order','categoria','state','sucursal']))
             ->orderByDesc('created_at')
-            ->paginate(5);
+            ->paginate(10); //Cantidad de registros por página
         $this->updadestateofproduct($productos);
-        $productos->appends($filters->valid());//para concatenar a la paginacion en busqueda
+        $productos->appends($filters->valid());//para concatenar a la paginación en búsqueda
         $sortable->appends($filters->valid());
         $sucursales=Sucursal::query()->unless(auth()->user()->isAdmin(),function ($q){
             $q->where('id',auth()->user()->profile->sucursal->id);
@@ -40,7 +40,7 @@ class ProductoController extends Controller
             'categorias'=>Categoria::query()->orderBy('nombre')->get()
         ]);
     }
-    public function create(){
+    public function create(){ //Función para crear los productos
         return $this->form('productos.create', new Producto,'create');
     }
     private function form(string $view, Producto $producto,$vista)
@@ -65,7 +65,7 @@ class ProductoController extends Controller
             'categorias'=>Categoria::query()->orderBy('nombre')->get(),
         ]);
     }
-    public function store(CreateProductoRequest $request,Producto $producto){
+    public function store(CreateProductoRequest $request,Producto $producto){ //Función para crear el producto
        if($request->hasFile('photo')){
            $photo=$request->file('photo');
            $nombreimg=\Illuminate\Support\Str::slug($request->nombre).".".$photo->guessExtension();
@@ -74,7 +74,7 @@ class ProductoController extends Controller
         }else {
            $nombreimg = $producto->photo;
        }
-        $producto=Producto::create([
+        $producto=Producto::create([ //Función para validar los que los campos no estén vacíos
             'nombre'=>$request->input('nombre'),
             'categoria_id'=>$request->input('categoria_id'),
             'cantidad'=>$request->input('cantidad'),
@@ -88,13 +88,13 @@ class ProductoController extends Controller
             'status'=>'Activo'
         ]);
 
-        return redirect()->route('productos.index')->with('success','Producto Guardado de Forma Exitosa');
+        return redirect()->route('productos.index')->with('success','Producto Creado Exitosamente');
     }
     public function edit(Producto $producto)
     {
-        return $this->form('productos.edit', $producto,'editar');
+        return $this->form('productos.edit', $producto,'editar'); //Función para editar el producto
     }
-    public function update(UpdateProductoRequest $request, Producto $producto)
+    public function update(UpdateProductoRequest $request, Producto $producto) //Función para actualizar el producto
     {
 
         if($request->hasFile('photo')){
@@ -118,7 +118,7 @@ class ProductoController extends Controller
            'sucursal_id'=>$request->sucursal_id,
        ]);
 
-        return redirect()->route('productos.index')->with('success','Producto Actualizado de manera Exitosa');
+        return redirect()->route('productos.index')->with('success','Producto Actualizado Exitosamente');
     }
     private function updadestateofproduct($productos)
     {
@@ -137,7 +137,7 @@ class ProductoController extends Controller
 
 
     }
-    public function selecproducto(Request $request){
+    public function selecproducto(Request $request){ //Función para el producto
         if($request->tipo == 'compras'){
             $proveedor_id=$request->proveedor_id;
             $prove=Proveedor::query()->where('id',$proveedor_id)->first();
@@ -151,6 +151,8 @@ class ProductoController extends Controller
             $categoria_id=$request->categoria_id;
             $productos= Producto::query()
                 ->where('status','activo')
+                ->where('cantidad','!=',null)
+                ->where('porcentaje_ganancia','!=',null)
                 ->whereHas('categoria',function ($q) use ($categoria_id){
                     $q->where('id',$categoria_id);
                 })
@@ -197,7 +199,7 @@ class ProductoController extends Controller
         }
 
     }
-    public function selecmaxproducto(Request $request){
+    public function selecmaxproducto(Request $request){ //Función para registrar la cantidad total del producto
         $producto_id=$request->producto_id;
         $producto= Producto::query()
             ->where('id',$producto_id)
@@ -224,40 +226,38 @@ class ProductoController extends Controller
             ];
         }
 
-
-
     }
-    public function delete(Request $request){
+    public function delete(Request $request){ //Función para eliminar el producto
         $producto = Producto::query()->where('id', $request->producto_id)->first();
         $producto->forceDelete();
             return [
                 'status'=>true,
             ];
     }
-    //ALMACEN
+    //APARTADO DEL ALMACÉN
     public function index_almacen(Request $request,ProductoFilter $filters,Sortable $sortable)
     {
 
-        $productos = Producto::query()
+        $productos = Producto::query() //Función para la cantidad de productos por página
             ->with( 'categoria')
             ->filterBy($filters,$request->only(['search','order','categoria','state','sucursal']))
             ->orderByDesc('created_at')
-            ->paginate(5);
+            ->paginate(10); //Cantidad de productos por página
 
         $this->updadestateofproduct($productos);
-        $productos->appends($filters->valid());//para concatenar a la paginacion en busqueda
+        $productos->appends($filters->valid());//para concatenar a la paginación en búsqueda
         $sortable->appends($filters->valid());
         $sucursales=Sucursal::query()
         ->orderBy('nombre')->get();
 
-        return view('productos.index_almacen', [
+        return view('productos.index_almacen', [ //Función para el producto en el almacén
             'productos' => $productos,
             'sucursales'=>$sucursales,
             'sortable'=>$sortable,
             'categorias'=>Categoria::query()->orderBy('nombre')->get()
         ]);
     }
-    public function update_productos(Request $request){
+    public function update_productos(Request $request){ //Función para que el estado del producto sea "activo" cuando se agregue el producto al almacén y se le coloque el precio de venta
         foreach ($request->ids_productos as $i=>$id) {
             $producto = Producto::query()->where('id', $id)->first();
             $producto->update([
@@ -273,7 +273,20 @@ class ProductoController extends Controller
            'status'=>true
        ];
     }
-    public function traslados_almacen(Producto $producto){
+    public function update_venta(Request $request){
+        $producto = Producto::query()->where('id', $request->producto_id)->first();
+        $producto->update([
+            'porcentaje_ganancia'=>(int)$request->porcentaje_ganancia,
+            'precio_venta'=>(int)$request->precio_venta
+        ]);
+        $producto->save();
+
+        return[
+            'status'=>true,
+        ];
+
+    }
+    public function traslados_almacen(Producto $producto){ //Función para el traslado de los productos
         $sucursales=Sucursal::query()
             ->orderBy('nombre')->get();
       $canti=[];
@@ -355,6 +368,44 @@ class ProductoController extends Controller
        ];
 
 
+    }
+    public function config_venta(Producto $producto){
+        $sucursales=Sucursal::query()
+            ->orderBy('nombre')->get();
+        $canti=[];
+        $nombre_sucur=[];
+
+        //dd($producto->almacen);
+        foreach ($sucursales as $i=>$sucursal){
+            $nombre_sucur[$i]=$sucursal->nombre;
+            if(count($producto->almacen) != 0){
+                $produc=$sucursal->almacen()->where('sucursal_id',$sucursal->id )->where('producto_id',$producto->id)->orderBy('created_at')->first();
+                if($produc != null){
+                    $canti[$i]=$produc->cantidad_acumulada;
+                }else{
+                    $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
+                    if($prod != null){
+                        $canti[$i]=$prod->cantidad;
+                    }else{
+                        $canti[$i]=0;
+                    }
+                }
+            }else{
+                $prod=$sucursal->productos->where('sucursal_id',$sucursal->id)->where('id',$producto->id)->first();
+                if($prod != null){
+                    $canti[$i]=$prod->cantidad;
+                }else{
+                    $canti[$i]=0;
+                }
+            }
+
+        }
+        return view('productos.configurar_venta',[
+            'producto'=>$producto,
+            'sucursales'=>$sucursales,
+            'cantidad'=>json_encode($canti),
+            'nombre_sucur'=>json_encode($nombre_sucur),
+        ]);
     }
 
 }

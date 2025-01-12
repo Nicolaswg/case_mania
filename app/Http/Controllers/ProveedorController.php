@@ -12,12 +12,12 @@ class ProveedorController extends Controller
 {
     public function index(Request $request, ProveedorFilter $filters,Sortable $sortable)
     {
-        $proveedores = Proveedor::query()
+        $proveedores = Proveedor::query() //Función para la cantidad de registros por página
             ->filterBy($filters,$request->only(['status','search','order']))
             ->orderByDesc('created_at')
-            ->paginate(5);
+            ->paginate(10); //Cantidad de registros por página
 
-        $proveedores->appends($filters->valid());//para concatenar a la paginacion en busqueda
+        $proveedores->appends($filters->valid());//para concatenar a la paginación en búsqueda
         $sortable->appends($filters->valid());
 
 
@@ -26,7 +26,7 @@ class ProveedorController extends Controller
             'sortable'=>$sortable,
         ]);
     }
-    public function create(){
+    public function create(){ //Función para crear los proveedores
         return $this->form('proveedores.create', new Proveedor(),'create');
     }
     private function form(string $view, Proveedor $proveedor,$vista)
@@ -56,15 +56,15 @@ class ProveedorController extends Controller
             'categoria_id'=>$request->categoria_id,
         ]);
 
-        return redirect()->route('proveedores.index')->with('success','Proveedor Guardado con Exito');
+        return redirect()->route('proveedores.index')->with('success','Proveedor Creado Exitosamente');
     }
-    public function edit(Proveedor $proveedor)
+    public function edit(Proveedor $proveedor) //Función para editar los proveedores
     {
         return $this->form('proveedores.edit', $proveedor,'editar');
     }
-    public function update(Request $request, Proveedor $proveedor)
+    public function update(Request $request, Proveedor $proveedor) //Función para actualizar los proveedores
     {
-        $request->validate([
+        $request->validate([ //Función para validar los campos solicitados
             'rif'=>'required',
             'num_cel'=>'required',
             'tipo'=>'required',
@@ -82,9 +82,9 @@ class ProveedorController extends Controller
         ]);
         $proveedor->save();
 
-        return redirect()->route('proveedores.index')->with('success','Proveedor actualizado con Exito');
+        return redirect()->route('proveedores.index')->with('success','Proveedor Actualizado Exitosamente');
     }
-    public function delete(Request $request)
+    public function delete(Request $request) //Función para inactivar a los proveedores
     {
         $proveedor = Proveedor::query()->where('id', $request->proveedor_id)->first();
         $proveedor->status = 'inactive';

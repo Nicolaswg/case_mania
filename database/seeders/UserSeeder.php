@@ -34,6 +34,13 @@ class UserSeeder extends Seeder
             'num_documento'=>'23897456',
             'sucursal_id'=>$sucursal->id,
         ]);
+        $user->seguridad()->create([
+            'pregunta_1'=>"nombre primera mascota",
+            'pregunta_2'=>"nombre de la madre",
+            'respuesta_1'=>'perro',
+            'respuesta_2'=>'mama',
+            'user_id'=>$user->id,
+        ]);
 
         foreach (range(1,10) as $i) {
             $user = UserFactory::new()->create([

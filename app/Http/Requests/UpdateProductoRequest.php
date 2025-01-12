@@ -23,7 +23,7 @@ class UpdateProductoRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return [ //Función para validar los campos solicitados
             'categoria_id'=>'required',
             'nombre'=>'required',
             'cantidad'=>'',

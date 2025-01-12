@@ -2,6 +2,9 @@
 
 @section('title', 'Sucursales')
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Sucursales</li>
 @endsection
@@ -22,21 +25,26 @@
             Lista de Sucursales
         </h1>
         <p>
-            <a href="{{ route('sucursales.create') }}" class="btn btn-dark">Nueva Sucursal</a>
+        <a href="{{ route('sucursales.create') }}" class="btn btn-primary bi bi-plus-lg"> Regisitrar Nueva Sucursal</a>
         </p>
     </div>
+    <div class="card col-md-3" align="left">
+        <div class="text-center"><label><strong >Leyenda</strong></label></div>
+            <label>Estado Activo = <strong class="text-success">Verde</strong></label>
+            <label>Estado Inactivo = <strong class="text-danger">Rojo</strong></label>
+    </div>
     @if ($sucursales->isNotEmpty())
-        <p>Viendo pagina {{$sucursales->currentPage()}} de {{$sucursales->lastPage()}}</p>
+        <p>Viendo Página {{$sucursales->currentPage()}} de {{$sucursales->lastPage()}}</p> <!-- Paginación -->
         <div class="table-responsive-lg">
             <table class="table table-sm" id="app">
-                <thead class="thead-dark">
+                <thead class="thead-dark"> <!-- Subtítulos de la tabla -->
                 <tr class="">
-                    <th scope="col">#</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Codigo</th>
-                    <th scope="col">Ubicacion</th>
-                    <th scope="col">Registro</th>
-                    <th scope="col" class="text-right th-actions">Acciones</th>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col">Nombre de la Sucursal</th>
+                    <th scope="col" class="text-center">Código</th>
+                    <th scope="col" class="text-center">Ubicación</th>
+                    <th scope="col" class="text-center">Registro</th>
+                    <th scope="col" class="text-center th-actions">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,6 +55,9 @@
             </table>
 
             {{ $sucursales->links()}}
+        </div>
+        <div class="pt-2 text-center">
+        <a href="{{ route('login') }}" class="btn btn-primary bi bi-arrow-90deg-left"> Regresar al Inicio</a>
         </div>
     @else
         <p>No hay Sucursales registrados.</p>

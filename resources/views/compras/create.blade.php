@@ -1,6 +1,9 @@
 @extends('layout')
 @section('title', "Registrar Compra")
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('compras.index')}}" class="link-dark">Compras</a></li>
     <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
@@ -11,9 +14,9 @@
     @include('shared._errors')
     <form method="POST" action="{{ url('compras') }}" id="app" >
         @include('compras._fields')
-        <div class="form-group mt-4" align="middle">
+        <div class="form-group mt-4" align="middle"> <!-- Botón de guardar compra y regresar al listado -->
             <button type="button" :disabled="!datos"  class="btn btn-primary" @click="savedata()"><i class="bi bi-save-fill"></i> Guardar Orden de Compra</button>
-            <a href="{{ route('compras.index') }}" class="btn btn-link">Regresar</a>
+            <a href="{{ route('compras.index') }}" class="btn btn-link">Regresar al Listado de Compras</a>
         </div>
     </form>
     @endcard
@@ -74,7 +77,7 @@
             methods:{
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarve.org/api/v1/dollar?page=bcv',
+                        url:'https://pydolarve.org/api/v1/dollar?page=bcv', //Función para obtener el valor del BCV
                         method:'GET',
                         dataType:'json',
                         success:function (data){
@@ -88,7 +91,7 @@
                         }
                     })
                 },
-                selecproductos(){
+                selecproductos(){ //Función para seleccionar los productos
                 console.log(this.proveedor)
                     $.ajax({
                         url:'/selecproducto',
@@ -118,7 +121,7 @@
                 verificarproducto(){
                     this.disabledprecio = this.verificarigualesids2();
                 },
-                agregarfila(){
+                agregarfila(){ //Función para agregar la fila
                     let status=this.checkfields()
                     if(status){
                         this.datos=true
@@ -137,10 +140,10 @@
                         }
                         this.resetfields()
                     }else{
-                        Swal.fire({
+                        Swal.fire({ //Función para el mensaje de error
                             icon: "error",
                             title: "Error",
-                            text: "todos los campos deben estar llenos",
+                            text: "Todos los campos deben estar llenos",
                             footer: '<span class="note">Estaran Subrallados de Color Rojo</span>'
                         }).then((result)=>{
                            this.error=true
@@ -148,7 +151,7 @@
                     }
 
                 },
-                deletefila(indice){
+                deletefila(indice){ //Función para eliminar la fila
                     this.lista_compras.nombres.splice(indice,1)
                     this.lista_compras.ids.splice(indice,1)
                     this.lista_compras.cantidad.splice(indice,1)
@@ -163,7 +166,7 @@
                     }
 
                 },
-                calculofactura(){
+                calculofactura(){ //Función para el cálculo de la factura
                     let acum=0
                     this.lista_compras.subtotal.forEach((subtotal, index)=>{
                             acum=acum+subtotal
@@ -241,11 +244,11 @@
                         dataType:'json',
                         success:function (data){
                             if(data.status=== true){
-                               Swal.fire({
+                               Swal.fire({ //Función para dar un mensaje cuando se registre la compra
                                     icon: "success",
-                                    title: "Exito",
+                                    title: "Realizado",
                                     text: "Compra Registrada Exitosamente",
-                                    confirmButtonText: 'Enterado',
+                                    confirmButtonText: 'Entendido',
                                     allowOutsideClick:false,
                                     footer: '<a class="note" href="/compras/nueva">Deseas Agregar otra compra?</a>'
                                 }).then((result)=>{

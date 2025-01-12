@@ -1,8 +1,13 @@
 @extends('layouts.app')
+
+@section('title', 'Categorias')
 @section('content')
 
-    <div class="container" id="app">
+<!-- contenedor de confirmación, verificación de preguntas de seguridad y nueva contraseña -->
+
+    <div class="container" id="app"> 
         <div class="row justify-content-center">
+            <!-- Imagen del sistema -->
             <div class="sidebar-heading text-center"><img src="{{asset('images/logosis.jpg')}}"  class="img-thumbnail rounded" alt="CaseMania" height="100px" width="49%"></div>
             <div class="col-md-6 pt-2">
                 <div class="card">
@@ -17,13 +22,17 @@
                         </div>
                     @endif
                     @if($status_preguntas == false ||   session('status_preguntas') == 'false')
+                    
+                        <!-- Verificación del correo electrónico-->
+
                         <div class="card-header bg-info bg-gradient text-black">Reestablecer Contraseña</div>
                         <form  method="POST" action="{{ url('verificar/email') }}">
                             @csrf
                             <div class="card-body">
                                 <div class="row mb-3 pt-2" style="justify-content: center">
-                                    <div class="col-md-4 col-form-label text-md-right">
-                                        <label for="email">* Correo Electrónico: </label>
+                                    <div class="offset-md-5">
+                                        <span class="note info text-white" v-if="showinfo" >Ingrese el correo eléctronico que desea cambiar la contraseña</span>
+                                        <label for="email">* Correo Electrónico: <button @click.prevent="verificarinfo()" id="email" class="btn btn-link m-0 text-dark"><i class="bi bi-info-circle"></i></button></label>
                                     </div>
                                     <div class="col-md-7">
                                         <div class="input-group">
@@ -44,31 +53,39 @@
 
                                     </div>
                                 </div>
+                                <label class="pt-2">* Campos Obligatorios</label>
                             </div>
                         </form>
 
                         @if(session('status') == 'true' &&  session('status_preguntas') == 'false')
                             <hr>
+
+                            <!-- Verificación de las preguntas de seguridad -->
+
                             <h6 class="card-header bg-info bg-gradient text-black">Preguntas de Seguridad</h6>
                             <form method="POST" action="{{ url('verificar/preguntas') }}">
                                 @csrf
                                 <div class="row">
                                     <div class="col-md-5 text-center">
                                         <label for="pregunta1">{{ucfirst(session('pregunta1'))}}</label>
-                                        <input type="text" class="form-control text-center" value="{{session('respuesta1')}}" @if(session('status_preguntas') == 'true') disabled @endif  name="respuesta1" autocomplete="off">
+                                        <input type="text" class="form-control text-center" value="{{session('respuesta1')}}" @if(session('status_preguntas') == 'true') disabled @endif  name="respuesta1" autocomplete="off" maxlength="20" minlength="4">
                                     </div>
                                     <div class="col-md-5 text-center">
                                         <label for="pregunta2">{{ucfirst(session('pregunta2'))}}</label>
-                                        <input type="text" class="form-control text-center" value="{{session('respuesta2')}}" @if(session('status_preguntas') == 'true') disabled @endif name="respuesta2" autocomplete="off">
+                                        <input type="text" class="form-control text-center" value="{{session('respuesta2')}}" @if(session('status_preguntas') == 'true') disabled @endif name="respuesta2" autocomplete="off" maxlength="20" minlength="4">
                                     </div>
                                     <div class="col-md-2 mt-3 text-center" style="justify-content: center">
                                         <button type="submit" class="btn-sm btn btn-success "><i class="bi bi-arrow-bar-right"></i>Verificar</button>
                                     </div>
                                     <input type="hidden" value="{{session('user_id')}}" name="user_id">
                                 </div>
+                                <label class="pt-2">Estimado usuario, ingrese las respuestas exactamente como fueron registradas, es decir, se toman en cuenta las mayúsculas y minúsculas</label>
                             </form>
                         @endif
                     @endif
+
+                    <!-- Cambio de la contraseña cuando las preguntas de seguridad sean verificadas de manera correcta -->
+
                     @if(session('status_preguntas') == 'true')
                         <h6 class="card-header bg-info bg-gradient text-black">Nueva Contraseña</h6>
                         <form method="POST" action="{{ url('contraseña/update') }}">
@@ -76,24 +93,28 @@
                             <div class="row">
                                 <div class="col-md-5 text-center">
                                     <label for="pregunta1">Nueva Contraseña</label>
-                                    <input type="password" class="form-control text-center" name="contraseña">
+                                    <input type="password" class="form-control text-center" name="contraseña" maxlength="12" minlength="6">
                                 </div>
                                 <div class="col-md-5 text-center">
                                     <label for="pregunta2">Confirmar Contraseña</label>
-                                    <input type="password" v-model="contra2" class="form-control text-center" name="contraseña2">
+                                    <input type="password" v-model="contra2" class="form-control text-center" name="contraseña2" maxlength="12" minlength="6">
                                 </div>
                                 <div class="col-md-2 mt-3 text-center" style="justify-content: center">
                                     <button type="submit" class="btn-sm btn btn-success "><i class="bi bi-floppy"></i>Guardar</button>
                                 </div>
                                 <input type="hidden" value="{{session('user_id')}}" name="user_id">
                             </div>
+                            <label class="pt-2">Estimado usuario, la contraseña debe contener entre 6 y 12 caracteres y deben ser alfanuméricos</label>
                         </form>
                     @endif
                 </div>
             </div>
         </div>
     </div>
-    </div>
+    <div class="pt-4 text-center">
+    <a href="{{ route('login') }}" class="btn btn-primary bi bi-arrow-90deg-left"> Regresar al Inicio de Sesión</a>
+</div>
+</div>
 @endsection
 @section('script')
     <script>
@@ -113,7 +134,7 @@
                              icon:'error',
                              showConfirmButton: true,
                          })*/
-                        console.log('Debes escribir un correo valido')
+                        console.log('Debes Ingresar un Correo Electrónico Válido') //Mensaje cuando se ingrese un correo electrónico incorrecto
                     }else{
 
                     }

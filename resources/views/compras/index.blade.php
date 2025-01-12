@@ -2,6 +2,9 @@
 
 @section('title', 'Lista de Compras')
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item active" aria-current="page">Compras</li>
 @endsection
@@ -21,23 +24,23 @@
         <h1 class="pb-1">
            Lista de Compras
         </h1>
-        <p>
+        <p> <!-- Botón para realizar una nueva compra -->
             <a href="{{ route('compras.create') }}" class="btn btn-primary bi bi-plus-lg"> Registrar Nueva Compra</a>
 
         </p>
     </div>
 
-    @include('compras._filters')
+    @include('compras._filters') <!-- Cuadro de búsqueda para buscar la compra -->
     @if ($compras->isNotEmpty())
-        <p>Viendo pagina {{$compras->currentPage()}} de {{$compras->lastPage()}}</p>
+        <p>Viendo Página {{$compras->currentPage()}} de {{$compras->lastPage()}}</p>
         <div class="table-responsive-lg">
             <table class="table table-sm" id="app">
                 <thead class="thead-dark">
                 <tr class="" style="justify-content: center" align="center">
                     <th scope="col"># Factura</th>
-                    <th scope="col"><a href="{{$sortable->url('fecha_compra')}}" class="{{ $sortable->classes('fecha_compra') }}">Fecha de Compra <i class="icon-sort"></i></a></th>
-                    <th scope="col">Proveedor </th>
-                    <th scope="col">Productos Adquiridos</th>
+                    <th scope="col" class="text-center"><a href="{{$sortable->url('fecha_compra')}}" class="{{ $sortable->classes('fecha_compra') }}">Fecha de Compra <i class="icon-sort"></i></a></th>
+                    <th scope="col" class="text-center">Proveedor </th>
+                    <th scope="col" class="text-center">Productos Adquiridos</th>
                     <th scope="col" class="text-center th-actions">Acciones</th>
                 </tr>
                 </thead>
@@ -49,6 +52,9 @@
             </table>
 
             {{ $compras->links()}}
+        </div>
+        <div class="pt-2 text-center">
+        <a href="{{ route('login') }}" class="btn btn-primary bi bi-arrow-90deg-left"> Regresar al Inicio</a>
         </div>
     @else
         <p>No hay compras registradas.</p>

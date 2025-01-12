@@ -2,8 +2,11 @@
 
 @section('title', 'Servicios Técnicos')
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Servicio Tecnico</li>
+    <li class="breadcrumb-item active" aria-current="page">Servicio Técnico</li>
 @endsection
 
 @section('content')
@@ -21,27 +24,27 @@
         <h1 class="pb-1">
             Servicios Técnicos
         </h1>
-        <p>
-            <a href="{{ route('servicios.create') }}" class="btn btn-dark">Nuevo Servicio</a>
+        <p> <!-- Botón para registrar nuevo servicio técnico -->
+        <a href="{{ route('servicios.create') }}" class="btn btn-primary bi bi-plus-lg"> Regisitrar Nuevo Servicio Técnico</a>
         </p>
     </div>
 
-    @include('servicios._filters')
+    @include('servicios._filters') <!-- Filtros -->
     @if ($servicios->isNotEmpty())
-        <p>Viendo pagina {{$servicios->currentPage()}} de {{$servicios->lastPage()}}</p>
+        <p>Viendo Página {{$servicios->currentPage()}} de {{$servicios->lastPage()}}</p> <!-- Paginación -->
         <div class="table-responsive-lg">
-            <table class="table table-sm table-bordered" id="app">
+            <table class="table table-sm table-bordered" id="app"> <!-- Subtítulos de la tabla -->
                 <thead class="thead-dark">
                 <tr class="">
-                    <th scope="col">#</th>
-                    <th scope="col">Cliente</th>
-                    <th scope="col">Recepcion</th>
-                    <th scope="col">Productos</th>
-                    <th scope="col">Cantidad</th>
+                    <!-- <th scope="col">#</th> -->
+                    <th scope="col" class="text-center">Cliente</th>
+                    <th scope="col" class="text-center">Datos de Recepción</th>
+                    <th scope="col" class="text-center">Productos</th>
+                    <th scope="col" class="text-center">Cantidad</th>
                     <th scope="col" colspan="2" class="text-center">Falla Registrada</th>
-                    <th scope="col">Estatus</th>
-                    <th scope="col">Datos del Recibo</th>
-                    <th scope="col" class="text-right th-actions">Acciones</th>
+                    <th scope="col" class="text-center">Estado</th>
+                    <th scope="col" class="text-center">Datos del Recibo</th>
+                    <th scope="col" class="text-center th-actions">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -52,6 +55,9 @@
             </table>
 
             {{ $servicios->links()}}
+        </div>
+        <div class="pt-4 text-center">
+        <a href="{{ route('login') }}" class="btn btn-primary bi bi-arrow-90deg-left"> Regresar al Inicio</a>
         </div>
     @else
         <p>No hay Servicios registrados.</p>
@@ -79,13 +85,13 @@
             },
             methods:{
                 deleteservicio:function (servicio_id){
-                    Swal.fire({
-                        title: '¿Seguro que deseas eliminar este Servicio?',
+                    Swal.fire({ //Función para confirmar eliminar el servicio técnico
+                        title: '¿Seguro que deseas eliminar este Servicio Técnico?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, Eliminarlo!'
+                        confirmButtonText: 'Si, Eliminar'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -99,8 +105,8 @@
                                 success:function (data){
                                     if(data){
                                         Swal.fire(
-                                            'Eliminado!',
-                                            'El Servicio a sido eliminado de Forma Exitosa.',
+                                            'Eliminado',
+                                            'El Servicio ha sido eliminado exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()
@@ -116,7 +122,7 @@
                 },
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv', //Función para obtener el valor del BCV
                         method:'GET',
                         dataType:'json',
                         success:function (data){
@@ -130,7 +136,7 @@
                         }
                     })
                 },
-                async setcosto(servicio_id) {
+                async setcosto(servicio_id) { //Función para anexar el costo desde la lista de los servicios
                     const {value: formValues} = await Swal.fire({
                         title: "Ingresa el Costo del Servicio ($)",
                         html: `
@@ -181,14 +187,14 @@
                         })
                     }
                 },
-                changestatus(servicio_id){
+                changestatus(servicio_id){ //Función para cambiar el estado a "Entregado"
                     Swal.fire({
-                        title: '¿Seguro que deseas cambiar el estatus del servicio a : ENTREGADO?',
+                        title: '¿Seguro que deseas cambiar el estatus del servicio a : Entregado?',
                         icon: 'warning',
                         showCancelButton: true,
                         confirmButtonColor: '#3085d6',
                         cancelButtonColor: '#d33',
-                        confirmButtonText: 'Si, cambiarlo!'
+                        confirmButtonText: 'Si, Cambiar a "Entregado"'
                     }).then((result) => {
                         if (result.isConfirmed) {
                             $.ajax({
@@ -201,9 +207,9 @@
                                 dataType:'json',
                                 success:function (data){
                                     if(data.status=== true){
-                                        Swal.fire(
-                                            'Exito!',
-                                            'se cambio con exito el estatus del Servicio',
+                                        Swal.fire( //Función para confirmación de cambio de estado
+                                            'Realizado',
+                                            'Cambio de estado a "Entregado" realizado exitosamente',
                                             'success',
                                         ).then(function (){
                                             location.reload()

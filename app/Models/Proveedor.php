@@ -15,7 +15,7 @@ class Proveedor extends Model
     }
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class);
+        return $this->belongsTo(Categoria::class)->withDefault();
     }
     public function ScopeFilterBy($query,QueryFilter $filters,array $data)
     {

@@ -24,13 +24,13 @@ class DevolucionController extends Controller
          ]);
     }
     public function store(Request $request){
-      Devolucion::create([
+      Devolucion::create([ //Función para crear la devolución
           'fecha_devolucion'=>Carbon::now(),
           'user'=>auth()->user()->name,
           'motivo_devolucion'=>$request->razon_devolucion,
           'venta_id'=>$request->venta_id,
       ]);
-      $venta=Venta::query()->where('id',$request->venta_id)->first();
+      $venta=Venta::query()->where('id',$request->venta_id)->first(); //Función para el estado de la devolución
       $venta->update([
           'status'=>'devuelto',
           'total_dolar'=>0,
@@ -42,7 +42,7 @@ class DevolucionController extends Controller
           $venta->delivery->forceDelete();
       }
 
-      foreach (explode(',',$venta->detalle_venta->productos_ids) as $i=>$producto){
+      foreach (explode(',',$venta->detalle_venta->productos_ids) as $i=>$producto){ //Cantidad de devueltos
           $producto_id=(int)$producto;
           $cantidad=explode(',',$venta->detalle_venta->cantidad);
           $prod=Producto::query()->where('id',$producto_id)->first();
@@ -53,7 +53,7 @@ class DevolucionController extends Controller
       }
       $venta->save();
 
-      return redirect()->route('ventas.index')->with('success','Devolucion Guardada con Exito');
+      return redirect()->route('ventas.index')->with('success','Devolución Realizada Exitosamente');
 
 
     }

@@ -1,5 +1,5 @@
 <form method="get" action="{{ url('usuarios') }}">
-    <div class="row row-filters">
+    <div class="row row-filters"> <!-- Selección de roles de usuarios para la búsqueda -->
         <div class="col-md-6">
             @foreach (trans('users.filters.roles') as $value => $text)
                 <div class="form-check form-check-inline">
@@ -11,10 +11,10 @@
 
         </div>
     </div>
-    <div class="row row-filters">
+    <div class="row row-filters"> <!-- Cuadro de texto para realizar la búsqueda de los empleados -->
         <div class="col-md-10">
             <div class="form-inline form-search">
-                <input type="search" name="search" value="{{ request('search') }}" size="80" class="form-control form-control-sm" placeholder="Buscar empleado...">
+                <input type="search" name="search" value="{{ request('search') }}" size="80" class="form-control form-control-sm" placeholder="Buscar empleado..." autocomplete="off">
                 <button type="submit" class="btn btn-md btn-primary">Buscar</button>
             </div>
         </div>

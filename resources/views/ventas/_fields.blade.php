@@ -1,7 +1,10 @@
 @csrf
-<div class="row">
-    <div class="col-md-8">
-        <h5>* Cliente:</h5>
+
+<!-- Bloque de cliente y sucursal -->
+
+<div class="row"> 
+    <div class="col-md-8"> <!-- Cliente -->
+        <h5>* Cliente: </h5>
         <div class="input-group">
             <select name="cliente_id" :disabled="datos" v-model="cliente" id="cliente_id" class="form-control text-center" :class="{'field-error': cliente === ''  && error}">
                 <option value="">-- Seleccionar Cliente --</option>
@@ -15,7 +18,8 @@
         </div>
     </div>
     <div class="col-md-4">
-        <h5>* Sucursal:</h5>
+    <span class="note info text-white" v-if="showinfo" >Debe escojer la sucursal donde se encuentre el producto</span>
+        <h5>* Sucursal:</h5> <!-- Sucursal -->
         <select name="sucursal" @change="selecproductos()" v-model="sucursal" :disabled="datos" v-model="sucursal" id="sucursal_id" class="form-control text-center" >
             @foreach($sucursales as $sucursal)
                 <option value="{{ $sucursal->id }}"{{ old('sucursal_id')}} >
@@ -25,9 +29,11 @@
         </select>
     </div>
 </div>
-
 <hr>
-<h5>* Seleccionar Productos:</h5>
+
+<!-- Bloque para escojer los productos de la venta -->
+
+<h5>* Seleccionar Productos:</h5> <!-- Selección de Productos -->
 <div class="card-header">
 <div class="row">
     <div class="col-md-4">
@@ -47,13 +53,13 @@
         </select>
     </div>
     <div class="col-md-4">
-        <input type="text" placeholder="Ingrese la Cantidad del Producto" name="cantidad" :max="maximo_producto" v-model="cantidad" class="form-control text-center" @keyup="verifimax()" :class="{'field-error': cantidad === '' || errormax}" autocomplete="off" minlength="1" min="1" step="1">
+        <input type="number" placeholder="Ingrese la Cantidad del Producto" name="cantidad" :max="maximo_producto" v-model="cantidad" class="form-control text-center" @keyup="verifimax()" :class="{'field-error': cantidad === '' || errormax}" autocomplete="off" minlength="1" min="1" step="1">
         <p class="note text-danger" v-if="errormax">Debe agregar al menos 1 unidad y la máxima cantidad disponible para este producto es de @{{ maximo_producto }} unidades</p>
     </div>
 
 </div>
 <div class="row mt-2">
-    <div class="col-md-12 text-center" >
+    <div class="col-md-12 text-center" > <!-- Botón para agregar la fila -->
         <button class="btn btn-outline-danger btn-lg"  @click.prevent="agregarfila()"><i class="bi bi-plus-circle-fill" :disable="!validar"></i> Agregar Producto</button>
     </div>
 </div>
@@ -61,10 +67,10 @@
 * Campos Obligatorios
 <div v-if="datos">
     <hr>
-    <h5 class="text-center">Datos de la Venta</h5>
+    <h5 class="text-center">Datos de la Venta</h5> <!-- Detalles de la venta -->
     <table class="table align-items-center mb-0" id="tabla_datos">
         <thead>
-        <tr>
+        <tr> <!-- Subtítulos de la venta -->
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7" >Renglón</th>
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Código del Producto</th>
             <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Categoría del Producto</th>
@@ -77,7 +83,7 @@
         </tr>
         </thead>
         <tbody>
-            <tr v-for="(venta,index) in lista_venta.nombres ">
+            <tr v-for="(venta,index) in lista_venta.nombres "> <!-- Detalles de los datos ingresados -->
                 <td class="align-middle text-center text-sm">@{{ index +1 }}</td>
                 <td class="align-middle text-center text-sm">00@{{ lista_venta.ids[index] }} </td>
                 <td class="align-middle text-center text-sm">@{{ lista_venta.categoria[index] }}</td>
@@ -86,24 +92,27 @@
                 <td class="align-middle text-center text-sm"> @{{ lista_venta.precio_unitario[index] }} $</td>
                 <td class="align-middle text-center text-sm"> @{{ lista_venta.subtotal[index] }} $</td>
                 <td align=middle>
-                    <a class="btn btn-outline-danger btn-sm" type="button" @click.prevent="deletefila(index)"><i class="bi bi-trash3-fill"></i></a>
+                    <a class="btn btn-outline-danger btn-sm" type="button" @click.prevent="deletefila(index)"><i class="bi bi-trash3-fill"> Eliminar</i></a>
                 </td>
             </tr>
 
         </tbody>
     </table>
+
+<!-- Bloque para el servicio a domicilio -->
+
     <div class="row">
-        <div class="col-md-6 mt-3">
+        <div class="col-md-6 mt-3"> 
             <label class="mt-1"> <strong>Servicio a Domicilio</strong></label>
             <div class="form-check" >
                 <input class="form-check-input" type="checkbox" :value="delivery" v-model="delivery" @click="configdelivery()" name="delivery" id="delivery">
-                <label class="form-check-label" for="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault"> <!-- Caja de marcado para agregar el servicio a domicilio -->
                     Agregar Servicio a Domicilio
                 </label>
             </div>
             <div v-if="delivery" class=" card">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6"> <!-- Cuadros de texto para ingresar la dirección, el punto de referencia y el costo del servicio a domicilio -->
                         <label for="direccion">Dirección:</label>
                         <textarea type="text" class="form-control" name="direccion" v-model="direccion_delivery" autocomplete="off"></textarea>
                     </div>
@@ -123,7 +132,10 @@
             </div>
 
         </div>
-        <div class="col-md-6">
+
+<!-- Bloque para el cálculo de la venta -->
+
+        <div class="col-md-6"> 
             <table class=" table table-striped table-hover table-responsive-md" align="right">
                 <thead>
                     <tr align="right">
@@ -133,7 +145,7 @@
                 </thead>
                 <tbody>
                 <tr align="right" class="mt-2" style=" border: double #051b11;">
-                    <th colspan="3">Total a Pagar</th>
+                    <th colspan="3">Total a Pagar</th> <!-- Total a pagar -->
                     <th colspan="2"> @{{ lista_venta.subtotal_factura }} $ </th>
                     <th class="text-center">@{{  bs.subtotal }} </th>
                 </tr>
@@ -148,7 +160,7 @@
                     <td class="text-center  fw-bold ">@{{  bs.total_factura }} </td>
                 </tr> -->
                 <tr align="right" v-if="delivery && checkdelivery()"style=" border: double #051b11;" >
-                    <th colspan="3">Costo del Servicio a Domicilio</th>
+                    <th colspan="3">Costo del Servicio a Domicilio</th> <!-- Costo del servicio a domicilio -->
                     <th colspan="2"> @{{ costo_delivery }} $</th>
                     <td class="text-center  fw-bold ">@{{  costo_delivery_bs }} </td>
                 </tr>

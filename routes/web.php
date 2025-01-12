@@ -40,6 +40,8 @@ Route::group(['middleware'=>['auth','vendedor']],function (){
     //ALMACEN
     Route::get('almacen',[ProductoController::class,'index_almacen'])->name('almacen.index');
     Route::get('almacen/{producto}/traslados',[ProductoController::class,'traslados_almacen'])->name('almacen.traslados');
+    Route::get('almacen/{producto}/configventa',[ProductoController::class,'config_venta'])->name('almacen.configurar_venta');
+    Route::post('producto/updateprecioventa',[ProductoController::class,'update_venta'])->name('almacen.updateprecioventa');
     Route::post('traslado/update',[ProductoController::class,'traslados_store'])->name('almacen.traslados.update');
     //DEVOLUCIONES
 
@@ -144,14 +146,9 @@ Route::group(['middleware'=>['auth','admin']],function (){
     Route::post('/usuarios', [UserController::class, 'store']);
     Route::post('/user/delete', [UserController::class, 'destroy'])->name('users.destroy');
     Route::get('base_datos',function (){
-        $ubicacionArchivoTemporal = getcwd() . DIRECTORY_SEPARATOR . "Respaldo_" . uniqid(date("Y-m-d") . "_", true) . ".sql";
-        $salida = "";
-        $comando = sprintf("%s --user=\"%s\" --password=\"%s\" %s > %s", env("UBICACION_MYSQLDUMP"), env("DB_USERNAME"), env("DB_PASSWORD"), env("DB_DATABASE"), $ubicacionArchivoTemporal);
-        exec($comando, $salida, $codigoSalida);
-        if ($codigoSalida !== 0) {
-            return "Código de salida distinto de 0, se obtuvo código (" . $codigoSalida . "). Revise los ajustes e intente de nuevo";
-        }
-        return response()->download($ubicacionArchivoTemporal);
+        \Illuminate\Support\Facades\Artisan::call('backup:clean');
+        \Illuminate\Support\Facades\Artisan::call('backup:run');
+        return redirect()->back()->with('success','Respaldo Guardado con Exito');
     })->name('base_datos');
     //Sucursales
 

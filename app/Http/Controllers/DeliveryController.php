@@ -11,11 +11,11 @@ use Illuminate\Http\Request;
 class DeliveryController extends Controller
 {
         public function index(Request $request, DeliveryFilter $filters){
-            $deliverys=Delivery::query()
+            $deliverys=Delivery::query() //Función para la cantidad de registros por página
                 ->with('venta','venta.detalle_venta','venta.cliente')
                 ->filterBy($filters,$request->only(['status','search']))
                 ->orderBy('created_at')
-                ->paginate(5);
+                ->paginate(10); //Cantidad de registros por página
 
             $deliverys->appends($filters->valid());
 
@@ -23,7 +23,7 @@ class DeliveryController extends Controller
                 'deliverys' => $deliverys,
             ]);
         }
-        public function selecrepartidores(){
+        public function selecrepartidores(){ //Función para seleccionar al repartidor
 
 
             $repartidores=User::query()
@@ -52,7 +52,7 @@ class DeliveryController extends Controller
 
 
         }
-        public function updaterepartidor(Request $request){
+        public function updaterepartidor(Request $request){ //Función para actualizar al repartidor
             $delivery=Delivery::query()->where('id',$request->delivery_id)->first();
             $delivery->update([
                 'user_id'=>$request->user_id,
@@ -63,7 +63,7 @@ class DeliveryController extends Controller
                 'status'=>true
             ];
         }
-        public function update(Request $request){
+        public function update(Request $request){ //Función para actualizar el servicio a domicilio
             $delivery=Delivery::query()->where('id',$request->delivery_id)->first();
             $user=User::query()->where('id',$request->user_id)->first();
             $delivery->update([

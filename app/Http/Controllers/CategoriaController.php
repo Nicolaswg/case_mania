@@ -9,10 +9,10 @@ class CategoriaController extends Controller
 {
     public function index()
     {
-        $categorias = Categoria::query()
+        $categorias = Categoria::query() //Función para la cantidad de registros por página
             ->with('productos')
             ->orderBy('nombre')
-            ->paginate(5);
+            ->paginate(10); //Cantidad de registros por página
 
         return view('categorias.index', [
             'categorias' => $categorias,
@@ -28,7 +28,7 @@ class CategoriaController extends Controller
             'vista'=>$vista
         ]);
     }
-    public function store(Request $request)
+    public function store(Request $request) //Función la creación de categorías
     {
         $request->validate([
             'nombre'=>'required',
@@ -39,13 +39,13 @@ class CategoriaController extends Controller
             'active'=> $request->state== 'active',
         ]);
 
-        return redirect()->route('categorias.index')->with('success','Categoria Guardado con Exito');
+        return redirect()->route('categorias.index')->with('success','Categoría Creada Exitosamente');
     }
-    public function edit(Categoria $categoria)
+    public function edit(Categoria $categoria) //Función para editar la categoría
     {
         return $this->form('categorias.edit', $categoria,'editar');
     }
-    public function update(Request $request, Categoria $categoria)
+    public function update(Request $request, Categoria $categoria) 
     {
         $request->validate([
           'nombre'=>'required'
@@ -57,9 +57,9 @@ class CategoriaController extends Controller
         ]);
         $categoria->save();
 
-        return redirect()->route('categorias.index')->with('success','Categoria actualizado con Exito');
+        return redirect()->route('categorias.index')->with('success','Categoría Actualizada Exitosamente');
     }
-    public function delete(Request $request)
+    public function delete(Request $request) //Función para desactivar la categoría
     {
         $categoria = Categoria::query()->where('id', $request->categoria_id)->first();
         $categoria->active = false;

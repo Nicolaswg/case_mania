@@ -1,6 +1,9 @@
 @extends('layout')
 @section('title', "Crear un Servicio Técnico")
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('servicios.index')}}" class="link-dark">Servicio Técnico</a></li>
     <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
@@ -11,9 +14,9 @@
     @include('shared._errors')
     <form method="POST" action="{{ url('servicio') }}" id="app">
         @include('servicios._fields')
-        <div class="form-group mt-4" align="middle">
+        <div class="form-group mt-4" align="middle"> <!-- Botón de gurdar servicio tecnico y regresar al listado -->
             <button type="button" :disabled="!datos" class="btn btn-primary" @click="savedata()"><i class="bi bi-save-fill"></i> Guardar Servicio Técnico</button>
-            <a href="{{ route('servicios.index') }}" class="btn btn-link">Regresar a Listado de Servicios Técnico</a>
+            <a href="{{ route('servicios.index') }}" class="btn btn-link">Regresar al Listado de Servicios Técnicos</a>
         </div>
     </form>
     @endcard
@@ -56,7 +59,7 @@
             methods:{
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar',
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar', //Función para obtener el valor del BCV
                         method:'GET',
                         dataType:'json',
                         success:function (data){
@@ -70,12 +73,12 @@
                         }
                     })
                 },
-                setcostobs(){
+                setcostobs(){ //Función para el costo del servicio tecnico
                     this.costo_unitario_bs=(parseFloat(this.costo_unitario)*parseFloat(this.tasa_dolar.price)).toFixed(2)
                     this.total_dolar=(parseFloat(this.costo_unitario)*parseInt(this.cantidad)).toFixed(2)
                     this.total_bs=(parseFloat(this.total_dolar)*parseFloat(this.tasa_dolar.price)).toFixed(2)
                 },
-                agregarfila(){
+                agregarfila(){ //Función para agregar las filas
                     let status=this.checkfields()
                     if(status){
                         this.datos=true
@@ -87,7 +90,7 @@
                         this.cont=this.cont+1
                         this.resetfields()
                     }else{
-                        Swal.fire({
+                        Swal.fire({ //Función para mostrar el mensaje de error
                             icon: "error",
                             title: "Error",
                             text: "Todos los campos deben estar llenos",
@@ -97,7 +100,7 @@
                     }
 
                 },
-                deletefila(indice){
+                deletefila(indice){ //Función para eliminar la fila
                     this.lista_servicio.productos.splice(indice,1)
                     this.lista_servicio.cantidad.splice(indice,1)
                     this.lista_servicio.serial.splice(indice,1)
@@ -155,11 +158,11 @@
                         success:function (data){
                             //console.log(data.costo)
                            if(data.status=== true){
-                                Swal.fire({
+                                Swal.fire({ //Función para mostrar mensaje de confirmación
                                     icon: "success",
-                                    title: "Exito",
-                                    text: "Sercivio Tecnico Registrado de Forma Exitosa",
-                                    confirmButtonText: 'Enterado',
+                                    title: "Realizado",
+                                    text: "Sercivio Técnico registrado exitosamente",
+                                    confirmButtonText: 'Entendido',
                                     allowOutsideClick:false,
                                     footer: '<a class="note" href="/servicio/nuevo">Deseas Agregar otro servicio?</a>'
                                 }).then((result)=>{

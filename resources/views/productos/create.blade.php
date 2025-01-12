@@ -1,6 +1,9 @@
 @extends('layout')
 @section('title', "Añadir un Producto")
-@section('breadcrumb')
+@section('breadcrumb') 
+
+    <!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('productos.index')}}" class="link-dark">Productos</a></li>
     <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
@@ -9,11 +12,11 @@
     @card
     @slot('header', 'Añadir Producto')
     @include('shared._errors')
-    <form method="POST" action="{{ url('productos') }}" id="app" enctype="multipart/form-data">
+    <form method="POST" action="{{ url('productos') }}" id="app" enctype="multipart/form-data"> <!-- Botones de guardar y regresar al listado -->
         @include('productos._fields')
         <div class="form-group mt-4" align="middle">
             <button type="submit"  class="btn btn-primary"><i class="bi bi-save-fill"></i> Guardar Producto</button>
-            <a href="{{ route('productos.index') }}" class="btn btn-link">Regresar a Listado de Productos</a>
+            <a href="{{ route('productos.index') }}" class="btn btn-link">Regresar al Listado de Productos</a>
         </div>
     </form>
     @endcard
@@ -44,7 +47,7 @@
             methods:{
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv', //Enlace para obtener el valor del BCV
                         method:'GET',
                         dataType:'json',
                         success:function (data){
@@ -66,7 +69,7 @@
                         this.empleado=true
                     }
                 },
-                deleteuser:function (user_id){
+                deleteuser:function (user_id){ //Función para eliminar el producto
                     Swal.fire({
                         title: '¿Seguro que deseas eliminar el producto?',
                         icon: 'warning',
@@ -86,7 +89,7 @@
                                 dataType:'json',
                                 success:function (data){
                                     if(data){
-                                        Swal.fire(
+                                        Swal.fire( //Confirmación de producto eliminado
                                             'Eliminado',
                                             'El producto ha sido eliminado exitosamente',
                                             'success',
@@ -102,7 +105,7 @@
                         }
                     })
                 },
-                setprecio(){
+                setprecio(){ //Función para cálculos de los precios
                     this.precio_venta=(parseFloat(this.precio_compra)*parseFloat(this.porcentaje_ganancia)/100)+parseFloat(this.precio_compra)
                     //console.log(this.tasa_dolar.price)
                     this.precio_bs= (parseFloat(this.precio_compra) * parseFloat(this.tasa_dolar.price)).toFixed(2)

@@ -18,7 +18,7 @@ class UpdateUserRequest extends FormRequest
 
     public function rules()
     {
-        return [
+        return [ //Función para validar los campos solicitados
             'name' => 'required',
             'email' => ['required',Rule::unique('users','email')->ignore($this->user),'email:rfc'],
             'password' => 'required',
@@ -37,11 +37,15 @@ class UpdateUserRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'El nombre es obligatorio',
-            'num_cel.required'=>'El numero de telefono es obligatorio',
-            'role.required'=>'El usuario debe tener un Rol.',
-            'num_documento.required'=>'El numero de Cedula es Obligatorio',
-            'tipo_documento.required'=>'El tipo de documento es Obligatorio'
+            'name.required' => 'El nombre y apellido es obligatorio',
+            'email.required' => 'El correo electrónico es obligatorio',
+            /* 'password.required' => 'La contraseña es obligatoria', */
+            'ubicacion.required' => 'La dirección de domicilio es obligatoria',
+            'tipo_documento.required'=>'El tipo de documento es obligatorio',
+            'num_documento.required'=>'El número de documento es obligatorio',
+            'num_cel.required'=>'El número de teléfono es obligatorio',
+            'sucursal_id.required'=>'La sucursal es obligatoria',
+            'role.required'=>'El usuario debe tener un Rol de acceso'
         ];
     }
 

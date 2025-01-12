@@ -1,6 +1,9 @@
 @extends('layout')
 @section('title', "Editar una Compra")
 @section('breadcrumb')
+
+<!-- Ruta -->
+
     <li class="breadcrumb-item"><a href="{{route('home')}}" class="link-dark">Inicio</a></li>
     <li class="breadcrumb-item"><a href="{{route('compras.index')}}" class="link-dark">Compras</a></li>
     <li class="breadcrumb-item active" aria-current="page">Editar</li>
@@ -9,11 +12,11 @@
     @card
     @slot('header', 'Editar una Compra')
     @include('shared._errors')
-    <form method="POST" action="{{ url('compras') }}" id="app">
+    <form method="POST" action="{{ url('compras') }}" id="app"> <!-- Botones de editar factura y regresar al listado -->
         @include('compras._fields')
         <div class="form-group mt-4" align="middle">
             <button type="button" :disabled="(!datos || ini)"  class="btn btn-primary" @click="editardata()"><i class="bi bi-pencil"></i> Editar Factura</button>
-            <a href="{{ route('compras.index') }}" class="btn btn-link">Regresar a Lista de Compras</a>
+            <a href="{{ route('compras.index') }}" class="btn btn-link">Regresar al Listado de Compras</a>
         </div>
     </form>
     @endcard
@@ -82,7 +85,7 @@
             methods:{
                 setpreciodolar() {
                     $.ajax({
-                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv',
+                        url:'https://pydolarvenezuela-api.vercel.app/api/v1/dollar?page=bcv', //Función para obtener el valor del BCV
                         method:'GET',
                         dataType:'json',
                         success:function (data){
@@ -96,7 +99,7 @@
                         }
                     })
                 },
-                selecproductos(){
+                selecproductos(){ //Función para seleccionar los productos
                     $.ajax({
                         url:'/selecproducto',
                         method:'POST',
@@ -120,7 +123,7 @@
                         }
                     })
                 },
-                cargardatoscompra(){
+                cargardatoscompra(){ 
                     $.ajax({
                         url:'/cargarproducto',
                         method:'POST',
@@ -163,7 +166,7 @@
                 verificarproducto(){
                     this.disabledprecio = this.verificarigualesids2();
                 },
-                agregarfila(){
+                agregarfila(){ //Función para agregar la fila de la compra
                     let status=this.checkfields()
                     if(status){
                         this.datos=true
@@ -186,7 +189,7 @@
                         Swal.fire({
                             icon: "error",
                             title: "Error",
-                            text: "todos los campos deben estar llenos",
+                            text: "Todos los campos deben estar llenos",
                             footer: '<span class="note">Estaran Subrallados de Color Rojo</span>'
                         }).then((result)=>{
                             this.error=true
@@ -194,7 +197,7 @@
                     }
 
                 },
-                deletefila(indice){
+                deletefila(indice){ //Función para eliminar la fila
                     this.lista_compras.nombres.splice(indice,1)
                     this.lista_compras.ids.splice(indice,1)
                     this.lista_compras.cantidad.splice(indice,1)
@@ -209,8 +212,7 @@
                     }
 
                 },
-                calculofactura(){
-                    //console.log('entro aqui')
+                calculofactura(){ //Función para calcular la factura
                     let acum=0
                     this.lista_compras.subtotal.forEach((subtotal, index)=>{
                             acum=parseFloat(acum)+parseFloat(subtotal)
@@ -266,9 +268,9 @@
                         return true
                     }
                 },
-                editardata(){
+                editardata(){ //Función para dar un mensaje de editar la compra
                     Swal.fire({
-                        title: "Seguro que quieres editar la Compra?",
+                        title: "Seguro que quieres modificar la Compra?",
                         showDenyButton: true,
                         showCancelButton: true,
                         icon:'info',
@@ -300,11 +302,11 @@
                                 dataType:'json',
                                 success:function (data){
                                     if(data.status=== true){
-                                        Swal.fire({
+                                        Swal.fire({ //Función para mensaje de compra editada
                                             icon: "success",
-                                            title: "Exito",
+                                            title: "Realizado",
                                             text: "Compra Modificada Exitosamente",
-                                            confirmButtonText: 'Enterado',
+                                            confirmButtonText: 'Entendido',
                                             allowOutsideClick:false,
                                             footer: '<a class="note" href="/compras/nueva">Deseas Agregar otra compra?</a>'
                                         }).then((result)=>{
